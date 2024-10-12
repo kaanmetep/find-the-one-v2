@@ -1,10 +1,10 @@
-import Heading from "./components/Heading";
+import MainContainer from "./components/MainContainer";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <Heading />
+      <MainContainer />
     </>
   );
 }
