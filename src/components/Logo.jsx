@@ -1,9 +1,9 @@
 function Logo() {
   return (
     <img
-      src="minilogo.png"
+      src="mainlogo.png"
       alt="find-the-one-logo"
-      className="w-20 filter invert brightness-0"
+      className="w-48 filter invert brightness-0"
     />
   );
 }
