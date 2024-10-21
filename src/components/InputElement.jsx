@@ -13,10 +13,10 @@ function InputElement({
     <input
       type={type}
       placeholder={placeholder}
-      className={`shadow-lg border-2 border-slate-400 px-2 rounded-md py-${py} placeholder:text-xs w-40 md:w-80 md:focus:w-[340px]
+      className={`shadow-lg border-2 border-rose-200 px-2 rounded-md py-${py} placeholder:text-xs w-40 md:w-80 md:focus:w-[340px]
         transition-all duration-300 focus:outline-none
         focus:ring
-        focus:ring-slate-400
+        focus:ring-rose-200
         focus:ring-opacity-50`}
       disabled={disabled}
       value={value}

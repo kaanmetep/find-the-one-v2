@@ -1,9 +1,10 @@
-function Logo() {
+function Logo({ w = 160 }) {
   return (
     <img
       src="mainlogo.png"
       alt="find-the-one-logo"
-      className="w-48 filter invert brightness-0"
+      className={` filter invert brightness-0 `}
+      style={{ width: `${w}px` }}
     />
   );
 }
