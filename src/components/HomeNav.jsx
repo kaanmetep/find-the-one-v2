@@ -11,7 +11,7 @@ function HomeNav() {
           <NavItem to="howitworks">How it works</NavItem>
         </div>
         <div className="flex-col-reverse">
-          <Logo w={110} />
+          <Logo w={80} />
         </div>
       </ul>
     </nav>

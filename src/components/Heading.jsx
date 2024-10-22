@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { useApp } from "../hooks/useApp";
 import LogInPopUp from "./LogInPopUp";
 import Button from "./Button";
 import HomeNav from "./HomeNav";
-import Logo from "./Logo";
 function Heading() {
   const { isLoginPopUpOpen, setIsLoginPopUpOpen } = useApp();
   return (
