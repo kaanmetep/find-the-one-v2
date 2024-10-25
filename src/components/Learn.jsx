@@ -1,11 +1,12 @@
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import SectionHeading from "./SectionHeading";
+import TestimonialCards from "./TestimonialCards";
 function Learn() {
-  const { sectionRef, isVisible } = useIntersectionObserver(0.7);
+  const { sectionRef, isVisible } = useIntersectionObserver(0.6);
   return (
-    <div id="learn" className="mt-20 flex justify-center p-8">
+    <div id="learn" className="mt-16 flex justify-center p-8">
       <div
-        className={`shadow-md p-4 fade-in-section ${
+        className={`shadow-md p-8 fade-in-section ${
           isVisible ? "is-visible" : ""
         }`}
         ref={sectionRef}
@@ -27,6 +28,9 @@ function Learn() {
           Experience the future of dating — powered by cutting-edge AI
           technology, designed to help you find your perfect match effortlessly.
         </p>
+        <div>
+          <TestimonialCards />
+        </div>
       </div>
     </div>
   );
