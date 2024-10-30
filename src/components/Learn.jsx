@@ -4,12 +4,13 @@ import TestimonialCards from "./TestimonialCards";
 function Learn() {
   const { sectionRef, isVisible } = useIntersectionObserver(0.6);
   return (
-    <div id="learn" className="mt-16 flex justify-center p-8">
+    <div className="mt-8 flex justify-center p-12 text-sm">
       <div
-        className={`shadow-md p-8 fade-in-section ${
+        className={`shadow-xl p-8 fade-in-section ${
           isVisible ? "is-visible" : ""
         }`}
         ref={sectionRef}
+        id="learn"
       >
         <SectionHeading>Learn</SectionHeading>
         <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold">
