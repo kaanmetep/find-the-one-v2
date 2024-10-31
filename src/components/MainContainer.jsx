@@ -3,6 +3,7 @@ import SecondaryHeading from "./SecondaryHeading";
 import Learn from "./Learn";
 import Safety from "./Safety";
 import Support from "./Support";
+import HowItWorks from "./HowItWorks";
 function MainContainer() {
   return (
     <div>
@@ -11,7 +12,7 @@ function MainContainer() {
       <Learn />
       <Safety />
       <Support />
-      <p className="my-16 text-center bg-rose-400">How it works</p>
+      <HowItWorks />
     </div>
   );
 }
