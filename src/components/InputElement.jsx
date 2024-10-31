@@ -17,7 +17,7 @@ function InputElement({
         transition-all duration-300 focus:outline-none
         focus:ring
         focus:ring-rose-200
-        focus:ring-opacity-50`}
+        focus:ring-opacity-50 text-black`}
       disabled={disabled}
       value={value}
       onChange={onChange}
