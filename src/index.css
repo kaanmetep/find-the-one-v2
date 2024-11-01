@@ -3,11 +3,16 @@
 @tailwind utilities;
 
 .main {
-  background-image: url("bg.jpg");
   background-size: cover;
   background-position: center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url("bg2.jpg");
+}
+.register {
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("registerimg.jpg");
 }
 .fade-in-section {
   opacity: 0; /* Başlangıçta görünmez */

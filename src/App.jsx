@@ -1,21 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
 import { AppProvider } from "./contexts/AppContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import MainContainer from "./components/MainContainer";
-import Register from "./components/Register";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
 import PageNotFound from "./components/PageNotFound";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "register",
+    element: <Register />,
+  },
+]);
 
 function App() {
   return (
     <AuthProvider>
       <AppProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<MainContainer />} />
-            <Route path="register" element={<Register />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </AppProvider>
     </AuthProvider>
   );

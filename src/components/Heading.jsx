@@ -1,10 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../hooks/useApp";
 import LogInPopUp from "./LogInPopUp";
 import Button from "./Button";
 import HomeNav from "./HomeNav";
 function Heading() {
   const { isLoginPopUpOpen, setIsLoginPopUpOpen } = useApp();
-
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-svh pt-8  text-white font-bold pb-8 main  ">
       <div className="flex justify-between px-8 items-center h-12 flex-col md:flex-row gap-4 ">
@@ -23,7 +24,7 @@ function Heading() {
           Where you meet the one who’s right for you
         </h2>
         <div className="mt-4 flex justify-center flex-col items-center ">
-          <Button bgcolor="bg-white">
+          <Button bgcolor="bg-white" onClick={() => navigate("/register")}>
             <p className="uppercase">Create Account</p>
           </Button>
         </div>
