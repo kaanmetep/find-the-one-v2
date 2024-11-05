@@ -1,20 +1,24 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import InputElement from "../components/InputElement";
+import TextArea from "../components/TextArea";
 import "react-datepicker/dist/react-datepicker.css";
 function Register() {
   const [page, setPage] = useState(1);
   const [startDate, setStartDate] = useState("");
   return (
     <div className=" h-svh flex items-center justify-center bg-red-50">
-      <div className="flex flex-col justify-center items-center gap-6 p-24 w-[80%] mx-auto bg-red-200 rounded-lg ">
+      <div className="flex flex-col justify-center items-center gap-6 h-[600px]  w-[80%] mx-auto bg-red-200 rounded-lg ">
         <div className="flex gap-4 items-center">
           <h1 className="text-3xl font-bold italic p-2 rounded-sm text-center ">
             Create an account
           </h1>
           <h2 className="text-black font-bold">{page}/4</h2>
         </div>
-        <form action="" className="flex flex-col gap-2">
+        <form
+          action=""
+          className="flex flex-col gap-2 items-center justify-center"
+        >
           {page === 1 && (
             <>
               <InputElement placeholder="E-mail" pl={20} py={6} />
@@ -37,6 +41,9 @@ function Register() {
           )}
           {page === 2 && (
             <>
+              <h2 className="text-center mb-4 italic font-bold text-black">
+                Let's get the important details first.
+              </h2>
               <InputElement placeholder="Name" pl={20} />
               <DatePicker
                 selected={startDate}
@@ -76,6 +83,7 @@ function Register() {
                 <option value="man">Man</option>
                 <option value="woman">Woman</option>
               </select>
+
               <button
                 className="ml-auto mt-4 bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
                 onClick={(e) => {
@@ -89,16 +97,19 @@ function Register() {
           )}
           {page === 3 && (
             <>
-              <InputElement
-                placeholder="Which genre of movies do you like?"
-                pl={20}
-                py={24}
-              />
-              <InputElement
-                placeholder="How do you usually spend your weekends?"
-                pl={20}
-                py={24}
-              />
+              <h2 className="text-center mb-4 italic font-bold text-black">
+                Just to know you better. You're one step away to find the one
+                for you!
+              </h2>
+              <label>Which genre of movies do you like?</label>
+              <TextArea />
+              <label>How do you usually spend your weekends?</label>
+              <TextArea />
+              <label>
+                What is something you are passionate about that not many people
+                know?
+              </label>
+              <TextArea />
               <button
                 className="ml-auto mt-4 bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
                 onClick={(e) => {
@@ -112,23 +123,33 @@ function Register() {
           )}
           {page === 4 && (
             <>
-              <InputElement
-                placeholder="What type of relationship is most valuable to you? (For example, an adventurous partner, a calming bond, a relationship based on strong communication, etc.)"
-                pl={20}
-                py={12}
-              />
-              <InputElement
-                placeholder="If you could describe your ideal day, what would it look like?"
-                pl={20}
-                py={12}
-              />
-              <InputElement
-                placeholder="If you could live in any country for a year, where would it be, and why?"
-                pl={20}
-                py={32}
-              />
+              <h2 className="text-center mb-4 italic font-bold text-black">
+                Your ideas about relationships.
+              </h2>
+              <div className="flex flex-col items-center gap-2">
+                <label className="text-center">
+                  What type of relationship is most valuable to you? (For
+                  example, an adventurous partner, a calming bond, a
+                  relationship based on strong communication, etc.)
+                </label>
+                <TextArea />
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <label>
+                  If you could describe your ideal day, what would it look like?
+                </label>
+                <TextArea />
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <label htmlFor="">
+                  If you could live in any country for a year, where would it
+                  be, and why?
+                </label>
+                <TextArea />
+              </div>
+              <button onClick={() => setPage((curr) => curr - 1)}>Geri</button>
               <button
-                className="ml-auto mt-4 bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
+                className="mx-auto mt-4 bg-red-300 px-8 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage((curr) => curr + 1);
