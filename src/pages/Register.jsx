@@ -1,68 +1,15 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { validationSchemas } from "../features/authentication/register/validation";
 import InputElement from "../components/InputElement";
 import TextArea from "../components/TextArea";
-import RegisterValidationError from "../components/RegisterValidationError";
+import RegisterValidationError from "../features/authentication/register/components/RegisterValidationError";
 import "react-datepicker/dist/react-datepicker.css";
 function Register() {
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [inputType, setInputType] = useState("text");
-  const validationSchemas = [
-    yup.object({
-      registerEmail: yup
-        .string()
-        .email("E-mail must be a valid email.")
-        .required("E-mail is required."),
-      registerPassword: yup
-        .string()
-        .required("Password is required.")
-        .min(6, "Password must be at least 6 characters."),
-      registerRePassword: yup
-        .string()
-        .oneOf([yup.ref("registerPassword"), null], "Passwords must match"),
-    }),
-    yup.object({
-      registerName: yup.string().required("Please enter your name."),
-      registerBirthdayDate: yup
-        .date()
-        .typeError("Please enter a valid date.") // check if user is older than 18
-        .required("Please enter your birthday date."),
-      registerGender: yup.string().required("Please choose your gender."),
-      registerInterestedGender: yup
-        .string()
-        .required("Please choose your interested gender."),
-    }),
-    yup.object({
-      registerPersonelQ1: yup
-        .string()
-        .min(20, "Please enter at least 20 characters for 1st question.")
-        .required("Please answer 1st question."),
-      registerPersonelQ2: yup
-        .string()
-        .min(20, "Please enter at least 20 characters for 2nd question.")
-        .required("Please answer 2nd question."),
-      registerPersonelQ3: yup
-        .string()
-        .min(20, "Please enter at least 20 characters for 3rd question.")
-        .required("Please answer 3rd question."),
-    }),
-    yup.object({
-      registerRelationshipQ1: yup
-        .string()
-        .min(20, "Please enter at least 20 characters for 1st question.")
-        .required("Please answer 1st question."),
-      registerRelationshipQ2: yup
-        .string()
-        .min(20, "Please enter at least 20 characters for 2nd question.")
-        .required("Please answer 2nd question."),
-      registerRelationshipQ3: yup
-        .string()
-        .min(20, "Please enter at least 20 characters for 3rd question.")
-        .required("Please answer 3rd question."),
-    }),
-  ];
+
   const {
     register,
     handleSubmit,
