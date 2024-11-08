@@ -1,11 +1,13 @@
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useApp } from "../hooks/useApp";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import InputElement from "./InputElement";
 function LogInPopUp() {
   const { setIsLoginPopUpOpen } = useApp();
   const { loginInput, handleLoginInput } = useAuth();
+  const navigate = useNavigate();
   useOutsideClick(setIsLoginPopUpOpen);
   return (
     <div className=" fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[100]   inset-0 backdrop-blur-sm bg-opacity-50 ">
@@ -45,8 +47,12 @@ function LogInPopUp() {
             type="password"
           />
         </div>
-        <a href="#" className="text-black mb-4 border-b-2 border-black text-sm">
-          Do you already have an account?
+        <a
+          href="#"
+          className=" border-b-2  border-black text-black hover:border-transparent transition-all delay-75 mb-4 text-sm"
+          onClick={() => navigate("/register")}
+        >
+          You don't have an account?
         </a>
         <Button>Login</Button>
       </div>
