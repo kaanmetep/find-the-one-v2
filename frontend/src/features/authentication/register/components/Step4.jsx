@@ -58,12 +58,6 @@ function Step4({ control, errors, goBack }) {
         >
           &larr;
         </button>
-        <button
-          className=" bg-red-300 px-8 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
-          type="submit"
-        >
-          Complete
-        </button>
       </div>
       <RegisterValidationError>
         {errors.registerRelationshipQ1?.message ||

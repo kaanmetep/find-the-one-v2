@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchemas } from "../features/authentication/register/validation";
 import { useApp } from "../hooks/useApp";
 import { useRegisterUser } from "../features/authentication/register/services/authService";
+import LoadingSpinner from "../components/LoadingSpinner";
 import Step1 from "../features/authentication/register/components/Step1";
 import Step2 from "../features/authentication/register/components/Step2";
 import Step3 from "../features/authentication/register/components/Step3";
@@ -21,7 +22,7 @@ function Register() {
     control,
   } = useForm({ resolver: yupResolver(validationSchemas[currentStep - 1]) });
 
-  const { mutate, isLoading, isError, error, isSuccess } = useRegisterUser();
+  const { mutate, isLoading, isError } = useRegisterUser();
 
   const goBack = () => {
     if (currentStep < 2) return;
@@ -33,7 +34,7 @@ function Register() {
     handleSubmit(() => setCurrentStep((curr) => curr + 1))(); // handleSubmit is a function that returns another function. So we have to call it immediately.
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const formattedData = {
       registerName: data.registerName,
       registerEmail: data.registerEmail,
@@ -99,6 +100,21 @@ function Register() {
           {currentStep === 4 && (
             <Step4 control={control} errors={errors} goBack={goBack} />
           )}
+          {currentStep === 4 &&
+            (isLoading ? (
+              <LoadingSpinner />
+            ) : isError ? (
+              <p className="text-red-700 font-extrabold">
+                An error occured on register. Please try again later.
+              </p>
+            ) : (
+              <button
+                className=" bg-red-300 px-8 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
+                type="submit"
+              >
+                Complete
+              </button>
+            ))}
         </form>
         {currentStep === 1 && (
           <a

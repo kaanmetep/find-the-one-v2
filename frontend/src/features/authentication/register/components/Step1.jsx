@@ -20,7 +20,13 @@ const Step1 = ({ control, errors, goForward }) => {
         name="registerPassword"
         control={control}
         render={({ field }) => (
-          <InputElement placeholder="Password" pl={20} py={6} {...field} />
+          <InputElement
+            placeholder="Password"
+            pl={20}
+            py={6}
+            type="password"
+            {...field}
+          />
         )}
       />
       <Controller
@@ -32,6 +38,7 @@ const Step1 = ({ control, errors, goForward }) => {
             pl={20}
             py={6}
             {...field}
+            type="password"
           />
         )}
       />

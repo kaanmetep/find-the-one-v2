@@ -13,6 +13,10 @@ const step4Validation = yup.object({
     .string()
     .min(20, "Please enter at least 20 characters for 3rd question.")
     .required("Please answer 3rd question."),
+  registerRelationshipQ4: yup
+    .string()
+    .min(20, "Please enter at least 20 characters for 4th question.")
+    .required("Please answer 4th question."),
 });
 
 export default step4Validation;

@@ -3,19 +3,20 @@ import axios from "axios";
 import { endpoints } from "../../../../../config";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
-const registerUser = async (userData) => {
+
+const loginUser = async (userData) => {
   try {
-    const response = await axios.post(endpoints.register, userData);
+    const response = await axios.post(endpoints.login, userData);
     return response.data;
   } catch (error) {
     console.error("Registration Error:", error.response?.data || error.message);
     throw error;
   }
 };
-export const useRegisterUser = () => {
+export const useLoginUser = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  return useMutation(registerUser, {
+  return useMutation(loginUser, {
     onSuccess: (data) => {
       login(data);
       navigate("/dashboard");

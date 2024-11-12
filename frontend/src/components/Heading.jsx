@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../hooks/useApp";
-import LogInPopUp from "./LogInPopUp";
+import LogInPopUp from "../features/authentication/login/components/LogInPopUp";
 import Button from "./Button";
 import HomeNav from "./HomeNav";
 function Heading() {
