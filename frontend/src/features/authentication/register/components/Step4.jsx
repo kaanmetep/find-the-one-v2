@@ -40,6 +40,15 @@ function Step4({ control, errors, goBack }) {
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
+        <label htmlFor="">
+          If you could live in any country for a year, where would it be, and
+          why?
+        </label>
+        <Controller
+          name="registerRelationshipQ4"
+          control={control}
+          render={({ field }) => <TextArea {...field} />}
+        />
       </div>
       <div className="flex gap-8 items-center mt-4 w-full justify-center ">
         <button
@@ -59,7 +68,8 @@ function Step4({ control, errors, goBack }) {
       <RegisterValidationError>
         {errors.registerRelationshipQ1?.message ||
           errors.registerRelationshipQ2?.message ||
-          errors.registerRelationshipQ3?.message}
+          errors.registerRelationshipQ3?.message ||
+          errors.registerRelationshipQ4?.message}
       </RegisterValidationError>
     </>
   );

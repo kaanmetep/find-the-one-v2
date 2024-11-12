@@ -1,9 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 dotenv.config({ path: "config.env" });
+const authController = require("./controllers/authController");
 
 const app = express();
+
+app.use(cors());
+app.options("*", cors());
+
+app.use(express.json());
 
 mongoose
   .connect(process.env.DATABASE)
@@ -12,6 +19,8 @@ mongoose
 app.get("/", (req, res) => {
   res.end("hello from the server");
 });
+
+app.post("/signup", authController.signup);
 
 app.get("/api/v1/:x?/:y?", (req, res) => {
   console.log(req.params);

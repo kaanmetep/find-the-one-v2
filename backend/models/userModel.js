@@ -7,79 +7,93 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "You must have a first name."],
     lowercase: true,
+    trim: true,
   },
   registerEmail: {
     type: String,
     required: [true, "You must have an email."],
     unique: true,
-    index: true,
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email."],
+    trim: true,
   },
   registerBirthdayDate: {
     type: Date,
     required: [true, "You must have a birth date."],
+    trim: true,
   },
   registerPassword: {
     type: String,
     required: [true, "You must have a password."],
     select: false,
+    trim: true,
   },
   registerRePassword: {
     type: String,
     validate: {
-      validator: (el) => {
+      validator: function (el) {
         return el === this.registerPassword;
       },
       message: "Passwords are not matching.",
     },
+    trim: true,
   },
   personelDetails: {
     registerGender: {
       type: String,
       lowercase: true,
       required: [true, "You must enter your gender"],
+      trim: true,
     },
     registerGenderInterest: {
       type: String,
       lowercase: true,
       required: [true, "You must enter your interested gender"],
+      trim: true,
     },
   },
   personelQuestions: {
     registerPersonelQ1: {
       type: String,
       required: [true, "You must answer first personel question"],
+      trim: true,
     },
     registerPersonelQ2: {
       type: String,
       required: [true, "You must answer second personel question"],
+      trim: true,
     },
     registerPersonelQ3: {
       type: String,
       required: [true, "You must answer third personel question"],
+      trim: true,
     },
     registerPersonelQ4: {
       type: String,
       required: [true, "You must answer fourth personel question"],
+      trim: true,
     },
   },
   relationshipQuestions: {
     registerRelationshipQ1: {
       type: String,
       required: [true, "You must answer first relationship question."],
+      trim: true,
     },
     registerRelationshipQ2: {
       type: String,
       required: [true, "You must answer second relationship question."],
+      trim: true,
     },
     registerRelationshipQ3: {
       type: String,
       required: [true, "You must answer third relationship question."],
+      trim: true,
     },
     registerRelationshipQ4: {
       type: String,
       required: [true, "You must answer fourth relationship question."],
+      trim: true,
     },
   },
 });
@@ -89,7 +103,7 @@ userSchema.pre("save", async function (next) {
 
   this.registerPassword = await bcrypt.hash(this.registerPassword, 12); // hash is an async method.
 
-  this.confirmPassword = undefined;
+  this.registerRePassword = undefined; // we don't need to hold re-password.
   next();
 });
 

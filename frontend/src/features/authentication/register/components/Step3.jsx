@@ -28,6 +28,14 @@ function Step3({ control, errors, goForward, goBack }) {
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
+      <label>
+        What is something you are passionate about that not many people know?
+      </label>
+      <Controller
+        name="registerPersonelQ4"
+        control={control}
+        render={({ field }) => <TextArea {...field} />}
+      />
       <div className=" flex gap-2 items-center mt-4 justify-between w-full">
         <button
           onClick={goBack}
@@ -47,7 +55,8 @@ function Step3({ control, errors, goForward, goBack }) {
       <RegisterValidationError>
         {errors.registerPersonelQ1?.message ||
           errors.registerPersonelQ2?.message ||
-          errors.registerPersonelQ3?.message}
+          errors.registerPersonelQ3?.message ||
+          errors.registerPersonelQ4?.message}
       </RegisterValidationError>
     </>
   );

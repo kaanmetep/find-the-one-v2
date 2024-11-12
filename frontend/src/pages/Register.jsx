@@ -30,11 +30,55 @@ function Register() {
     handleSubmit(() => setCurrentStep((curr) => curr + 1))(); // handleSubmit is a function that returns another function. So we have to call it immediately.
   };
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const formattedData = {
+        registerName: data.registerName,
+        registerEmail: data.registerEmail,
+        registerBirthdayDate: data.registerBirthdayDate,
+        registerPassword: data.registerPassword,
+        registerRePassword: data.registerRePassword,
+        personelDetails: {
+          registerGender: data.registerGender,
+          registerGenderInterest: data.registerInterestedGender,
+        },
+        personelQuestions: {
+          registerPersonelQ1: data.registerPersonelQ1,
+          registerPersonelQ2: data.registerPersonelQ2,
+          registerPersonelQ3: data.registerPersonelQ3,
+          registerPersonelQ4: data.registerPersonelQ4,
+        },
+        relationshipQuestions: {
+          registerRelationshipQ1: data.registerRelationshipQ1,
+          registerRelationshipQ2: data.registerRelationshipQ2,
+          registerRelationshipQ3: data.registerRelationshipQ3,
+          registerRelationshipQ4: data.registerRelationshipQ4,
+        },
+      };
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formattedData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Request failed");
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+    } catch (error) {
+      // Detaylı hata mesajı
+      console.log("Error:", error.message);
+    }
+  };
 
   return (
     <div className=" h-svh flex items-center justify-center bg-red-50">
-      <div className="flex flex-col justify-center items-center gap-6 h-[680px]  w-[80%] mx-auto bg-red-200 rounded-lg ">
+      <div className="flex flex-col justify-center items-center gap-6  py-8 w-[80%] mx-auto bg-red-200 rounded-lg ">
         {currentStep === 1 && (
           <img src="minilogo.png" alt="Logo" className="w-32" />
         )}
