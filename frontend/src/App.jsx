@@ -4,6 +4,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import PageNotFound from "./components/PageNotFound";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -18,11 +21,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AuthProvider>
-      <AppProvider>
-        <RouterProvider router={router} />
-      </AppProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <AppProvider>
+          <RouterProvider router={router} />
+        </AppProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchemas } from "../features/authentication/register/validation";
 import { useApp } from "../hooks/useApp";
+import { useRegisterUser } from "../features/authentication/register/services/authService";
 import Step1 from "../features/authentication/register/components/Step1";
 import Step2 from "../features/authentication/register/components/Step2";
 import Step3 from "../features/authentication/register/components/Step3";
@@ -20,6 +21,8 @@ function Register() {
     control,
   } = useForm({ resolver: yupResolver(validationSchemas[currentStep - 1]) });
 
+  const { mutate, isLoading, isError, error, isSuccess } = useRegisterUser();
+
   const goBack = () => {
     if (currentStep < 2) return;
     setCurrentStep((curr) => curr - 1);
@@ -31,49 +34,30 @@ function Register() {
   };
 
   const onSubmit = async (data) => {
-    try {
-      const formattedData = {
-        registerName: data.registerName,
-        registerEmail: data.registerEmail,
-        registerBirthdayDate: data.registerBirthdayDate,
-        registerPassword: data.registerPassword,
-        registerRePassword: data.registerRePassword,
-        personelDetails: {
-          registerGender: data.registerGender,
-          registerGenderInterest: data.registerInterestedGender,
-        },
-        personelQuestions: {
-          registerPersonelQ1: data.registerPersonelQ1,
-          registerPersonelQ2: data.registerPersonelQ2,
-          registerPersonelQ3: data.registerPersonelQ3,
-          registerPersonelQ4: data.registerPersonelQ4,
-        },
-        relationshipQuestions: {
-          registerRelationshipQ1: data.registerRelationshipQ1,
-          registerRelationshipQ2: data.registerRelationshipQ2,
-          registerRelationshipQ3: data.registerRelationshipQ3,
-          registerRelationshipQ4: data.registerRelationshipQ4,
-        },
-      };
-      const response = await fetch("http://localhost:3000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formattedData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Request failed");
-      }
-
-      const result = await response.json();
-      console.log("Success:", result);
-    } catch (error) {
-      // Detaylı hata mesajı
-      console.log("Error:", error.message);
-    }
+    const formattedData = {
+      registerName: data.registerName,
+      registerEmail: data.registerEmail,
+      registerBirthdayDate: data.registerBirthdayDate,
+      registerPassword: data.registerPassword,
+      registerRePassword: data.registerRePassword,
+      personelDetails: {
+        registerGender: data.registerGender,
+        registerGenderInterest: data.registerInterestedGender,
+      },
+      personelQuestions: {
+        registerPersonelQ1: data.registerPersonelQ1,
+        registerPersonelQ2: data.registerPersonelQ2,
+        registerPersonelQ3: data.registerPersonelQ3,
+        registerPersonelQ4: data.registerPersonelQ4,
+      },
+      relationshipQuestions: {
+        registerRelationshipQ1: data.registerRelationshipQ1,
+        registerRelationshipQ2: data.registerRelationshipQ2,
+        registerRelationshipQ3: data.registerRelationshipQ3,
+        registerRelationshipQ4: data.registerRelationshipQ4,
+      },
+    };
+    mutate(formattedData);
   };
 
   return (
