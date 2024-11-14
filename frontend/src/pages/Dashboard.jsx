@@ -1,7 +1,8 @@
+import Header from "../features/profile/components/Header";
 function Dashboard() {
   return (
     <div>
-      <p>welcome!</p>
+      <Header />
     </div>
   );
 }

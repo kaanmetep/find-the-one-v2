@@ -22,7 +22,7 @@ function Register() {
     control,
   } = useForm({ resolver: yupResolver(validationSchemas[currentStep - 1]) });
 
-  const { mutate, isLoading, isError } = useRegisterUser();
+  const { mutate, isLoading, isError, error } = useRegisterUser();
 
   const goBack = () => {
     if (currentStep < 2) return;
@@ -105,7 +105,8 @@ function Register() {
               <LoadingSpinner />
             ) : isError ? (
               <p className="text-red-700 font-extrabold">
-                An error occured on register. Please try again later.
+                {/* An error occured on register. Please try again later. */}
+                {error.response.data.result}
               </p>
             ) : (
               <button

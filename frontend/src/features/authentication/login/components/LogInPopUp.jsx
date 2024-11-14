@@ -2,16 +2,17 @@ import { useOutsideClick } from "../../../../hooks/useOutsideClick";
 import { useApp } from "../../../../hooks/useApp";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import { useLoginUser } from "../services/authService";
 import Button from "./../../../../components//Button";
 import InputElement from "./../../../../components/InputElement";
-import { useLoginUser } from "../services/authService";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 function LogInPopUp() {
-  const { register, handleSubmit, control } = useForm();
+  const { handleSubmit, control } = useForm();
   const { setIsLoginPopUpOpen } = useApp();
   const navigate = useNavigate();
   useOutsideClick(setIsLoginPopUpOpen);
 
-  const { mutate, isLoading, isError } = useLoginUser();
+  const { mutate, isLoading, isError, error } = useLoginUser();
 
   const onSubmit = (data) => {
     mutate(data);
@@ -64,7 +65,12 @@ function LogInPopUp() {
         >
           You don't have an account?
         </a>
-        <Button type="submit">Login</Button>
+        {isLoading ? <LoadingSpinner /> : <Button type="submit">Login</Button>}
+        {isError && (
+          <p className="text-red-600 font-bold">
+            {error.response.data.result}!
+          </p>
+        )}
       </form>
     </div>
   );

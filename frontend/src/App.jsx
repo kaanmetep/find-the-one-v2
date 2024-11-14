@@ -1,4 +1,4 @@
-import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppProvider } from "./contexts/AppContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Home from "./pages/Home";
@@ -7,7 +7,6 @@ import PageNotFound from "./components/PageNotFound";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./pages/PrivateRoute";
 import { QueryClient, QueryClientProvider } from "react-query";
-
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([

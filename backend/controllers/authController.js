@@ -54,17 +54,28 @@ exports.signup = async (req, res) => {
       },
     });
     const token = signToken(newUser._id);
-    res.status(201).json({
-      status: "success",
-      data: {
-        token,
-        user: newUser,
-      },
-    });
+    res.status(201).json({ token });
   } catch (err) {
     res.status(400).json({
       status: "fail",
       message: err.message,
     });
   }
+};
+
+exports.login = async (req, res) => {
+  const { loginEmail, loginPassword } = req.body;
+  if (!loginEmail || !loginPassword) {
+    return res
+      .status(400)
+      .json({ result: "Please provide an email and a password" });
+  }
+  const user = await User.findOne({ registerEmail: loginEmail }).select(
+    "+password"
+  );
+  if (!user || !(await user.correctPassword(loginPassword))) {
+    return res.status(401).json({ result: "Incorrect e-mail or password" });
+  }
+  const token = signToken(user._id);
+  res.status(200).json({ token });
 };

@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 dotenv.config({ path: "config.env" });
 const authController = require("./controllers/authController");
-
+const userController = require("./controllers/userController");
 const app = express();
 
 app.use(cors());
@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signup", authController.signup);
+
+app.post("/login", authController.login);
+
+app.get("/users/:id", userController.getUser);
 
 app.get("/api/v1/:x?/:y?", (req, res) => {
   console.log(req.params);
