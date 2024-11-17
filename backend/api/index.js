@@ -7,8 +7,19 @@ const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 const app = express();
 
-app.use(cors());
-app.options("*", cors());
+// CORS ayarları
+const corsOptions = {
+  origin: ["https://findtheoneai.vercel.app", "http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
+// Pre-flight istekleri için
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
@@ -27,6 +38,6 @@ app.post("/login", authController.login);
 app.get("/users/:id", userController.getUser);
 
 const port = 3000;
-app.listen(3000, () => {
-  console.log("server is on port 3000");
+app.listen(port, () => {
+  console.log(`server is on port ${port}`);
 });
