@@ -1,7 +1,7 @@
 function TextArea({ value, onChange }) {
   return (
     <textarea
-      className="shadow-lg border-2 border-rose-200 px-2 pt-2  rounded-md py-6 placeholder:text-sm w-40 md:w-80 md:focus:w-[340px]
+      className="shadow-lg border-2 border-rose-200 px-2 pt-2  rounded-md py-6 placeholder:text-sm w-72 md:focus:w-[320px]
   transition-all duration-300 focus:outline-none
   focus:ring
   focus:ring-rose-200

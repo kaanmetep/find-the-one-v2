@@ -1,7 +1,8 @@
 import SectionHeading from "./SectionHeading";
+import SectionContainer from "./SectionContainer";
 function Safety() {
   return (
-    <div className="mt-8 flex justify-center p-12 text-sm">
+    <SectionContainer>
       <div className=" w-full" id="safety">
         <SectionHeading>Safety</SectionHeading>
         <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold">
@@ -114,7 +115,7 @@ function Safety() {
           </li>
         </ul>
       </div>
-    </div>
+    </SectionContainer>
   );
 }
 

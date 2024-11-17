@@ -8,19 +8,21 @@ function Step3({ control, errors, goForward, goBack }) {
       <h2 className="text-center mb-4 italic font-bold text-black">
         Just to know you better.
       </h2>
-      <label>Which genre of movies do you like?</label>
+      <label className="text-center">Which genre of movies do you like?</label>
       <Controller
         name="registerPersonelQ1"
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
-      <label>How do you usually spend your weekends?</label>
+      <label className="text-center">
+        How do you usually spend your weekends?
+      </label>
       <Controller
         name="registerPersonelQ2"
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
-      <label>
+      <label className="text-center">
         What is something you are passionate about that not many people know?
       </label>
       <Controller
@@ -28,7 +30,7 @@ function Step3({ control, errors, goForward, goBack }) {
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
-      <label>
+      <label className="text-center">
         What is something you are passionate about that not many people know?
       </label>
       <Controller
@@ -39,13 +41,13 @@ function Step3({ control, errors, goForward, goBack }) {
       <div className=" flex gap-2 items-center mt-4 justify-between w-full">
         <button
           onClick={goBack}
-          className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75"
+          className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75 ml-2"
           type="button"
         >
           &larr;
         </button>
         <button
-          className="ml-auto bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
+          className="ml-auto bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75 mr-2"
           onClick={goForward}
           type="button"
         >

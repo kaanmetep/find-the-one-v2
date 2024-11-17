@@ -12,18 +12,19 @@ function Home() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      navigate("/dashboard");
+      navigate("/dashboard"); // If user is logged in, navigate to dashboard page immediately.
     }
   }, [isAuthenticated, isLoading, navigate]);
-  // If user is logged in, navigate to dashboard page immediately.
   return (
     <div>
       <Heading />
       <SecondaryHeading />
-      <Learn />
-      <Safety />
-      <Support />
-      <HowItWorks />
+      <div className="flex flex-col mx-auto max-w-7xl">
+        <Learn />
+        <Safety />
+        <Support />
+        <HowItWorks />
+      </div>
     </div>
   );
 }

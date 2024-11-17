@@ -9,18 +9,16 @@ import LoadingSpinner from "../../../../components/LoadingSpinner";
 function LogInPopUp() {
   const { handleSubmit, control } = useForm();
   const { setIsLoginPopUpOpen } = useApp();
-  const navigate = useNavigate();
   useOutsideClick(setIsLoginPopUpOpen);
-
+  const navigate = useNavigate();
   const { mutate, isLoading, isError, error } = useLoginUser();
-
   const onSubmit = (data) => {
     mutate(data);
   };
   return (
     <div className=" fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[100]   inset-0 backdrop-blur-sm bg-opacity-50 ">
       <form
-        className="shadow-2xl bg-rose-50 px-12 pb-10 pt-4 rounded-md flex flex-col items-center relative popup gap-4"
+        className="shadow-2xl bg-rose-50 md:px-24 px-4 pb-10 pt-4 rounded-md flex flex-col items-center relative popup gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         <button
@@ -38,24 +36,26 @@ function LogInPopUp() {
           alt="logo"
           className="w-48 filter brightness-0"
         />
-        <div className="grid grid-cols-[80px,350px] items-center gap-4">
-          <label htmlFor="" className="text-black">
+        <div className="grid grid-cols-[80px,260px] items-center md:gap-8 justify-items-center">
+          <label htmlFor="loginEmail" className="text-black ">
             E-mail:
           </label>
           <Controller
             name="loginEmail"
             control={control}
-            render={({ field }) => <InputElement {...field} />}
+            render={({ field }) => <InputElement {...field} w={240} />}
           />
         </div>
-        <div className="grid grid-cols-[80px,350px] items-center gap-4 mb-2">
-          <label htmlFor="" className="text-black">
+        <div className="grid grid-cols-[80px,260px] items-center md:gap-8 mb-2 justify-items-center">
+          <label htmlFor="loginPassword" className="text-black">
             Password:
           </label>
           <Controller
             name="loginPassword"
             control={control}
-            render={({ field }) => <InputElement type="password" {...field} />}
+            render={({ field }) => (
+              <InputElement type="password" {...field} w={240} />
+            )}
           />
         </div>
         <a

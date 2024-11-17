@@ -3,6 +3,7 @@ import { useApp } from "../hooks/useApp";
 import LogInPopUp from "../features/authentication/login/components/LogInPopUp";
 import Button from "./Button";
 import HomeNav from "./HomeNav";
+import NavItem from "./NavItem";
 function Heading() {
   const { isLoginPopUpOpen, setIsLoginPopUpOpen } = useApp();
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Heading() {
             AI-Powered matchmaking to find true love
           </h1>
         </div>
-        <h2 className="font-roboto md:tracking-wide text-xl mt-6">
+        <h2 className="font-roboto md:tracking-wide text-xl mt-6 text-center px-1">
           Where you meet the one who’s right for you
         </h2>
         <div className="mt-4 flex justify-center flex-col items-center ">
@@ -30,9 +31,7 @@ function Heading() {
         </div>
       </div>
       <div className="  border-b-2 border-rose-300 hover:border-transparent transition-all delay-[50ms] mt-auto flex items-center justify-center gap-2 mx-auto">
-        <a href="" className="text-rose-300">
-          Learn more &darr;
-        </a>
+        <NavItem to="howitworks">Learn more &darr;</NavItem>
         <img
           src="square-heart.svg"
           alt="heart"

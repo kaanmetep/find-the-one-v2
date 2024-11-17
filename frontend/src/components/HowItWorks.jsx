@@ -1,6 +1,7 @@
 import SectionHeading from "./SectionHeading";
+import SectionContainer from "./SectionContainer";
 function HowItWorksHeading({ children }) {
-  return <h2 className="text-3xl mb-2">{children}</h2>;
+  return <h2 className="md:text-3xl text-xl mb-2">{children}</h2>;
 }
 function HowItWorksSpan({ children }) {
   return (
@@ -16,12 +17,12 @@ function HowItWorksText({ children }) {
 }
 function HowItWorks() {
   return (
-    <div className="mt-8 flex justify-center p-12 text-sm">
+    <SectionContainer>
       <div className="w-full" id="howitworks">
         <SectionHeading>How it works</SectionHeading>
         <div className="mt-4 flex flex-col gap-8">
           <div>
-            <div className="w-1/2">
+            <div className="md:w-1/2">
               <HowItWorksHeading>
                 Fill in your <HowItWorksSpan>details</HowItWorksSpan>
               </HowItWorksHeading>
@@ -38,7 +39,7 @@ function HowItWorks() {
             </div>
           </div>
           <div>
-            <div className="w-1/2 ml-auto">
+            <div className="md:w-1/2 md:ml-auto">
               <HowItWorksHeading>
                 Find your <HowItWorksSpan>perfect match</HowItWorksSpan>
               </HowItWorksHeading>
@@ -56,7 +57,7 @@ function HowItWorks() {
             </div>
           </div>
           <div>
-            <div className="w-1/2">
+            <div className="md:w-1/2">
               <HowItWorksHeading>
                 Start the <HowItWorksSpan>conversation</HowItWorksSpan>
               </HowItWorksHeading>
@@ -73,7 +74,7 @@ function HowItWorks() {
           </div>
         </div>
       </div>
-    </div>
+    </SectionContainer>
   );
 }
 

@@ -21,7 +21,7 @@ function Step4({ control, errors, goBack }) {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <label>
+        <label className="text-center">
           If you could describe your ideal day, what would it look like?
         </label>
         <Controller
@@ -31,7 +31,7 @@ function Step4({ control, errors, goBack }) {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <label htmlFor="">
+        <label className="text-center">
           If you could live in any country for a year, where would it be, and
           why?
         </label>
@@ -40,7 +40,7 @@ function Step4({ control, errors, goBack }) {
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
-        <label htmlFor="">
+        <label className="text-center">
           If you could live in any country for a year, where would it be, and
           why?
         </label>

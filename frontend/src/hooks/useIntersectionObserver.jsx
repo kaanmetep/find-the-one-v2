@@ -1,11 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 
-export const useIntersectionObserver = (threshold) => {
+export const useIntersectionObserver = (
+  threshold = 0.1,
+  rootMargin = "0px"
+) => {
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef();
+  const sectionRef = useRef(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries, observer) => {
+      (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
@@ -15,17 +19,23 @@ export const useIntersectionObserver = (threshold) => {
       },
       {
         threshold,
+        rootMargin,
       }
     );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current); // which element we watching?
+
+    const currentRef = sectionRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
+      observer.disconnect();
     };
-  });
+  }, [threshold, rootMargin]);
+
   return { sectionRef, isVisible };
 };

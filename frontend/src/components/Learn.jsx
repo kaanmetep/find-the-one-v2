@@ -1,10 +1,11 @@
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import SectionHeading from "./SectionHeading";
 import TestimonialCards from "./TestimonialCards";
+import SectionContainer from "./SectionContainer";
 function Learn() {
-  const { sectionRef, isVisible } = useIntersectionObserver(0.6);
+  const { sectionRef, isVisible } = useIntersectionObserver(0.4, "100px");
   return (
-    <div className="mt-8 flex justify-center p-12 text-sm">
+    <SectionContainer>
       <div
         className={`shadow-xl p-8 fade-in-section ${
           isVisible ? "is-visible" : ""
@@ -33,7 +34,7 @@ function Learn() {
           <TestimonialCards />
         </div>
       </div>
-    </div>
+    </SectionContainer>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchemas } from "../features/authentication/register/validation";
@@ -63,9 +63,17 @@ function Register() {
 
   return (
     <div className=" h-svh flex items-center justify-center bg-red-50">
-      <div className="flex flex-col justify-center items-center gap-6  py-8 w-[80%] mx-auto bg-red-200 rounded-lg ">
+      <div className="flex flex-col justify-center items-center gap-6  py-8 md:w-[80%] w-full mx-auto bg-red-200 rounded-lg ">
         {currentStep === 1 && (
-          <img src="minilogo.png" alt="Logo" className="w-32" />
+          <div className="flex flex-col items-center  w-full">
+            <a
+              onClick={() => navigate("/")}
+              className="  text-red-600 italic font-bold cursor-pointer ml-auto mr-2"
+            >
+              Go back to home page
+            </a>
+            <img src="minilogo.png" alt="Logo" className="w-32" />
+          </div>
         )}
         <div className="flex gap-4 items-center">
           <h1 className="text-3xl font-bold italic p-2 rounded-sm text-center ">

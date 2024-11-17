@@ -5,7 +5,7 @@ import RegisterValidationError from "../components/RegisterValidationError";
 const Step1 = ({ control, errors, goForward }) => {
   return (
     <>
-      <h2 className="text-center mb-4 italic font-bold text-black">
+      <h2 className="text-center mb-4 italic font-bold text-black px-4">
         Registration consists of 4 steps. You must fill out all steps
         completely.
       </h2>
@@ -43,7 +43,7 @@ const Step1 = ({ control, errors, goForward }) => {
         )}
       />
       <button
-        className="ml-auto mt-4 bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
+        className="ml-auto mt-4 bg-red-300 px-5 mr-2 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
         onClick={goForward}
         type="button"
       >

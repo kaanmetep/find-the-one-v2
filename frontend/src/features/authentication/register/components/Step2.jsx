@@ -27,7 +27,7 @@ function Step2({ control, errors, goForward, goBack, register }) {
             onFocus={() => setInputType("date")}
             onBlur={() => setInputType("text")}
             style={{ padding: "8px", fontSize: "16px" }}
-            className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-40 md:w-80 md:focus:w-[340px]
+            className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-72 md:focus:w-[320px]
                       transition-all duration-300 focus:outline-none
                       focus:ring
                       focus:ring-rose-200
@@ -38,7 +38,7 @@ function Step2({ control, errors, goForward, goBack, register }) {
       />
 
       <select
-        className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-40 md:w-80 md:focus:w-[340px]
+        className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-72 md:focus:w-[320px]
                 transition-all duration-300 focus:outline-none
                 focus:ring
                 focus:ring-rose-200
@@ -53,7 +53,7 @@ function Step2({ control, errors, goForward, goBack, register }) {
         <option value="woman">Woman</option>
       </select>
       <select
-        className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-40 md:w-80 md:focus:w-[340px]
+        className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-72 md:focus:w-[320px]
                 transition-all duration-300 focus:outline-none
                 focus:ring
                 focus:ring-rose-200

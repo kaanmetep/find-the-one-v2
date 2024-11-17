@@ -1,11 +1,14 @@
+import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Logo from "./Logo";
 import AvatarImage from "./AvatarImage";
-import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+
 const avatarImages = ["pp1.jpg", "pp2.jpg", "pp3.jpg", "pp4.jpg", "pp5.jpg"];
 
 function SecondaryHeading() {
   const { sectionRef, isVisible } = useIntersectionObserver(0.7);
+  const navigate = useNavigate();
   return (
     <div
       className={`fade-in-section ${
@@ -23,7 +26,7 @@ function SecondaryHeading() {
             ))}
           </div>
           <div>
-            <p className="font-bold text-xs lg:text-base">
+            <p className="font-bold text-xs lg:text-base text-center">
               Join{" "}
               <span className="underline text-white font-extrabold">
                 +10.000
@@ -38,7 +41,7 @@ function SecondaryHeading() {
           </h2>
           <Logo w={60} />
         </div>
-        <Button>Sign Up</Button>
+        <Button onClick={() => navigate("/register")}>Sign Up</Button>
       </div>
     </div>
   );

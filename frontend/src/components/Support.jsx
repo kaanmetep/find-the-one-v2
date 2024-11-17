@@ -2,15 +2,16 @@ import SectionHeading from "./SectionHeading";
 import InputElement from "./InputElement";
 import PlaceholderLogo from "./PlaceholderLogo";
 import Button from "./Button";
+import SectionContainer from "./SectionContainer";
 function Support() {
   return (
-    <div className="mt-8 flex justify-center p-12 text-sm">
+    <SectionContainer>
       <div className="w-full shadow-xl p-6 pl-12" id="support">
         <SectionHeading>Support</SectionHeading>
-        <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold">
+        <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold text-center">
           Here to help whenever you need us!
         </h3>
-        <div className="flex items-center justify-center gap-6 mt-2">
+        <div className="flex flex-col  md:flex-row items-center justify-center gap-6 mt-2">
           <form action="" className="text-xl flex flex-col gap-4 mt-4">
             <h3 className="mt-4 font-fontHeading text-rose-600  text-3xl tracking-tight">
               Contact us
@@ -41,10 +42,10 @@ function Support() {
             </div>
             <Button>Send Message</Button>
           </form>
-          <img src="minilogo.png" alt="fto-logo" className=" w-60" />
+          <img src="minilogo.png" alt="fto-logo" className=" md:w-60 w-32" />
         </div>
       </div>
-    </div>
+    </SectionContainer>
   );
 }
 

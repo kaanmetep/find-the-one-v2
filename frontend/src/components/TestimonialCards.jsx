@@ -1,6 +1,6 @@
 function TestimonialCards() {
   return (
-    <div className="flex gap-4 mt-12 italic text-slate-700 tracking-wider line-clamp-5">
+    <div className="flex flex-col md:flex-row gap-12 md:gap-4 mt-12 italic text-slate-700 tracking-wider line-clamp-5">
       <div className=" shadow-2xl flex flex-col gap-12">
         <div className="p-4">
           <img src="quote.svg" alt="quote-icon" className="w-12" />
