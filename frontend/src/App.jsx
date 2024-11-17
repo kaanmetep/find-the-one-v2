@@ -7,6 +7,7 @@ import PageNotFound from "./components/PageNotFound";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./pages/PrivateRoute";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "react-toastify";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -38,6 +39,16 @@ function App() {
       <AuthProvider>
         <AppProvider>
           <RouterProvider router={router} />
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable
+            theme="light"
+          />
         </AppProvider>
       </AuthProvider>
     </QueryClientProvider>
