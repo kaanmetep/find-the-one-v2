@@ -2,9 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-dotenv.config({ path: "config.env" });
-const authController = require("./controllers/authController");
-const userController = require("./controllers/userController");
+dotenv.config({ path: "../config.env" });
+const authController = require("../controllers/authController");
+const userController = require("../controllers/userController");
 const app = express();
 
 app.use(cors());
