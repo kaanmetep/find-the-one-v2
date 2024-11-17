@@ -14,10 +14,12 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <PageNotFound />,
   },
   {
     path: "register",
     element: <Register />,
+    errorElement: <PageNotFound />,
   },
   {
     path: "dashboard",
@@ -26,6 +28,7 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    errorElement: <PageNotFound />,
   },
   {
     path: "*",

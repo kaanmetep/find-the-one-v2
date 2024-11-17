@@ -26,11 +26,6 @@ app.post("/login", authController.login);
 
 app.get("/users/:id", userController.getUser);
 
-app.get("/api/v1/:x?/:y?", (req, res) => {
-  console.log(req.params);
-  res.status(200).json({ status: "success" });
-});
-
 const port = 3000;
 app.listen(3000, () => {
   console.log("server is on port 3000");
