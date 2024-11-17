@@ -1,4 +1,4 @@
-const API_URL = "http://findyoursoulmatebackend.vercel.app";
+const API_URL = "https://findyoursoulmatebackend.vercel.app";
 
 export const endpoints = {
   register: `${API_URL}/signup`,
