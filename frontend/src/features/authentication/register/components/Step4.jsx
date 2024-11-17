@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
 import TextArea from "../../../../components/TextArea";
 import RegisterValidationError from "../components/RegisterValidationError";
-
+import { questionsRelationship } from "../../../../../config";
 function Step4({ control, errors, goBack }) {
   return (
     <>
@@ -9,11 +9,7 @@ function Step4({ control, errors, goBack }) {
         Your ideas about relationships.
       </h2>
       <div className="flex flex-col items-center gap-2">
-        <label className="text-center">
-          What type of relationship is most valuable to you? (For example, an
-          adventurous partner, a calming bond, a relationship based on strong
-          communication, etc.)
-        </label>
+        <label className="text-center">{questionsRelationship.question1}</label>
         <Controller
           name="registerRelationshipQ1"
           control={control}
@@ -21,9 +17,7 @@ function Step4({ control, errors, goBack }) {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <label className="text-center">
-          If you could describe your ideal day, what would it look like?
-        </label>
+        <label className="text-center">{questionsRelationship.question2}</label>
         <Controller
           name="registerRelationshipQ2"
           control={control}
@@ -31,19 +25,13 @@ function Step4({ control, errors, goBack }) {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <label className="text-center">
-          If you could live in any country for a year, where would it be, and
-          why?
-        </label>
+        <label className="text-center">{questionsRelationship.question3}</label>
         <Controller
           name="registerRelationshipQ3"
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
-        <label className="text-center">
-          If you could live in any country for a year, where would it be, and
-          why?
-        </label>
+        <label className="text-center">{questionsRelationship.question4}</label>
         <Controller
           name="registerRelationshipQ4"
           control={control}
