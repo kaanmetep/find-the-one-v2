@@ -8,7 +8,7 @@ function Heading() {
   const { isLoginPopUpOpen, setIsLoginPopUpOpen } = useApp();
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col h-svh pt-8  text-white font-bold pb-8 main  ">
+    <div className="flex flex-col h-svh pt-8  text-white font-bold pb-8 main object-top   ">
       <div className="flex justify-between px-8 items-center h-12 flex-col md:flex-row gap-4 ">
         <Button onClick={() => setIsLoginPopUpOpen((curr) => !curr)}>
           Log in
