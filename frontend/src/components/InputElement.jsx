@@ -10,6 +10,7 @@ function InputElement({
   maxLength = 36,
   pl = 4,
   w = 288,
+  logo = "",
 }) {
   return (
     <input

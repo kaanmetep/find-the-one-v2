@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ArrowLeft } from "lucide-react";
 import { validationSchemas } from "../features/authentication/register/validation";
 import { useApp } from "../hooks/useApp";
 import { useRegisterUser } from "../features/authentication/register/services/authService";
@@ -62,25 +63,48 @@ function Register() {
   };
 
   return (
-    <div className=" h-svh flex items-center justify-center bg-red-50">
-      <div className="flex flex-col justify-center items-center gap-6  py-8 md:w-[80%] w-full mx-auto bg-red-200 rounded-lg ">
+    <div className="h-svh flex items-center justify-center bg-gradient-to-r from-red-50 to-pink-100 ">
+      <div className="flex flex-col  items-center gap-2 py-8 md:w-[75%] h-[90%] w-full mx-auto bg-red-100 rounded-lg shadow-2xl ">
         {currentStep === 1 && (
-          <div className="flex flex-col items-center  w-full">
+          <div className="flex justify-between items-center w-full px-4 md:px-8 text-xs md:text-base">
             <a
-              onClick={() => navigate("/")}
-              className="  text-red-600 italic font-bold cursor-pointer ml-auto mr-2"
+              href="#"
+              className="w-fit text-rose-600 hover:text-rose-800 font-bold  transition-all duration-300 ease-in-out"
+              onClick={() => {
+                navigate("/");
+                setIsLoginPopUpOpen(true);
+              }}
             >
-              Go back to home page
+              Do you already have an account?
             </a>
-            <img src="minilogo.png" alt="Logo" className="w-32" />
+
+            <div className="flex flex-col items-center">
+              <a
+                onClick={() => navigate("/")}
+                className="group flex items-center gap-2 px-4 py-2 text-rose-600 hover:text-rose-800 font-bold 
+                       transition-all duration-300 ease-in-out cursor-pointer mr-4 ml-auto"
+              >
+                <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300" />
+                Back to Home
+              </a>
+            </div>
           </div>
         )}
-        <div className="flex gap-4 items-center">
-          <h1 className="text-3xl font-bold italic p-2 rounded-sm text-center ">
-            Create an account
-          </h1>
-          <h2 className="text-black font-bold">{currentStep}/4</h2>
+
+        <div className="flex flex-col items-center">
+          {(currentStep === 1 || currentStep === 2) && (
+            <img src="minilogo.png" alt="Logo" className="w-32" />
+          )}
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-bold  p-2 rounded-sm text-center">
+              Create an account
+            </h1>
+            <p className="text-black font-bold  text-sm  bg-red-300 rounded-full aspect-square p-2">
+              {currentStep}/4
+            </p>
+          </div>
         </div>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 items-center justify-center"
@@ -125,18 +149,6 @@ function Register() {
               </button>
             ))}
         </form>
-        {currentStep === 1 && (
-          <a
-            href="#"
-            className=" border-b-2  border-black text-black hover:border-transparent transition-all delay-75"
-            onClick={() => {
-              navigate("/");
-              setIsLoginPopUpOpen(true);
-            }}
-          >
-            Do you already have an account?
-          </a>
-        )}
       </div>
     </div>
   );
