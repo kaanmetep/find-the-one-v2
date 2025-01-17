@@ -1,9 +1,11 @@
-const API_URL = "https://findyoursoulmatebackend.vercel.app";
+const API_URL = "http://localhost:3000";
+//"https://findyoursoulmatebackend.vercel.app"
 
 export const endpoints = {
   register: `${API_URL}/signup`,
   login: `${API_URL}/login`,
   getUsers: `${API_URL}/users`,
+  checkEmail: `${API_URL}/checkEmail`,
 };
 
 export const questionsPersonel = {

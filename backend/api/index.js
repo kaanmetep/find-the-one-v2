@@ -37,6 +37,8 @@ app.post("/login", authController.login);
 
 app.get("/users/:id", userController.getUser);
 
+app.post("/checkEmail", authController.checkExistingEmail);
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`server is on port ${port}`);

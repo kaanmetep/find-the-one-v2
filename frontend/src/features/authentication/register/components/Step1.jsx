@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import InputElement from "../../../../components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
 import { Mail, KeyRound } from "lucide-react";
-const Step1 = ({ control, errors, goForward }) => {
+const Step1 = ({ control, errors }) => {
   return (
     <>
       <h2 className="text-center  italic font-bold text-black px-4">
@@ -54,13 +54,7 @@ const Step1 = ({ control, errors, goForward }) => {
           </div>
         )}
       />
-      <button
-        className="ml-auto mt-4 bg-red-300 px-5 mr-2 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
-        onClick={goForward}
-        type="button"
-      >
-        Continue &rarr;
-      </button>
+
       <RegisterValidationError>
         {errors.registerEmail?.message ||
           errors.registerPassword?.message ||

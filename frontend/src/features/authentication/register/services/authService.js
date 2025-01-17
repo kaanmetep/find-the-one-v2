@@ -12,6 +12,16 @@ const registerUser = async (userData) => {
     throw error;
   }
 };
+export const checkEmail = async (email) => {
+  try {
+    const response = await axios.post(endpoints.checkEmail, {
+      registerEmail: email,
+    });
+    console.log(response);
+  } catch (error) {
+    throw error;
+  }
+};
 export const useRegisterUser = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -21,4 +31,7 @@ export const useRegisterUser = () => {
       navigate("/dashboard");
     },
   });
+};
+export const useCheckEmail = () => {
+  return useMutation(checkEmail);
 };

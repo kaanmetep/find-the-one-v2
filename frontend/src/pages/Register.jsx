@@ -5,34 +5,56 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ArrowLeft } from "lucide-react";
 import { validationSchemas } from "../features/authentication/register/validation";
 import { useApp } from "../hooks/useApp";
-import { useRegisterUser } from "../features/authentication/register/services/authService";
+import {
+  useCheckEmail,
+  useRegisterUser,
+} from "../features/authentication/register/services/authService";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Step1 from "../features/authentication/register/components/Step1";
 import Step2 from "../features/authentication/register/components/Step2";
 import Step3 from "../features/authentication/register/components/Step3";
 import Step4 from "../features/authentication/register/components/Step4";
-
 function Register() {
   const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
   const { setIsLoginPopUpOpen } = useApp();
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
     control,
   } = useForm({ resolver: yupResolver(validationSchemas[currentStep - 1]) });
-
-  const { mutate, isLoading, isError, error } = useRegisterUser();
-
+  const {
+    mutate: registerUser,
+    isLoading: isRegistering,
+    isError: registerFailed,
+    error: registerError,
+  } = useRegisterUser();
+  const {
+    mutateAsync: checkEmail,
+    isLoading: isCheckingEmail,
+    isError: emailCheckedFailed,
+    error: emailCheckedError,
+    reset,
+  } = useCheckEmail();
   const goBack = () => {
     if (currentStep < 2) return;
     setCurrentStep((curr) => curr - 1);
   };
-
-  const goForward = () => {
+  const goForward = async () => {
     if (currentStep > 3) return;
-    handleSubmit(() => setCurrentStep((curr) => curr + 1))(); // handleSubmit is a function that returns another function. So we have to call it immediately.
+    if (currentStep === 1) {
+      reset();
+      try {
+        await checkEmail(watch("registerEmail"));
+        handleSubmit(() => setCurrentStep((curr) => curr + 1))();
+      } catch (error) {
+        return;
+      }
+    } else {
+      handleSubmit(() => setCurrentStep((curr) => curr + 1))(); // handleSubmit is a function that returns another function. So we have to call it immediately.
+    }
   };
 
   const onSubmit = (data) => {
@@ -59,12 +81,12 @@ function Register() {
         registerRelationshipQ4: data.registerRelationshipQ4,
       },
     };
-    mutate(formattedData);
+    registerUser(formattedData);
   };
 
   return (
-    <div className="h-svh flex items-center justify-center bg-gradient-to-r from-red-50 to-pink-100 ">
-      <div className="flex flex-col  items-center gap-2 py-8 md:w-[75%] h-[90%] w-full mx-auto bg-red-100 rounded-lg shadow-2xl ">
+    <div className=" min-h-[100vh] flex items-center justify-center bg-gradient-to-r from-red-50 to-pink-100 ">
+      <div className="flex flex-col  items-center gap-2 py-8 md:w-[75%]  min-h-[95vh] w-full mx-auto bg-red-100 rounded-lg shadow-2xl ">
         {currentStep === 1 && (
           <div className="flex justify-between items-center w-full px-4 md:px-8 text-xs md:text-base">
             <a
@@ -109,36 +131,19 @@ function Register() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 items-center justify-center"
         >
-          {currentStep === 1 && (
-            <Step1 control={control} errors={errors} goForward={goForward} />
-          )}
+          {currentStep === 1 && <Step1 control={control} errors={errors} />}
           {currentStep === 2 && (
-            <Step2
-              control={control}
-              errors={errors}
-              goForward={goForward}
-              goBack={goBack}
-              register={register}
-            />
+            <Step2 control={control} errors={errors} register={register} />
           )}
-          {currentStep === 3 && (
-            <Step3
-              control={control}
-              errors={errors}
-              goForward={goForward}
-              goBack={goBack}
-            />
-          )}
-          {currentStep === 4 && (
-            <Step4 control={control} errors={errors} goBack={goBack} />
-          )}
-          {currentStep === 4 &&
-            (isLoading ? (
+          {currentStep === 3 && <Step3 control={control} errors={errors} />}
+          {currentStep === 4 && <Step4 control={control} errors={errors} />}
+          {currentStep === 4 ? (
+            isRegistering ? (
               <LoadingSpinner />
-            ) : isError ? (
+            ) : registerFailed ? (
               <p className="text-red-700 font-extrabold">
-                {/* An error occured on register. Please try again later. */}
-                {error.response.data.result}
+                An error occured on register. Please try again later.
+                {registerError?.response.data.result}
               </p>
             ) : (
               <button
@@ -147,7 +152,36 @@ function Register() {
               >
                 Complete
               </button>
-            ))}
+            )
+          ) : (
+            <div className=" flex gap-2 items-center mt-4 justify-between w-full">
+              {currentStep !== 1 && (
+                <button
+                  onClick={goBack}
+                  className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75"
+                  type="button"
+                >
+                  &larr;
+                </button>
+              )}
+              {isCheckingEmail ? (
+                <div className=" flex w-full justify-end">
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                <button
+                  className="ml-auto bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
+                  onClick={goForward}
+                  type="button"
+                >
+                  Continue &rarr;
+                </button>
+              )}
+            </div>
+          )}
+          <p className="text-red-500 italic font-semibold">
+            {emailCheckedError?.response.data.result}
+          </p>
         </form>
       </div>
     </div>

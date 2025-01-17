@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import InputElement from "../../../../components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
 
-function Step2({ control, errors, goForward, goBack, register }) {
+function Step2({ control, errors, register }) {
   const [inputType, setInputType] = useState("text");
   return (
     <>
@@ -67,22 +67,7 @@ function Step2({ control, errors, goForward, goBack, register }) {
         <option value="man">Man</option>
         <option value="woman">Woman</option>
       </select>
-      <div className=" flex gap-2 items-center mt-4 justify-between w-full">
-        <button
-          onClick={goBack}
-          className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75"
-          type="button"
-        >
-          &larr;
-        </button>
-        <button
-          className="ml-auto bg-red-300 px-5 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
-          onClick={goForward}
-          type="button"
-        >
-          Continue &rarr;
-        </button>
-      </div>
+
       <RegisterValidationError>
         {errors.registerName?.message ||
           errors.registerBirthdayDate?.message ||

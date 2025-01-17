@@ -29,7 +29,12 @@ exports.signup = async (req, res) => {
         registerRelationshipQ4,
       },
     } = req.body;
-
+    const existedUser = await User.findOne({ registerEmail });
+    if (existedUser) {
+      return res
+        .status(409)
+        .json({ status: "fail", result: "This e-mail already in use!" });
+    }
     const newUser = await User.create({
       registerName,
       registerEmail,
@@ -78,4 +83,15 @@ exports.login = async (req, res) => {
   }
   const token = signToken(user._id);
   res.status(200).json({ token });
+};
+
+exports.checkExistingEmail = async (req, res) => {
+  const { registerEmail } = req.body;
+  const userExist = await User.findOne({ registerEmail });
+  if (userExist) {
+    return res
+      .status(409)
+      .json({ status: false, result: "This user already exist!" });
+  }
+  return res.status(200).json({ status: true });
 };

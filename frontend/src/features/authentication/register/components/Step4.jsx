@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import TextArea from "../../../../components/TextArea";
 import RegisterValidationError from "../components/RegisterValidationError";
 import { questionsRelationship } from "../../../../../config";
-function Step4({ control, errors, goBack }) {
+function Step4({ control, errors }) {
   return (
     <>
       <h2 className="text-center mb-4 italic font-bold text-black">
@@ -38,15 +38,7 @@ function Step4({ control, errors, goBack }) {
           render={({ field }) => <TextArea {...field} />}
         />
       </div>
-      <div className="flex gap-8 items-center mt-4 w-full justify-center ">
-        <button
-          onClick={goBack}
-          className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75 "
-          type="button"
-        >
-          &larr;
-        </button>
-      </div>
+
       <RegisterValidationError>
         {errors.registerRelationshipQ1?.message ||
           errors.registerRelationshipQ2?.message ||
