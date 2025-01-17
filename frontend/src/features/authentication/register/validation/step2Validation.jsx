@@ -4,7 +4,7 @@ const step2Validation = yup.object({
   registerName: yup.string().required("Please enter your name."),
   registerBirthdayDate: yup
     .date()
-    .typeError("Please enter a valid date.") // check if user is older than 18
+    .typeError("Please enter a valid date.") // todo: check if user is older than 18
     .required("Please enter your birthday date.")
     .test(
       "is-year-valid",

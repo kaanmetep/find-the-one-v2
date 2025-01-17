@@ -2,71 +2,78 @@ import { useState } from "react";
 import { Controller } from "react-hook-form";
 import InputElement from "../../../../components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
-
+import {
+  UserIcon,
+  Calendar,
+  PersonStanding,
+  HeartHandshakeIcon,
+} from "lucide-react";
 function Step2({ control, errors, register }) {
   const [inputType, setInputType] = useState("text");
   return (
     <>
-      <h2 className="text-center mb-4 italic font-bold text-black">
+      <h2 className="text-center italic font-bold text-black">
         Let's get the important details first.
       </h2>
+      <p className="text-gray-500 text-sm mb-4">
+        Do not refresh the page before you complete all the steps.
+      </p>
       <Controller
         name="registerName"
         control={control}
         render={({ field }) => (
-          <InputElement placeholder="Name" pl={20} py={6} {...field} />
+          <div className="flex relative">
+            <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2" />
+            <InputElement placeholder="First Name" pl={40} py={6} {...field} />
+          </div>
         )}
       />
       <Controller
         name="registerBirthdayDate"
         control={control}
         render={({ field }) => (
-          <input
-            type={inputType}
-            placeholder="Birthday Date"
-            onFocus={() => setInputType("date")}
-            onBlur={() => setInputType("text")}
-            style={{ padding: "8px", fontSize: "16px" }}
-            className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-72 md:focus:w-[320px]
-                      transition-all duration-300 focus:outline-none
-                      focus:ring
-                      focus:ring-rose-200
-                      focus:ring-opacity-50 text-black`}
-            {...field}
-          />
+          <div className="flex relative">
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type={inputType}
+              placeholder="Birthday Date"
+              onFocus={() => setInputType("date")}
+              onBlur={() => setInputType("text")}
+              className={"input-element-select"}
+              {...field}
+            />
+          </div>
         )}
       />
+      <div className="flex relative">
+        <PersonStanding className="absolute left-3 top-1/2 -translate-y-1/2 " />
+        <select
+          className={"input-element-select"}
+          required
+          {...register("registerGender")}
+        >
+          <option value="" disabled selected>
+            Gender
+          </option>
+          <option value="man">Man</option>
+          <option value="woman">Woman</option>
+        </select>
+      </div>
+      <div className="flex relative">
+        <HeartHandshakeIcon className="absolute left-3 top-1/2 -translate-y-1/2 " />
 
-      <select
-        className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-72 md:focus:w-[320px]
-                transition-all duration-300 focus:outline-none
-                focus:ring
-                focus:ring-rose-200
-                focus:ring-opacity-50 text-black`}
-        required
-        {...register("registerGender")}
-      >
-        <option value="" disabled selected>
-          Gender
-        </option>
-        <option value="man">Man</option>
-        <option value="woman">Woman</option>
-      </select>
-      <select
-        className={`shadow-lg border-2 border-rose-200 px-2 pl-5 rounded-md py-1 placeholder:text-sm w-72 md:focus:w-[320px]
-                transition-all duration-300 focus:outline-none
-                focus:ring
-                focus:ring-rose-200
-                focus:ring-opacity-50 text-black`}
-        required
-        {...register("registerInterestedGender")}
-      >
-        <option value="" disabled selected>
-          Interested Gender
-        </option>
-        <option value="man">Man</option>
-        <option value="woman">Woman</option>
-      </select>
+        <select
+          className={"input-element-select"}
+          required
+          {...register("registerInterestedGender")}
+        >
+          <option value="" disabled selected>
+            Interested Gender
+          </option>
+          <option value="man">Man</option>
+          <option value="woman">Woman</option>
+        </select>
+      </div>
 
       <RegisterValidationError>
         {errors.registerName?.message ||

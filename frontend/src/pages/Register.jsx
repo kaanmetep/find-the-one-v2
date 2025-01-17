@@ -146,15 +146,24 @@ function Register() {
                 {registerError?.response.data.result}
               </p>
             ) : (
-              <button
-                className=" bg-red-300 px-8 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
-                type="submit"
-              >
-                Complete
-              </button>
+              <div className=" flex gap-2 items-center mt-4 justify-between w-full px-4">
+                <button
+                  onClick={goBack}
+                  className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75"
+                  type="button"
+                >
+                  &larr;
+                </button>
+                <button
+                  className=" bg-red-300 px-8 py-2 rounded-lg text-white font-bold hover:bg-red-100 hover:text-black transition-all delay-75"
+                  type="submit"
+                >
+                  Complete
+                </button>
+              </div>
             )
           ) : (
-            <div className=" flex gap-2 items-center mt-4 justify-between w-full">
+            <div className=" flex gap-2 items-center mt-4 justify-between w-full px-4">
               {currentStep !== 1 && (
                 <button
                   onClick={goBack}

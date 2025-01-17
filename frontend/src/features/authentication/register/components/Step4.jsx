@@ -5,11 +5,16 @@ import { questionsRelationship } from "../../../../../config";
 function Step4({ control, errors }) {
   return (
     <>
-      <h2 className="text-center mb-4 italic font-bold text-black">
+      <h2 className="text-center  italic font-bold text-black">
         Your ideas about relationships.
       </h2>
+      <p className="text-gray-500 text-sm mb-4">
+        Do not refresh the page before you complete all the steps.
+      </p>
       <div className="flex flex-col items-center gap-2">
-        <label className="text-center">{questionsRelationship.question1}</label>
+        <label className="question-label">
+          {questionsRelationship.question1}
+        </label>
         <Controller
           name="registerRelationshipQ1"
           control={control}
@@ -17,7 +22,9 @@ function Step4({ control, errors }) {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <label className="text-center">{questionsRelationship.question2}</label>
+        <label className="question-label">
+          {questionsRelationship.question2}
+        </label>
         <Controller
           name="registerRelationshipQ2"
           control={control}
@@ -25,13 +32,17 @@ function Step4({ control, errors }) {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <label className="text-center">{questionsRelationship.question3}</label>
+        <label className="question-label">
+          {questionsRelationship.question3}
+        </label>
         <Controller
           name="registerRelationshipQ3"
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
-        <label className="text-center">{questionsRelationship.question4}</label>
+        <label className="question-label">
+          {questionsRelationship.question4}
+        </label>
         <Controller
           name="registerRelationshipQ4"
           control={control}

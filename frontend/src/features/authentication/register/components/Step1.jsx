@@ -54,7 +54,6 @@ const Step1 = ({ control, errors }) => {
           </div>
         )}
       />
-
       <RegisterValidationError>
         {errors.registerEmail?.message ||
           errors.registerPassword?.message ||

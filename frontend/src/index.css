@@ -26,3 +26,13 @@
   opacity: 1; /* Görünürlük */
   transform: translateY(0); /* Konum sıfırlanıyor */
 }
+.input-element-select {
+  @apply shadow-lg border-2 border-rose-200 px-2 pl-[40px] rounded-md py-1 placeholder:text-sm w-72 
+  transition-all duration-300 focus:outline-none
+  focus:ring
+  focus:ring-rose-200
+  focus:ring-opacity-50 text-black;
+}
+.question-label {
+  @apply font-medium text-gray-800 text-center  leading-relaxed tracking-wide;
+}
