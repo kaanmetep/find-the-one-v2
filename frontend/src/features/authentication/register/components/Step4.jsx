@@ -16,7 +16,7 @@ function Step4({ control, errors }) {
           {questionsRelationship.question1}
         </label>
         <Controller
-          name="registerRelationshipQ1"
+          name="relationshipQ1"
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
@@ -26,7 +26,7 @@ function Step4({ control, errors }) {
           {questionsRelationship.question2}
         </label>
         <Controller
-          name="registerRelationshipQ2"
+          name="relationshipQ2"
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
@@ -36,7 +36,7 @@ function Step4({ control, errors }) {
           {questionsRelationship.question3}
         </label>
         <Controller
-          name="registerRelationshipQ3"
+          name="relationshipQ3"
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
@@ -44,17 +44,17 @@ function Step4({ control, errors }) {
           {questionsRelationship.question4}
         </label>
         <Controller
-          name="registerRelationshipQ4"
+          name="relationshipQ4"
           control={control}
           render={({ field }) => <TextArea {...field} />}
         />
       </div>
 
       <RegisterValidationError>
-        {errors.registerRelationshipQ1?.message ||
-          errors.registerRelationshipQ2?.message ||
-          errors.registerRelationshipQ3?.message ||
-          errors.registerRelationshipQ4?.message}
+        {errors.relationshipQ1?.message ||
+          errors.relationshipQ2?.message ||
+          errors.relationshipQ3?.message ||
+          errors.relationshipQ4?.message}
       </RegisterValidationError>
     </>
   );

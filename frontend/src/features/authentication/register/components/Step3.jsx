@@ -13,34 +13,34 @@ function Step3({ control, errors }) {
       </p>
       <label className="question-label">{questionsPersonel.question1}</label>
       <Controller
-        name="registerPersonelQ1"
+        name="personelQ1"
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
       <label className="question-label">{questionsPersonel.question2}</label>
       <Controller
-        name="registerPersonelQ2"
+        name="personelQ2"
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
       <label className="question-label">{questionsPersonel.question3}</label>
       <Controller
-        name="registerPersonelQ3"
+        name="personelQ3"
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
       <label className="question-label">{questionsPersonel.question4}</label>
       <Controller
-        name="registerPersonelQ4"
+        name="personelQ4"
         control={control}
         render={({ field }) => <TextArea {...field} />}
       />
 
       <RegisterValidationError>
-        {errors.registerPersonelQ1?.message ||
-          errors.registerPersonelQ2?.message ||
-          errors.registerPersonelQ3?.message ||
-          errors.registerPersonelQ4?.message}
+        {errors.personelQ1?.message ||
+          errors.personelQ2?.message ||
+          errors.personelQ3?.message ||
+          errors.personelQ4?.message}
       </RegisterValidationError>
     </>
   );

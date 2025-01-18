@@ -1,14 +1,7 @@
-import { useGetUser } from "../services/profileService";
-import { useAuth } from "../../../hooks/useAuth";
-function Header() {
-  const { isLoading, data } = useGetUser();
-  const { logout } = useAuth();
+function Header({ firstName }) {
   return (
     <div>
-      {isLoading ? <p>Loading...</p> : <p>Welcome {data?.registerName}!</p>}
-      <button className="bg-red-300 px-5 py-1" onClick={() => logout()}>
-        Log out
-      </button>
+      <p>Welcome {firstName?.at(0).toUpperCase() + firstName?.slice(1)}!</p>
     </div>
   );
 }

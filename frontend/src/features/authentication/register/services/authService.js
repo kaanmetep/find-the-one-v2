@@ -15,10 +15,11 @@ const registerUser = async (userData) => {
 export const checkEmail = async (email) => {
   try {
     const response = await axios.post(endpoints.checkEmail, {
-      registerEmail: email,
+      email,
     });
     console.log(response);
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };

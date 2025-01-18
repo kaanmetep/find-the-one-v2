@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
 const step2Validation = yup.object({
-  registerName: yup.string().required("Please enter your name."),
-  registerBirthdayDate: yup
+  firstName: yup.string().required("Please enter your name."),
+  birthdayDate: yup
     .date()
     .typeError("Please enter a valid date.") // todo: check if user is older than 18
     .required("Please enter your birthday date.")
@@ -14,8 +14,8 @@ const step2Validation = yup.object({
         return value.getFullYear() <= 2024;
       }
     ),
-  registerGender: yup.string().required("Please choose your gender."),
-  registerInterestedGender: yup
+  gender: yup.string().required("Please choose your gender."),
+  genderInterest: yup
     .string()
     .required("Please choose your interested gender."),
 });

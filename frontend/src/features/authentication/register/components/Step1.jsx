@@ -13,7 +13,7 @@ const Step1 = ({ control, errors }) => {
         Do not refresh the page before you complete all the steps.
       </p>
       <Controller
-        name="registerEmail"
+        name="email"
         control={control}
         render={({ field }) => (
           <div className="flex relative">
@@ -23,7 +23,7 @@ const Step1 = ({ control, errors }) => {
         )}
       />
       <Controller
-        name="registerPassword"
+        name="password"
         control={control}
         render={({ field }) => (
           <div className="flex relative">
@@ -39,7 +39,7 @@ const Step1 = ({ control, errors }) => {
         )}
       />
       <Controller
-        name="registerRePassword"
+        name="rePassword"
         control={control}
         render={({ field }) => (
           <div className="flex relative">
@@ -55,9 +55,9 @@ const Step1 = ({ control, errors }) => {
         )}
       />
       <RegisterValidationError>
-        {errors.registerEmail?.message ||
-          errors.registerPassword?.message ||
-          errors.registerRePassword?.message}
+        {errors.email?.message ||
+          errors.password?.message ||
+          errors.rePassword?.message}
       </RegisterValidationError>
     </>
   );

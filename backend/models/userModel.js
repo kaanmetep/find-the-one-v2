@@ -3,13 +3,13 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-  registerName: {
+  firstName: {
     type: String,
     required: [true, "You must have a first name."],
     lowercase: true,
     trim: true,
   },
-  registerEmail: {
+  email: {
     type: String,
     required: [true, "You must have an email."],
     unique: true,
@@ -17,35 +17,35 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please provide a valid email."],
     trim: true,
   },
-  registerBirthdayDate: {
+  birthdayDate: {
     type: Date,
     required: [true, "You must have a birth date."],
     trim: true,
   },
-  registerPassword: {
+  password: {
     type: String,
     required: [true, "You must have a password."],
     // select:false
     trim: true,
   },
-  registerRePassword: {
+  rePassword: {
     type: String,
     validate: {
       validator: function (el) {
-        return el === this.registerPassword;
+        return el === this.password;
       },
       message: "Passwords are not matching.",
     },
     trim: true,
   },
   personelDetails: {
-    registerGender: {
+    gender: {
       type: String,
       lowercase: true,
       required: [true, "You must enter your gender"],
       trim: true,
     },
-    registerGenderInterest: {
+    genderInterest: {
       type: String,
       lowercase: true,
       required: [true, "You must enter your interested gender"],
@@ -53,44 +53,44 @@ const userSchema = new mongoose.Schema({
     },
   },
   personelQuestions: {
-    registerPersonelQ1: {
+    personelQ1: {
       type: String,
       required: [true, "You must answer first personel question"],
       trim: true,
     },
-    registerPersonelQ2: {
+    personelQ2: {
       type: String,
       required: [true, "You must answer second personel question"],
       trim: true,
     },
-    registerPersonelQ3: {
+    personelQ3: {
       type: String,
       required: [true, "You must answer third personel question"],
       trim: true,
     },
-    registerPersonelQ4: {
+    personelQ4: {
       type: String,
       required: [true, "You must answer fourth personel question"],
       trim: true,
     },
   },
   relationshipQuestions: {
-    registerRelationshipQ1: {
+    relationshipQ1: {
       type: String,
       required: [true, "You must answer first relationship question."],
       trim: true,
     },
-    registerRelationshipQ2: {
+    relationshipQ2: {
       type: String,
       required: [true, "You must answer second relationship question."],
       trim: true,
     },
-    registerRelationshipQ3: {
+    relationshipQ3: {
       type: String,
       required: [true, "You must answer third relationship question."],
       trim: true,
     },
-    registerRelationshipQ4: {
+    relationshipQ4: {
       type: String,
       required: [true, "You must answer fourth relationship question."],
       trim: true,
@@ -99,16 +99,16 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("registerPassword")) return next(); // if password is not modified, call next since we don't have to bcrypt.
+  if (!this.isModified("password")) return next(); // if password is not modified, call next since we don't have to bcrypt.
 
-  this.registerPassword = await bcrypt.hash(this.registerPassword, 12); // hash is an async method.
+  this.password = await bcrypt.hash(this.password, 12); // hash is an async method.
 
-  this.registerRePassword = undefined; // we don't need to hold re-password.
+  this.rePassword = undefined; // we don't need to hold re-password.
   next();
 });
 
 userSchema.methods.correctPassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.registerPassword);
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 const User = mongoose.model("User", userSchema);
 module.exports = User;

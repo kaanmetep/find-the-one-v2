@@ -36,7 +36,6 @@ function Register() {
     isLoading: isCheckingEmail,
     isError: emailCheckedFailed,
     error: emailCheckedError,
-    reset,
   } = useCheckEmail();
   const goBack = () => {
     if (currentStep < 2) return;
@@ -45,11 +44,11 @@ function Register() {
   const goForward = async () => {
     if (currentStep > 3) return;
     if (currentStep === 1) {
-      reset();
       try {
-        await checkEmail(watch("registerEmail"));
+        await checkEmail(watch("email"));
         handleSubmit(() => setCurrentStep((curr) => curr + 1))();
       } catch (error) {
+        console.log(error);
         return;
       }
     } else {
@@ -58,27 +57,29 @@ function Register() {
   };
 
   const onSubmit = (data) => {
+    const { firstName, email, birthdayDate, password, rePassword, ...rest } =
+      data;
     const formattedData = {
-      registerName: data.registerName,
-      registerEmail: data.registerEmail,
-      registerBirthdayDate: data.registerBirthdayDate,
-      registerPassword: data.registerPassword,
-      registerRePassword: data.registerRePassword,
+      firstName,
+      email,
+      birthdayDate,
+      password,
+      rePassword,
       personelDetails: {
-        registerGender: data.registerGender,
-        registerGenderInterest: data.registerInterestedGender,
+        gender: rest.gender,
+        genderInterest: rest.genderInterest,
       },
       personelQuestions: {
-        registerPersonelQ1: data.registerPersonelQ1,
-        registerPersonelQ2: data.registerPersonelQ2,
-        registerPersonelQ3: data.registerPersonelQ3,
-        registerPersonelQ4: data.registerPersonelQ4,
+        personelQ1: rest.personelQ1,
+        personelQ2: rest.personelQ2,
+        personelQ3: rest.personelQ3,
+        personelQ4: rest.personelQ4,
       },
       relationshipQuestions: {
-        registerRelationshipQ1: data.registerRelationshipQ1,
-        registerRelationshipQ2: data.registerRelationshipQ2,
-        registerRelationshipQ3: data.registerRelationshipQ3,
-        registerRelationshipQ4: data.registerRelationshipQ4,
+        relationshipQ1: rest.relationshipQ1,
+        relationshipQ2: rest.relationshipQ2,
+        relationshipQ3: rest.relationshipQ3,
+        relationshipQ4: rest.relationshipQ4,
       },
     };
     registerUser(formattedData);

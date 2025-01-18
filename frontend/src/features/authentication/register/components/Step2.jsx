@@ -19,7 +19,7 @@ function Step2({ control, errors, register }) {
         Do not refresh the page before you complete all the steps.
       </p>
       <Controller
-        name="registerName"
+        name="firstName"
         control={control}
         render={({ field }) => (
           <div className="flex relative">
@@ -29,7 +29,7 @@ function Step2({ control, errors, register }) {
         )}
       />
       <Controller
-        name="registerBirthdayDate"
+        name="birthdayDate"
         control={control}
         render={({ field }) => (
           <div className="flex relative">
@@ -50,7 +50,7 @@ function Step2({ control, errors, register }) {
         <select
           className={"input-element-select"}
           required
-          {...register("registerGender")}
+          {...register("gender")}
         >
           <option value="" disabled selected>
             Gender
@@ -65,7 +65,7 @@ function Step2({ control, errors, register }) {
         <select
           className={"input-element-select"}
           required
-          {...register("registerInterestedGender")}
+          {...register("genderInterest")}
         >
           <option value="" disabled selected>
             Interested Gender
@@ -76,10 +76,10 @@ function Step2({ control, errors, register }) {
       </div>
 
       <RegisterValidationError>
-        {errors.registerName?.message ||
-          errors.registerBirthdayDate?.message ||
-          errors.registerGender?.message ||
-          errors.registerInterestedGender?.message}
+        {errors.name?.message ||
+          errors.birthdayDate?.message ||
+          errors.gender?.message ||
+          errors.genderInterest?.message}
       </RegisterValidationError>
     </>
   );

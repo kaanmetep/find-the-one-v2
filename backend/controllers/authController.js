@@ -10,52 +10,47 @@ const signToken = (id) => {
 exports.signup = async (req, res) => {
   try {
     const {
-      registerName,
-      registerEmail,
-      registerBirthdayDate,
-      registerPassword,
-      registerRePassword,
-      personelDetails: { registerGender, registerGenderInterest },
-      personelQuestions: {
-        registerPersonelQ1,
-        registerPersonelQ2,
-        registerPersonelQ3,
-        registerPersonelQ4,
-      },
+      firstName,
+      email,
+      birthdayDate,
+      password,
+      rePassword,
+      personelDetails: { gender, genderInterest },
+      personelQuestions: { personelQ1, personelQ2, personelQ3, personelQ4 },
       relationshipQuestions: {
-        registerRelationshipQ1,
-        registerRelationshipQ2,
-        registerRelationshipQ3,
-        registerRelationshipQ4,
+        relationshipQ1,
+        relationshipQ2,
+        relationshipQ3,
+        relationshipQ4,
       },
     } = req.body;
-    const existedUser = await User.findOne({ registerEmail });
+    const existedUser = await User.findOne({ email });
     if (existedUser) {
       return res
         .status(409)
         .json({ status: "fail", result: "This e-mail already in use!" });
     }
     const newUser = await User.create({
-      registerName,
-      registerEmail,
-      registerBirthdayDate,
-      registerPassword,
-      registerRePassword,
+      firstName,
+      email,
+      birthdayDate,
+      password,
+      rePassword,
       personelDetails: {
-        registerGender,
-        registerGenderInterest,
+        gender,
+        genderInterest,
       },
       personelQuestions: {
-        registerPersonelQ1,
-        registerPersonelQ2,
-        registerPersonelQ3,
-        registerPersonelQ4,
+        personelQ1,
+        personelQ2,
+        personelQ3,
+        personelQ4,
       },
       relationshipQuestions: {
-        registerRelationshipQ1,
-        registerRelationshipQ2,
-        registerRelationshipQ3,
-        registerRelationshipQ4,
+        relationshipQ1,
+        relationshipQ2,
+        relationshipQ3,
+        relationshipQ4,
       },
     });
     const token = signToken(newUser._id);
@@ -86,12 +81,18 @@ exports.login = async (req, res) => {
 };
 
 exports.checkExistingEmail = async (req, res) => {
-  const { registerEmail } = req.body;
-  const userExist = await User.findOne({ registerEmail });
-  if (userExist) {
-    return res
-      .status(409)
-      .json({ status: false, result: "This user already exist!" });
+  const { email } = req.body;
+
+  try {
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      return res
+        .status(409)
+        .json({ status: false, result: "This user already exist!" });
+    }
+    return res.status(200).json({ status: true });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(400).json({ status: "fail", message: err.message });
   }
-  return res.status(200).json({ status: true });
 };
