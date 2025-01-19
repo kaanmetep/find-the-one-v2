@@ -16,9 +16,12 @@ const getUser = async (userId) => {
 };
 
 export const useGetUser = () => {
-  const { userId } = useAuth();
+  const { userId, setUserData } = useAuth();
   return useQuery({
     queryKey: ["user"],
     queryFn: () => getUser(userId),
+    onSuccess: (data) => {
+      setUserData(data);
+    },
   });
 };

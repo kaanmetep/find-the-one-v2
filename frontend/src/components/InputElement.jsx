@@ -3,13 +3,13 @@ function InputElement({
   py = 1,
   placeholder = "",
   disabled = false,
-  value = "",
   onChange,
   name = "",
   accept = "",
   maxLength = 36,
   pl = 4,
   w = 288,
+  defaultValue = "",
 }) {
   return (
     <input
@@ -27,11 +27,11 @@ function InputElement({
         width: `${w}px`,
       }}
       disabled={disabled}
-      value={value}
       onChange={onChange}
       name={name}
       accept={accept}
       maxLength={maxLength}
+      defaultValue={defaultValue}
     />
   );
 }

@@ -28,3 +28,12 @@ export const questionsRelationship = {
   question4:
     "How would you show appreciation or express love to a partner, and what do you hope they would do in return?",
 };
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};

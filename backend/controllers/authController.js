@@ -70,9 +70,7 @@ exports.login = async (req, res) => {
       .status(400)
       .json({ result: "Please provide an email and a password" });
   }
-  const user = await User.findOne({ registerEmail: loginEmail }).select(
-    "+password"
-  );
+  const user = await User.findOne({ email: loginEmail }).select("+password");
   if (!user || !(await user.correctPassword(loginPassword))) {
     return res.status(401).json({ result: "Incorrect e-mail or password" });
   }

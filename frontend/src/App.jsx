@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./pages/PrivateRoute";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
+import DashboardProfile from "./pages/DashboardProfile";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -29,6 +30,12 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     errorElement: <PageNotFound />,
+    children: [
+      {
+        path: "profile",
+        element: <DashboardProfile />,
+      },
+    ],
   },
   {
     path: "*",

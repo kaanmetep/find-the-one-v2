@@ -7,7 +7,7 @@ function AuthProvider({ children }) {
   const [userId, setUserId] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [userData, setUserData] = useState(null);
   const decodeJWT = () => {
     try {
       const token = localStorage.getItem("jwt");
@@ -45,7 +45,15 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ userId, login, logout, isAuthenticated, isLoading }}
+      value={{
+        userId,
+        login,
+        logout,
+        isAuthenticated,
+        isLoading,
+        userData,
+        setUserData,
+      }}
     >
       {children}
     </AuthContext.Provider>

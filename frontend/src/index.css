@@ -36,3 +36,8 @@
 .question-label {
   @apply font-medium text-gray-800 text-center  leading-relaxed tracking-wide;
 }
+
+/*** DASHBOARD PROFILE ***/
+.input-container {
+  @apply grid grid-cols-[1fr,2fr] w-fit items-center;
+}
