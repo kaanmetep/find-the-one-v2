@@ -39,5 +39,11 @@
 
 /*** DASHBOARD PROFILE ***/
 .input-container {
-  @apply grid grid-cols-[1fr,2fr] w-fit items-center;
+  @apply grid grid-cols-[1fr,2.2fr] w-fit items-center;
+}
+.question-profile {
+  @apply block;
+}
+.answer-profile {
+  @apply text-center;
 }

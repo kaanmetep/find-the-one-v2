@@ -10,7 +10,7 @@ const app = express();
 // CORS ayarları
 const corsOptions = {
   origin: ["https://findtheoneai.vercel.app", "http://localhost:5173"],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
   optionsSuccessStatus: 200,
@@ -36,6 +36,8 @@ app.post("/signup", authController.signup);
 app.post("/login", authController.login);
 
 app.get("/users/:id", userController.getUser);
+
+app.patch("/users/:id", userController.updateUser);
 
 app.post("/checkEmail", authController.checkExistingEmail);
 
