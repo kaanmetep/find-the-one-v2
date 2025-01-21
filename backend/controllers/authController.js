@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
+const { upload } = require("../middlewares/upload");
+const { uploadToCloudinary } = require("../cloudinary");
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -9,50 +10,53 @@ const signToken = (id) => {
 
 exports.signup = async (req, res) => {
   try {
+    // req.body'den gelen verileri al
     const {
       firstName,
       email,
       birthdayDate,
       password,
       rePassword,
-      personelDetails: { gender, genderInterest },
-      personelQuestions: { personelQ1, personelQ2, personelQ3, personelQ4 },
-      relationshipQuestions: {
-        relationshipQ1,
-        relationshipQ2,
-        relationshipQ3,
-        relationshipQ4,
-      },
+      personelDetails, // JSON
+      personelQuestions, // JSON
+      relationshipQuestions, // JSON
     } = req.body;
+
+    // Parse JSON first
+    const parsedPersonelDetails = JSON.parse(personelDetails);
+    const parsedPersonelQuestions = JSON.parse(personelQuestions);
+    const parsedRelationshipQuestions = JSON.parse(relationshipQuestions);
+
+    const files = req.files;
+    if (!files || files.length < 2) {
+      return res
+        .status(400)
+        .json({ error: "You need to upload at least 2 photos!" });
+    }
+
     const existedUser = await User.findOne({ email });
     if (existedUser) {
       return res
         .status(409)
-        .json({ status: "fail", result: "This e-mail already in use!" });
+        .json({ status: "fail", result: "This e-mail is already in use!" });
     }
+
+    const imageUrls = await Promise.all(
+      files.map((file) => uploadToCloudinary(file.buffer))
+    );
+
     const newUser = await User.create({
       firstName,
       email,
       birthdayDate,
       password,
       rePassword,
-      personelDetails: {
-        gender,
-        genderInterest,
-      },
-      personelQuestions: {
-        personelQ1,
-        personelQ2,
-        personelQ3,
-        personelQ4,
-      },
-      relationshipQuestions: {
-        relationshipQ1,
-        relationshipQ2,
-        relationshipQ3,
-        relationshipQ4,
-      },
+      photos: imageUrls,
+      personelDetails: parsedPersonelDetails,
+      personelQuestions: parsedPersonelQuestions,
+      relationshipQuestions: parsedRelationshipQuestions,
     });
+
     const token = signToken(newUser._id);
     res.status(201).json({ token });
   } catch (err) {
@@ -62,7 +66,6 @@ exports.signup = async (req, res) => {
     });
   }
 };
-
 exports.login = async (req, res) => {
   const { loginEmail, loginPassword } = req.body;
   if (!loginEmail || !loginPassword) {

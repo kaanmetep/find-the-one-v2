@@ -5,6 +5,8 @@ const cors = require("cors");
 dotenv.config({ path: "../config.env" });
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
+const { upload } = require("../middlewares/upload");
+
 const app = express();
 
 // CORS ayarları
@@ -31,7 +33,7 @@ app.get("/", (req, res) => {
   res.end("hello from the server");
 });
 
-app.post("/signup", authController.signup);
+app.post("/signup", upload, authController.signup);
 
 app.post("/login", authController.login);
 

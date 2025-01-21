@@ -15,6 +15,16 @@ import Step2 from "../features/authentication/register/components/Step2";
 import Step3 from "../features/authentication/register/components/Step3";
 import Step4 from "../features/authentication/register/components/Step4";
 function Register() {
+  const [images, setImages] = useState({
+    image1: null,
+    image2: null,
+    image3: null,
+  });
+  console.log(images.image1);
+  const handleImageUpload = (e) => {
+    const { name, files } = e.target;
+    setImages((prev) => ({ ...prev, [name]: files[0] }));
+  };
   const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
   const { setIsLoginPopUpOpen } = useApp();
@@ -27,13 +37,13 @@ function Register() {
   } = useForm({ resolver: yupResolver(validationSchemas[currentStep - 1]) });
   const {
     mutate: registerUser,
-    isLoading: isRegistering,
+    isPending: isRegistering,
     isError: registerFailed,
     error: registerError,
   } = useRegisterUser();
   const {
     mutateAsync: checkEmail,
-    isLoading: isCheckingEmail,
+    isPending: isCheckingEmail,
     isError: emailCheckedFailed,
     error: emailCheckedError,
   } = useCheckEmail();
@@ -56,33 +66,48 @@ function Register() {
     }
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { firstName, email, birthdayDate, password, rePassword, ...rest } =
       data;
-    const formattedData = {
-      firstName,
-      email,
-      birthdayDate,
-      password,
-      rePassword,
-      personelDetails: {
+
+    const formData = new FormData();
+
+    formData.append("firstName", firstName);
+    formData.append("email", email);
+    formData.append("birthdayDate", birthdayDate);
+    formData.append("password", password);
+    formData.append("rePassword", rePassword);
+    formData.append(
+      "personelDetails",
+      JSON.stringify({
         gender: rest.gender,
         genderInterest: rest.genderInterest,
-      },
-      personelQuestions: {
+      })
+    );
+    formData.append(
+      "personelQuestions",
+      JSON.stringify({
         personelQ1: rest.personelQ1,
         personelQ2: rest.personelQ2,
         personelQ3: rest.personelQ3,
         personelQ4: rest.personelQ4,
-      },
-      relationshipQuestions: {
+      })
+    );
+    formData.append(
+      "relationshipQuestions",
+      JSON.stringify({
         relationshipQ1: rest.relationshipQ1,
         relationshipQ2: rest.relationshipQ2,
         relationshipQ3: rest.relationshipQ3,
         relationshipQ4: rest.relationshipQ4,
-      },
-    };
-    registerUser(formattedData);
+      })
+    );
+
+    if (images.image1) formData.append("photos", images.image1);
+    if (images.image2) formData.append("photos", images.image2);
+    if (images.image3) formData.append("photos", images.image3);
+
+    registerUser(formData);
   };
 
   return (
@@ -132,7 +157,14 @@ function Register() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 items-center justify-center"
         >
-          {currentStep === 1 && <Step1 control={control} errors={errors} />}
+          {currentStep === 1 && (
+            <Step1
+              control={control}
+              errors={errors}
+              images={images}
+              handleImageUpload={handleImageUpload}
+            />
+          )}
           {currentStep === 2 && (
             <Step2 control={control} errors={errors} register={register} />
           )}

@@ -26,7 +26,8 @@ export const checkEmail = async (email) => {
 export const useRegisterUser = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  return useMutation(registerUser, {
+  return useMutation({
+    mutationFn: registerUser,
     onSuccess: (data) => {
       login(data);
       navigate("/dashboard");
@@ -34,5 +35,5 @@ export const useRegisterUser = () => {
   });
 };
 export const useCheckEmail = () => {
-  return useMutation(checkEmail);
+  return useMutation({ mutationFn: checkEmail });
 };

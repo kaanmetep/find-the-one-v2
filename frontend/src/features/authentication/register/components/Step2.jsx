@@ -74,7 +74,6 @@ function Step2({ control, errors, register }) {
           <option value="woman">Woman</option>
         </select>
       </div>
-
       <RegisterValidationError>
         {errors.name?.message ||
           errors.birthdayDate?.message ||

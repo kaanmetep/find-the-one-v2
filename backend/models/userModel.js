@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
     },
     trim: true,
   },
+  photos: { type: [String], required: true },
   personelDetails: {
     gender: {
       type: String,

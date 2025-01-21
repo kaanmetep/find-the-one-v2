@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect } from "react";
 function Dashboard() {
-  const { isLoading, data } = useGetUser();
+  const { isPending, data } = useGetUser();
   const { userData, setUserData } = useAuth();
   const location = useLocation();
   useEffect(() => {
@@ -19,7 +19,7 @@ function Dashboard() {
   return (
     <>
       <div className="flex justify-between px-8 py-4 border-b">
-        {isLoading ? (
+        {isPending ? (
           <LoadingSpinner />
         ) : (
           <Header firstName={userData?.firstName} />
