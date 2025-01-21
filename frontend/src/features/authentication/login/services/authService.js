@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { endpoints } from "../../../../../config";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,8 @@ const loginUser = async (userData) => {
 export const useLoginUser = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  return useMutation(loginUser, {
+  return useMutation({
+    mutationFn: loginUser,
     onSuccess: (data) => {
       login(data);
       navigate("/dashboard");

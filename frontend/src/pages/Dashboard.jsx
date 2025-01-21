@@ -6,12 +6,16 @@ import HomePageContent from "../features/profile/components/HomePageContent";
 import { Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-
+import { useEffect } from "react";
 function Dashboard() {
-  const { isLoading } = useGetUser();
-  const { userData } = useAuth();
+  const { isLoading, data } = useGetUser();
+  const { userData, setUserData } = useAuth();
   const location = useLocation();
-  console.log(userData);
+  useEffect(() => {
+    if (data) {
+      setUserData(data);
+    }
+  }, [data, setUserData]);
   return (
     <>
       <div className="flex justify-between px-8 py-4 border-b">

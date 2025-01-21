@@ -4,12 +4,12 @@ import { useForm, Controller } from "react-hook-form";
 import { formatDate } from "@config";
 import { questionsPersonel, questionsRelationship } from "@config";
 import { useUpdateUser } from "../services/profileService";
+import LoadingSpinner from "@components/LoadingSpinner";
 const ProfileContent = () => {
   const { userData } = useAuth();
   const { control, handleSubmit, register } = useForm();
-  const { mutate: updateUser } = useUpdateUser();
+  const { mutate: updateUser, isLoading: updatingUser } = useUpdateUser();
   const onSubmit = (data) => {
-    console.log(data);
     updateUser(data);
   };
 
@@ -18,7 +18,7 @@ const ProfileContent = () => {
       {userData && (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-8 mt-12 px-4 sm:px-8 md:px-12"
+          className="flex flex-col gap-12 mt-12 px-4 sm:px-8 md:px-12 items-center"
         >
           <div className="flex flex-col xl:flex-row gap-8 xl:gap-0 items-center xl:items-start">
             <div className=" flex grow-[2] basis-0 flex-col gap-4  ">
@@ -204,12 +204,16 @@ const ProfileContent = () => {
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="text-white bg-black px-8 py-2 rounded-md mx-auto"
-          >
-            Update
-          </button>
+          {updatingUser ? (
+            <LoadingSpinner />
+          ) : (
+            <button
+              type="submit"
+              className="text-white bg-black px-8 py-2 rounded-md mx-auto"
+            >
+              Update
+            </button>
+          )}
         </form>
       )}
     </div>

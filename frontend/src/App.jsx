@@ -6,9 +6,11 @@ import Register from "./pages/Register";
 import PageNotFound from "./components/PageNotFound";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./pages/PrivateRoute";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import DashboardProfile from "./pages/DashboardProfile";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -61,6 +63,7 @@ function App() {
           />
         </AppProvider>
       </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
