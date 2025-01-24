@@ -1,22 +1,22 @@
 import * as yup from "yup";
 
-const step4Validation = yup.object({
-  personelQ1: yup
+const step5Validation = yup.object({
+  relationshipQ1: yup
     .string()
     .min(20, "Please enter at least 20 characters for 1st question.")
     .required("Please answer 1st question."),
-  personelQ2: yup
+  relationshipQ2: yup
     .string()
     .min(20, "Please enter at least 20 characters for 2nd question.")
     .required("Please answer 2nd question."),
-  personelQ3: yup
+  relationshipQ3: yup
     .string()
     .min(20, "Please enter at least 20 characters for 3rd question.")
     .required("Please answer 3rd question."),
-  personelQ4: yup
+  relationshipQ4: yup
     .string()
     .min(20, "Please enter at least 20 characters for 4th question.")
     .required("Please answer 4th question."),
 });
 
-export default step4Validation;
+export default step5Validation;

@@ -7,7 +7,15 @@ import { useUpdateUser } from "../services/profileService";
 import LoadingSpinner from "@components/LoadingSpinner";
 const ProfileContent = () => {
   const { userData } = useAuth();
-  const { control, handleSubmit, register } = useForm();
+  console.log({ ...userData });
+  const { control, handleSubmit, register } = useForm({
+    defaultValues: {
+      firstName:
+        userData.firstName.at(0).toUpperCase() + userData.firstName.slice(1),
+      email: userData.email,
+      birthdayDate: formatDate(userData.birthdayDate),
+    },
+  });
   const { mutate: updateUser, isLoading: updatingUser } = useUpdateUser();
   const onSubmit = (data) => {
     updateUser(data);
@@ -28,42 +36,37 @@ const ProfileContent = () => {
                   name="firstName"
                   control={control}
                   render={({ field }) => (
-                    <InputElement
-                      {...field}
-                      defaultValue={
-                        userData.firstName.at(0).toUpperCase() +
-                        userData.firstName.slice(1)
-                      }
-                      w={"400"}
-                      py={3}
-                    />
+                    <InputElement {...field} w={"400"} py={3} />
                   )}
                 />
               </div>
               <div className="input-container">
                 <label htmlFor="email">Email</label>
-                <InputElement
-                  defaultValue={userData.email}
-                  disabled
-                  w={"400"}
-                  py={3}
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <InputElement {...field} disabled w={"400"} py={3} />
+                  )}
                 />
               </div>
               <div className="input-container">
                 <label htmlFor="birthdayDate">Birthday Date</label>
-                <InputElement
-                  defaultValue={formatDate(userData.birthdayDate)}
-                  disabled
-                  w={"400"}
-                  py={3}
+                <Controller
+                  name="birthdayDate"
+                  control={control}
+                  render={({ field }) => (
+                    <InputElement {...field} disabled w={"400"} py={3} />
+                  )}
                 />
               </div>
               <div className="input-container">
                 <label htmlFor="gender">Gender</label>
+
                 <select
                   className={"input-element-select !px-0 !w-[400px]"}
-                  required
                   disabled
+                  {...register("gender")}
                 >
                   <option
                     value="man"

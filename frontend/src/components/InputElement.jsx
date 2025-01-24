@@ -9,7 +9,7 @@ function InputElement({
   maxLength = 36,
   pl = 4,
   w = 288,
-  defaultValue = "",
+  value = "",
 }) {
   return (
     <input
@@ -31,7 +31,7 @@ function InputElement({
       name={name}
       accept={accept}
       maxLength={maxLength}
-      defaultValue={defaultValue}
+      value={value}
     />
   );
 }

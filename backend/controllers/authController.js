@@ -10,7 +10,6 @@ const signToken = (id) => {
 
 exports.signup = async (req, res) => {
   try {
-    // req.body'den gelen verileri al
     const {
       firstName,
       email,

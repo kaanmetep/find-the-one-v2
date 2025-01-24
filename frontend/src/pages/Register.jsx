@@ -14,17 +14,14 @@ import Step1 from "../features/authentication/register/components/Step1";
 import Step2 from "../features/authentication/register/components/Step2";
 import Step3 from "../features/authentication/register/components/Step3";
 import Step4 from "../features/authentication/register/components/Step4";
+import Step5 from "../features/authentication/register/components/Step5";
 function Register() {
   const [images, setImages] = useState({
     image1: null,
     image2: null,
     image3: null,
   });
-  console.log(images.image1);
-  const handleImageUpload = (e) => {
-    const { name, files } = e.target;
-    setImages((prev) => ({ ...prev, [name]: files[0] }));
-  };
+  const [imageError, setImageError] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
   const { setIsLoginPopUpOpen } = useApp();
@@ -52,15 +49,27 @@ function Register() {
     setCurrentStep((curr) => curr - 1);
   };
   const goForward = async () => {
-    if (currentStep > 3) return;
+    setImageError(null);
+    if (currentStep > 4) return;
     if (currentStep === 1) {
       try {
-        await checkEmail(watch("email"));
+        if (watch("email")) {
+          await checkEmail(watch("email"));
+        }
         handleSubmit(() => setCurrentStep((curr) => curr + 1))();
       } catch (error) {
         console.log(error);
         return;
       }
+    } else if (currentStep === 2) {
+      const uploadedPhotos = Object.values(images).filter(
+        (photo) => photo !== null
+      ).length;
+
+      if (!(uploadedPhotos >= 2)) {
+        return setImageError("Please upload at least 2 photo of yourself!");
+      }
+      handleSubmit(() => setCurrentStep((curr) => curr + 1))();
     } else {
       handleSubmit(() => setCurrentStep((curr) => curr + 1))(); // handleSubmit is a function that returns another function. So we have to call it immediately.
     }
@@ -109,7 +118,6 @@ function Register() {
 
     registerUser(formData);
   };
-
   return (
     <div className=" min-h-[100vh] flex items-center justify-center bg-gradient-to-r from-red-50 to-pink-100 ">
       <div className="flex flex-col  items-center gap-2 py-8 md:w-[75%]  min-h-[95vh] w-full mx-auto bg-red-100 rounded-lg shadow-2xl ">
@@ -148,29 +156,25 @@ function Register() {
               Create an account
             </h1>
             <p className="text-black font-bold  text-sm  bg-red-300 rounded-full aspect-square p-2">
-              {currentStep}/4
+              {currentStep}/5
             </p>
           </div>
         </div>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-2 items-center justify-center"
+          className="flex flex-col gap-2 items-center justify-center  w-full "
         >
           {currentStep === 1 && (
-            <Step1
-              control={control}
-              errors={errors}
-              images={images}
-              handleImageUpload={handleImageUpload}
-            />
+            <Step1 control={control} errors={errors} watch={watch} />
           )}
-          {currentStep === 2 && (
-            <Step2 control={control} errors={errors} register={register} />
+          {currentStep === 2 && <Step2 images={images} setImages={setImages} />}
+          {currentStep === 3 && (
+            <Step3 control={control} errors={errors} register={register} />
           )}
-          {currentStep === 3 && <Step3 control={control} errors={errors} />}
           {currentStep === 4 && <Step4 control={control} errors={errors} />}
-          {currentStep === 4 ? (
+          {currentStep === 5 && <Step5 control={control} errors={errors} />}
+          {currentStep === 5 ? (
             isRegistering ? (
               <LoadingSpinner />
             ) : registerFailed ? (
@@ -179,7 +183,7 @@ function Register() {
                 {registerError?.response.data.result}
               </p>
             ) : (
-              <div className=" flex gap-2 items-center mt-4 justify-between w-full px-4">
+              <div className=" flex gap-2 items-center mt-4 justify-between w-full sm:w-3/4 xl:w-1/2 px-4">
                 <button
                   onClick={goBack}
                   className="w-4 h-4 rounded-full bg-red-300 flex items-center justify-center p-4 hover:bg-red-400 transition-all delay-75"
@@ -196,7 +200,7 @@ function Register() {
               </div>
             )
           ) : (
-            <div className=" flex gap-2 items-center mt-4 justify-between w-full px-4">
+            <div className=" flex gap-2 items-center mt-4 justify-between w-full sm:w-3/4 xl:w-1/2  px-4">
               {currentStep !== 1 && (
                 <button
                   onClick={goBack}
@@ -223,6 +227,7 @@ function Register() {
           )}
           <p className="text-red-500 italic font-semibold">
             {emailCheckedError?.response.data.result}
+            {imageError}
           </p>
         </form>
       </div>

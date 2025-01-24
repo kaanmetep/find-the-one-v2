@@ -17,7 +17,6 @@ export const checkEmail = async (email) => {
     const response = await axios.post(endpoints.checkEmail, {
       email,
     });
-    console.log(response);
   } catch (error) {
     console.log(error);
     throw error;

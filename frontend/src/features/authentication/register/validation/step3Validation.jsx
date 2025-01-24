@@ -1,22 +1,23 @@
 import * as yup from "yup";
 
 const step3Validation = yup.object({
-  personelQ1: yup
+  firstName: yup.string().required("Please enter your name."),
+  birthdayDate: yup
+    .date()
+    .typeError("Please enter a valid date.") // todo: check if user is older than 18
+    .required("Please enter your birthday date.")
+    .test(
+      "is-year-valid",
+      "The year must not be greater than 2024.",
+      (value) => {
+        if (!value) return false; // Eğer tarih boşsa
+        return value.getFullYear() <= 2024;
+      }
+    ),
+  gender: yup.string().required("Please choose your gender."),
+  genderInterest: yup
     .string()
-    .min(20, "Please enter at least 20 characters for 1st question.")
-    .required("Please answer 1st question."),
-  personelQ2: yup
-    .string()
-    .min(20, "Please enter at least 20 characters for 2nd question.")
-    .required("Please answer 2nd question."),
-  personelQ3: yup
-    .string()
-    .min(20, "Please enter at least 20 characters for 3rd question.")
-    .required("Please answer 3rd question."),
-  personelQ4: yup
-    .string()
-    .min(20, "Please enter at least 20 characters for 4th question.")
-    .required("Please answer 4th question."),
+    .required("Please choose your interested gender."),
 });
 
 export default step3Validation;
