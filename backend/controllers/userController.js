@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const { uploadToCloudinary } = require("../cloudinary");
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -19,7 +20,23 @@ exports.updateUser = async (req, res) => {
     const { firstName, genderInterest } = req.body;
     if (firstName) user.firstName = firstName;
     if (genderInterest) user.personelDetails.genderInterest = genderInterest;
+    if (req.files) {
+      const files = req.files;
+      const imageUrls = await Promise.all(
+        files.map((file) => uploadToCloudinary(file.buffer))
+      );
+      req.files.forEach((file, index) => {
+        const photoIndex = parseInt(file.originalname) - 1; // '1', '2', '3' -> 0, 1, 2
 
+        if (photoIndex >= 0 && photoIndex < user.photos.length) {
+          user.photos[photoIndex] = imageUrls[index];
+        }
+        if (photoIndex === user.photos.length) {
+          // this means user adding a BRAND NEW third photo
+          user.photos.push(imageUrls[0]);
+        }
+      });
+    }
     await user.save();
     res.status(200).json({ message: "User updated successfully!", user });
   } catch (err) {

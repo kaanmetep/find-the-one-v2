@@ -39,7 +39,7 @@ app.post("/login", authController.login);
 
 app.get("/users/:id", userController.getUser);
 
-app.patch("/users/:id", userController.updateUser);
+app.patch("/users/:id", upload, userController.updateUser);
 
 app.post("/checkEmail", authController.checkExistingEmail);
 

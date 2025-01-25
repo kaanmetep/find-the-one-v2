@@ -1,6 +1,5 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const { upload } = require("../middlewares/upload");
 const { uploadToCloudinary } = require("../cloudinary");
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PlusIcon } from "lucide-react";
-import ImageContainer from "./ImageContainer";
+import ImageContainer from "@components/ImageContainer";
 
 const Step2 = ({ images, setImages }) => {
   const [error, setError] = useState({});
