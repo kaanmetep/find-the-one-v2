@@ -1,10 +1,11 @@
 import { useAuth } from "@hooks/useAuth";
 import { useForm, Controller } from "react-hook-form";
 import { formatDate } from "@config";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Trash2, Upload, SquarePen } from "lucide-react";
 import { useUpdateUser } from "../services/profileService";
 const ProfileContent = () => {
+  const imageDeleted = useRef(false);
   const { userData } = useAuth();
   const [images, setImages] = useState({
     image1: null,
@@ -57,6 +58,9 @@ const ProfileContent = () => {
           ...prev,
           [name]: file,
         }));
+        if (name === "image3") {
+          imageDeleted.current = false;
+        }
       }
     } catch (err) {
       setImageErrors((prev) => ({
@@ -72,6 +76,7 @@ const ProfileContent = () => {
       ...prev,
       [key]: null,
     }));
+    imageDeleted.current = true;
   };
 
   const { control, handleSubmit, register } = useForm({
@@ -98,12 +103,15 @@ const ProfileContent = () => {
         formData.append("photos", images[key], `${index + 1}`);
       }
     });
+    if (imageDeleted.current) {
+      formData.append("imageDeleted", "imageDeleted");
+    }
 
     updateUser(formData);
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg shadow-red-100 rounded-lg  mt-4">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid gap-4">
           {[
@@ -122,9 +130,9 @@ const ProfileContent = () => {
                   <input
                     {...field}
                     disabled={disabled}
-                    className={`w-full px-3 py-2 border rounded-md ${
+                    className={`w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring ${
                       disabled ? "bg-gray-100 cursor-not-allowed" : ""
-                    }`}
+                    } transition-all delay-[50ms]`}
                   />
                 )}
               />
@@ -136,7 +144,7 @@ const ProfileContent = () => {
             <select
               {...register("gender")}
               disabled
-              className="w-full px-3 py-2 border rounded-md bg-gray-100 cursor-not-allowed"
+              className="w-full px-3 py-2 border rounded-md bg-gray-100 cursor-not-allowed border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring"
             >
               <option value="man">Man</option>
               <option value="woman">Woman</option>
@@ -148,7 +156,7 @@ const ProfileContent = () => {
             <select
               {...register("genderInterest")}
               required
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
             >
               <option value="man">Man</option>
               <option value="woman">Woman</option>
@@ -179,7 +187,11 @@ const ProfileContent = () => {
                             : userData.photos[index]
                         }
                         alt="Upload preview"
-                        className="w-full h-full object-cover rounded-lg"
+                        className={`w-full h-full object-cover rounded-lg ${
+                          key === "image3" && imageDeleted.current === true
+                            ? "grayscale blur-sm"
+                            : ""
+                        }`}
                       />
                       <SquarePen
                         size={22}

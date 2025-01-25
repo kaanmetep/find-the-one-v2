@@ -17,10 +17,11 @@ exports.updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found!" });
     }
-    const { firstName, genderInterest } = req.body;
+    const { firstName, genderInterest, imageDeleted } = req.body;
     if (firstName) user.firstName = firstName;
     if (genderInterest) user.personelDetails.genderInterest = genderInterest;
-    if (req.files) {
+    if (imageDeleted) user.photos.pop();
+    if (req.files.length > 0) {
       const files = req.files;
       const imageUrls = await Promise.all(
         files.map((file) => uploadToCloudinary(file.buffer))
