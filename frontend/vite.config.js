@@ -9,6 +9,7 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@components": path.resolve(__dirname, "src/components"),
       "@config": path.resolve(__dirname, "config"),
+      "@utils": path.resolve(__dirname, "utils"),
     },
   },
 });

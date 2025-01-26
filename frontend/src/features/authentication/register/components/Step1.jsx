@@ -1,8 +1,8 @@
 import { Controller } from "react-hook-form";
-import InputElement from "../../../../components/InputElement";
+import InputElement from "@components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
 import { Mail, KeyRound } from "lucide-react";
-const Step1 = ({ control, errors, watch }) => {
+const Step1 = ({ control, errors }) => {
   return (
     <>
       <h2 className="text-center  italic font-bold text-black px-4">

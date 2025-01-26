@@ -1,58 +1,9 @@
 import { useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { Upload } from "lucide-react";
 import ImageContainer from "@components/ImageContainer";
-
+import { handleImageUpload } from "@utils";
 const Step2 = ({ images, setImages }) => {
-  const [error, setError] = useState({});
-  const handleImageUpload = (event) => {
-    event.preventDefault();
-    const file = event.target.files[0];
-    const name = event.target.name;
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      setError((prev) => ({
-        ...prev,
-        [name]: "Invalid file type! Please upload an image.",
-      }));
-      return;
-    }
-
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    if (file.size > maxSize) {
-      setError((prev) => ({
-        ...prev,
-        [name]: "File size must be less than 5MB!",
-      }));
-      return;
-    }
-
-    const img = new Image();
-    const objectUrl = URL.createObjectURL(file);
-    img.src = objectUrl;
-
-    img.onload = () => {
-      if (img.width > img.height) {
-        setError((prev) => ({
-          ...prev,
-          [name]: "Please upload a portrait photo!",
-        }));
-        URL.revokeObjectURL(objectUrl);
-        return;
-      }
-
-      setError((prev) => ({ ...prev, [name]: null }));
-      setImages((prevImages) => ({
-        ...prevImages,
-        [name]: file,
-      }));
-
-      // Bellek sızıntısını önle
-      URL.revokeObjectURL(objectUrl);
-    };
-  };
-
+  const [imageErrors, setImageErrors] = useState({});
   return (
     <>
       <h2 className="text-center italic font-bold text-black">
@@ -72,22 +23,25 @@ const Step2 = ({ images, setImages }) => {
                 className="w-full h-full object-fill absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               />
             ) : (
-              <div className="flex flex-col items-center">
-                <PlusIcon />
-                <p>Add a photo</p>
+              <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                <Upload size={32} />
+                <span className="mt-2 text-sm">Add Photo</span>
               </div>
             )}
 
             <input
               type="file"
               id={imageKey}
+              accept="image/*"
               className="hidden"
-              onChange={handleImageUpload}
+              onChange={(event) =>
+                handleImageUpload(event, setImageErrors, setImages, false)
+              }
               name={imageKey}
             />
-            {error[imageKey] && (
+            {imageErrors[imageKey] && (
               <p className="text-red-500 text-sm text-center">
-                {error[imageKey]}
+                {imageErrors[imageKey]}
               </p>
             )}
           </ImageContainer>

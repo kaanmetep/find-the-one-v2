@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Controller } from "react-hook-form";
-import InputElement from "../../../../components/InputElement";
+import InputElement from "@components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
 import {
   UserIcon,

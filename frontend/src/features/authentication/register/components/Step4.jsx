@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
-import TextArea from "../../../../components/TextArea";
+import TextArea from "@components/TextArea";
 import RegisterValidationError from "../components/RegisterValidationError";
-import { questionsPersonel } from "../../../../../config";
+import { questionsPersonel } from "@config";
 function Step4({ control, errors }) {
   return (
     <>
