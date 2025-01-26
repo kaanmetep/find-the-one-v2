@@ -1,9 +1,11 @@
 import { useAuth } from "@hooks/useAuth";
 import { useForm, Controller } from "react-hook-form";
 import { formatDate } from "@config";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Trash2, Upload, SquarePen } from "lucide-react";
 import { useUpdateUser } from "../services/profileService";
+import Loading from "./Loading";
+import { toast } from "react-toastify";
 const ProfileContent = () => {
   const imageDeleted = useRef(false);
   const { userData } = useAuth();
@@ -79,7 +81,12 @@ const ProfileContent = () => {
     imageDeleted.current = true;
   };
 
-  const { control, handleSubmit, register } = useForm({
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { defaultValues },
+  } = useForm({
     defaultValues: {
       firstName:
         userData.firstName.charAt(0).toUpperCase() +
@@ -91,12 +98,25 @@ const ProfileContent = () => {
     },
   });
 
-  const { mutate: updateUser, isPending: updatingUser } = useUpdateUser();
+  const {
+    mutate: updateUser,
+    isPending: updatingUser,
+    isSuccess: userUpdated,
+  } = useUpdateUser();
 
+  useEffect(() => {
+    if (userUpdated) {
+      toast.success("Profile updated successfully!");
+    }
+  }, [userUpdated]);
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("firstName", data.firstName);
-    formData.append("genderInterest", data.genderInterest);
+    if (data.firstName !== defaultValues.firstName) {
+      formData.append("firstName", data.firstName);
+    }
+    if (data.genderInterest !== defaultValues.genderInterest) {
+      formData.append("genderInterest", data.genderInterest);
+    }
 
     ["image1", "image2", "image3"].forEach((key, index) => {
       if (images[key]) {
@@ -107,12 +127,15 @@ const ProfileContent = () => {
       formData.append("imageDeleted", "imageDeleted");
     }
 
+    if (!Array.from(formData.keys()).length) {
+      return toast.info("No changes detected. Profile remains unchanged.");
+    }
     updateUser(formData);
   };
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-lg shadow-red-100 rounded-lg  mt-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <div className="grid gap-4">
           {[
             { label: "First Name", name: "firstName", disabled: false },
@@ -231,11 +254,11 @@ const ProfileContent = () => {
 
         <div className="flex justify-center">
           {updatingUser ? (
-            <div className="text-center">Updating Profile...</div>
+            <Loading />
           ) : (
             <button
               type="submit"
-              className="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition"
+              className="px-6 py-2 bg-gradient-to-r from-red-300 to-red-500 text-gray-50 font-semibold rounded-md hover:text-gray-200 hover:shadow-lg  transition-all delay-75"
             >
               Update Profile
             </button>

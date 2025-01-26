@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes pulse-1 {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  25% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-2 {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-3 {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-1 {
+  animation: pulse-1 2s infinite;
+}
+.animate-pulse-2 {
+  animation: pulse-2 2s infinite;
+}
+.animate-pulse-3 {
+  animation: pulse-3 2s infinite;
+}
+
 .main {
   background-size: cover;
   background-position: top;
