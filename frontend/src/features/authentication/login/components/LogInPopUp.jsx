@@ -1,21 +1,26 @@
-import { useOutsideClick } from "../../../../hooks/useOutsideClick";
-import { useApp } from "../../../../hooks/useApp";
+import { useOutsideClick } from "@hooks/useOutsideClick";
+import { useApp } from "@hooks/useApp";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useLoginUser } from "../services/authService";
-import Button from "./../../../../components//Button";
-import InputElement from "./../../../../components/InputElement";
-import LoadingSpinner from "../../../../components/LoadingSpinner";
+import Button from "@components//Button";
+import InputElement from "@components/InputElement";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 function LogInPopUp() {
   const { handleSubmit, control } = useForm();
   const { setIsLoginPopUpOpen } = useApp();
   useOutsideClick(setIsLoginPopUpOpen);
   const navigate = useNavigate();
-  const { mutate, isLoading, isError, error } = useLoginUser();
+  const {
+    mutate: login,
+    isPending: isLoggingIn,
+    isError: isLoginError,
+    error: loginError,
+  } = useLoginUser();
 
   const onSubmit = (data) => {
-    mutate(data);
+    login(data);
   };
 
   return (
@@ -105,7 +110,7 @@ function LogInPopUp() {
                 You don't have an account?
               </button>
 
-              {isLoading ? (
+              {isLoggingIn ? (
                 <LoadingSpinner className="w-8 h-8 text-rose-500" />
               ) : (
                 <Button
@@ -120,9 +125,9 @@ function LogInPopUp() {
               )}
             </div>
 
-            {isError && (
+            {isLoginError && (
               <p className="text-center text-red-500 font-medium italic ">
-                {error.response.data.result}
+                {loginError.response.data.result}
               </p>
             )}
           </div>
