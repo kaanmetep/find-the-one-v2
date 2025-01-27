@@ -43,6 +43,8 @@ app.patch("/users/:id", upload, userController.updateUser);
 
 app.post("/checkEmail", authController.checkExistingEmail);
 
+app.delete("/users/:id", userController.deleteUser);
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`server is on port ${port}`);

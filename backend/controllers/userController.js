@@ -44,3 +44,19 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+exports.deleteUser = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(401).json({ result: "User not found!" });
+    }
+    if (!password || !(await user.correctPassword(password))) {
+      return res.status(401).json({ result: "Incorrect password!" });
+    }
+    await User.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ result: "User deleted successfully!" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

@@ -30,6 +30,20 @@ const updateUser = async (userId, updatedData) => {
     throw error;
   }
 };
+const deleteUser = async (userId, password) => {
+  try {
+    if (userId) {
+      const response = await axios.delete(`${endpoints.getUsers}/${userId}`, {
+        data: { password },
+      });
+      return response.data;
+    }
+    throw new Error("No user Id provided.");
+  } catch (error) {
+    console.error("Error deleting user:", error.message);
+    throw error;
+  }
+};
 export const useGetUser = () => {
   const { userId } = useAuth();
   return useQuery({
@@ -44,6 +58,17 @@ export const useUpdateUser = () => {
   return useMutation({
     mutationFn: (data) => updateUser(userId, data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
+};
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  const { userId, logout } = useAuth();
+  return useMutation({
+    mutationFn: (data) => deleteUser(userId, data),
+    onSuccess: () => {
+      logout();
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
