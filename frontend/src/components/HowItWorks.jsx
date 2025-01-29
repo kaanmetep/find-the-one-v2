@@ -3,6 +3,7 @@ import SectionContainer from "./SectionContainer";
 import { PenLine } from "lucide-react";
 import { UsersRound } from "lucide-react";
 import { MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
 function HowItWorksHeading({ children, step }) {
   return (
     <div className="flex items-center justify-between">
@@ -25,9 +26,18 @@ function HowItWorksText({ children }) {
     <p className="mt-4 leading-7 text-slate-600 font-semibold">{children}</p>
   );
 }
+
 function HowItWorksContainer({ children, className, step }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false }}
+      transition={{
+        duration: 1,
+        ease: "easeOut",
+        delay: step * 0.1,
+      }}
       className={`lg:w-1/2 bg-gradient-to-r from-white to-red-50 shadow-lg p-6 rounded-lg border-2 border-r-[10px] border-b-8 relative hover:scale-105 transition-all delay-100 ${className} relative`}
     >
       {children}
@@ -38,9 +48,10 @@ function HowItWorksContainer({ children, className, step }) {
       >
         {step}
       </span>
-    </div>
+    </motion.div>
   );
 }
+
 function HowItWorks() {
   return (
     <SectionContainer>
