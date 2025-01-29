@@ -26,7 +26,7 @@ function SecondaryHeading() {
             ))}
           </div>
           <div>
-            <p className="font-bold text-xs lg:text-base text-center">
+            <p className="font-bold text-xs lg:text-base text-center text-gray-800">
               Join{" "}
               <span className="underline text-white font-extrabold">
                 +10.000

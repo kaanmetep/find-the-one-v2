@@ -4,6 +4,7 @@ import LogInPopUp from "../features/authentication/login/components/LogInPopUp";
 import Button from "./Button";
 import HomeNav from "./HomeNav";
 import NavItem from "./NavItem";
+
 function Heading() {
   const { isLoginPopUpOpen, setIsLoginPopUpOpen } = useApp();
   const navigate = useNavigate();
@@ -16,28 +17,30 @@ function Heading() {
         <HomeNav />
       </div>
       <div className="flex flex-col items-center pt-40 relative">
-        <div className=" font-fontHeading text-2xl sm:text-4xl md:text-5xl tracking-tight  w-full  flex items-center justify-center ">
-          <h1 className="w-[45%] text-center leading-snug">
-            AI-Powered matchmaking to find true love
-          </h1>
-        </div>
-        <h2 className="font-roboto md:tracking-wide text-xl mt-6 text-center px-1">
+        <h2 className="font-roboto md:tracking-widest mb-2 text-xs md:text-base text-center px-1">
           Where you meet the one who’s right for you
         </h2>
-        <div className="mt-4 flex justify-center flex-col items-center ">
+        <div className=" font-fontHeading text-4xl sm:text-5xl md:text-6xl tracking-tight  w-full  flex items-center justify-center  ">
+          <h1 className="w-[80%] md:w-[45%] text-center leading-snug ">
+            AI-Powered matchmaking to find{" "}
+            <span className="bg-gradient-to-r from-white to-red-100 text-black px-3 rounded-md ">
+              true love
+            </span>
+          </h1>
+        </div>
+
+        <div className="mt-12 flex justify-center items-center gap-8 ">
           <Button bgcolor="bg-white" onClick={() => navigate("/register")}>
             <p className="uppercase">Create Account</p>
           </Button>
+          <div className="bg-gradient-to-r from-red-50 to-red-100 px-6 py-2 rounded-lg text-black">
+            <NavItem to="howitworks" className={"hover:text-slate-700"}>
+              Learn more
+            </NavItem>
+          </div>
         </div>
       </div>
-      <div className="  border-b-2 border-rose-300 hover:border-transparent transition-all delay-[50ms] mt-auto flex items-center justify-center gap-2 mx-auto">
-        <NavItem to="howitworks">Learn more &darr;</NavItem>
-        <img
-          src="square-heart.svg"
-          alt="heart"
-          className="w-4 filter invert brightness-0"
-        />
-      </div>
+
       {isLoginPopUpOpen && <LogInPopUp />}
     </div>
   );

@@ -17,7 +17,7 @@ function Learn() {
         <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold">
           So, Why Choose A Dating App Like Find the One?
         </h3>
-        <p className="mt-4">
+        <p className="mt-4 text-gray-600">
           In a world filled with dating apps, finding the right match can be a
           challenge. But with the power of AI, "Find the One" takes online
           dating to the next level. Our advanced algorithms learn from your
@@ -26,7 +26,7 @@ function Learn() {
           simply exploring new possibilities, our AI-driven system ensures you
           meet people who truly resonate with you.
         </p>
-        <p className="mt-4">
+        <p className="mt-4 text-gray-900">
           Experience the future of dating — powered by cutting-edge AI
           technology, designed to help you find your perfect match effortlessly.
         </p>

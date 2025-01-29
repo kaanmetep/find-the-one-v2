@@ -41,19 +41,11 @@
 .animate-pulse-3 {
   animation: pulse-3 2s infinite;
 }
-
 .main {
   background-size: cover;
   background-position: top;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url("/bg-header.jpg");
-}
-
-.register {
-  background-size: cover;
-  background-position: center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/registerimg.jpg");
 }
 
 .fade-in-section {
