@@ -39,6 +39,8 @@ app.post("/login", authController.login);
 
 app.get("/users/:id", userController.getUser);
 
+app.get("/users", userController.getAllUsers);
+
 app.patch("/users/:id", upload, userController.updateUser);
 
 app.post("/checkEmail", authController.checkExistingEmail);

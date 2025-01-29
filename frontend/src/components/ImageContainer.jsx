@@ -1,7 +1,7 @@
 const ImageContainer = ({ children, htmlFor }) => {
   return (
     <label
-      className="border-dashed rounded-lg cursor-pointer hover:border-red-500 transition-all delay-75 relative h-[300px] w-[270px] min-w-[240px] border-2 border-red-300 p-12"
+      className="border-dashed rounded-lg cursor-pointer hover:border-red-500 transition-all delay-75 relative h-[300px] w-[290px] min-w-[240px] border-2 border-red-300 p-12"
       htmlFor={htmlFor}
     >
       {children}

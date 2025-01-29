@@ -60,3 +60,15 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    if (users) {
+      return res.status(200).json({ result: users });
+    }
+    return res.status(401).json({ result: "Users couldnt fetched!" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

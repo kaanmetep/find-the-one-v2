@@ -12,7 +12,10 @@ const Navigation = () => {
           <NavLink to="profile">Profile</NavLink>
         </li>
         <li>
-          <button className="bg-red-300 px-5 py-1" onClick={() => logout()}>
+          <button
+            className="bg-red-300 px-5 py-1 rounded-lg"
+            onClick={() => logout()}
+          >
             Log out
           </button>
         </li>

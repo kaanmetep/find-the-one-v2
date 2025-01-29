@@ -226,7 +226,7 @@ function Register() {
             </div>
           )}
           <p className="text-red-500 italic font-semibold">
-            {emailCheckedError?.response.data.result}
+            {emailCheckedError?.response?.data?.result}
             {imageError}
           </p>
         </form>
