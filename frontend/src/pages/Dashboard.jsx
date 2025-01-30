@@ -18,7 +18,7 @@ function Dashboard() {
   }, [data, setUserData]);
   return (
     <>
-      <div className="flex justify-between px-8 py-4 border-b bg-gradient-to-r from-red-100 to-red-200 font-medium">
+      <div className="flex flex-col md:flex-row gap-3 lg:gap-0 justify-between items-center px-8 py-4 border-b bg-gradient-to-r from-red-100 to-red-200 font-medium">
         {isPending ? (
           <LoadingSpinner />
         ) : (

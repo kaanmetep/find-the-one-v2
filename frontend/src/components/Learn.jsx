@@ -11,13 +11,13 @@ function Learn() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 3, ease: "easeOut", delay: 2 }}
+          transition={{ duration: 2, ease: "easeOut", delay: 2 }}
         >
           <SectionHeading>Learn</SectionHeading>
           <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold">
             So, Why Choose A Dating App Like Find the One?
           </h3>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-4 text-gray-600 text-base">
             In a world filled with dating apps, finding the right match can be a
             challenge. But with the power of AI, "Find the One" takes online
             dating to the next level. Our advanced algorithms learn from your

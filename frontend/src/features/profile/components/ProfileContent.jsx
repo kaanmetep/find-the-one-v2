@@ -87,7 +87,7 @@ const ProfileContent = () => {
       <div className="max-w-xl mx-auto p-6 bg-white shadow-lg shadow-red-100 rounded-lg  mt-4">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-8"
+          className="flex flex-col space-y-14"
         >
           <div className="grid gap-4">
             {[
@@ -215,25 +215,25 @@ const ProfileContent = () => {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex flex-col justify-center items-center gap-6">
             {updatingUser ? (
               <Loading />
             ) : (
               <button
                 type="submit"
-                className="px-6 py-2 bg-gradient-to-r from-red-300 to-red-500 text-gray-50 font-semibold rounded-md hover:text-gray-200 hover:shadow-lg  transition-all delay-75"
+                className="px-6 py-2 bg-gradient-to-r from-red-300 to-red-500 text-gray-50 font-semibold rounded-md hover:text-gray-200 hover:shadow-lg  transition-all delay-75 w-fit"
               >
                 Update Profile
               </button>
             )}
+            <button
+              className="px-4 py-2 bg-gradient-to-r from-red-200 to-red-300 text-black font-semibold rounded-md hover:text-gray-50 hover:shadow-lg  transition-all delay-75 w-fit mx-auto text-xs"
+              type="button"
+              onClick={() => setShowProfileDeletePage(true)}
+            >
+              Delete my account
+            </button>
           </div>
-          <button
-            className="px-4 py-2 bg-gradient-to-r from-red-200 to-red-300 text-black font-semibold rounded-md hover:text-gray-50 hover:shadow-lg  transition-all delay-75 w-fit mx-auto text-xs"
-            type="button"
-            onClick={() => setShowProfileDeletePage(true)}
-          >
-            Delete my account
-          </button>
         </form>
       </div>
     </>

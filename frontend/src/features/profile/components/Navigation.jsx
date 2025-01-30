@@ -4,7 +4,7 @@ const Navigation = () => {
   const { logout } = useAuth();
   return (
     <nav>
-      <ul className="flex items-center gap-4">
+      <ul className="flex items-center gap-4 text-xs lg:text-base">
         <li>
           <NavLink to="/dashboard">Home</NavLink>
         </li>
