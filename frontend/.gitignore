@@ -24,3 +24,5 @@ config.env
 *.sln
 *.sw?
 .env
+
+notes.md

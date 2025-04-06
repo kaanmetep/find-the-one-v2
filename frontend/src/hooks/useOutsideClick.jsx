@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-export function useOutsideClick(handleFunc) {
+export function useOutsideClick(handleFunc, nullOrFalse) {
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (!e.target.closest(".popup")) {
-        handleFunc(false);
+        handleFunc(nullOrFalse === null ? null : false);
       }
     };
     document.addEventListener("mousedown", handleOutsideClick);
