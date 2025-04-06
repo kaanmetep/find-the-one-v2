@@ -3,26 +3,43 @@ import { useState, useEffect } from "react";
 import { useGetUsers } from "../services/profileService";
 import UserCards from "./UserCards";
 import UserDetailsCard from "./UserDetailsCard";
+
 const HomePageContent = () => {
   const { data, isPending: gettingUsers } = useGetUsers();
   const [users, setUsers] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
-  console.log(users);
+
   useEffect(() => {
     if (data) {
       setUsers(data.result);
     }
   }, [data]);
+
   return (
-    <div>
+    <div className="container mx-auto px-4 py-4 ">
       {userDetails && (
         <UserDetailsCard
           userDetails={userDetails}
           setUserDetails={setUserDetails}
         />
       )}
-      <h2 className="text-2xl">Discover your perfect match</h2>
-      <p className="text-gray-400">Meet Like-Minded People</p>
+
+      <div className="flex flex-col items-center ">
+        <h2 className="text-4xl font-extrabold text-black mb-3 relative  w-fit text-center">
+          <span
+            className="absolute h-2 md:h-3 w-1/2 hidden md:block lg:w-full bg-red-300 bottom-1 left-0 -z-10 rounded-md"
+            aria-hidden="true"
+          ></span>
+          Discover Your Perfect Match
+        </h2>
+
+        <p className="text-gray-500 text-lg max-w-2xl mx-auto text-center">
+          Connect with like-minded people who share your interests and passions.
+          Your perfect match could be just{" "}
+          <span className="text-black font-semibold">one click away!</span>
+        </p>
+      </div>
+
       {users ? (
         <UserCards users={users} setUserDetails={setUserDetails} />
       ) : (

@@ -1,5 +1,5 @@
 const UserCard = ({ user, setUserDetails }) => {
-  const matchPercentage = Math.floor(Math.random() * (91 - 20) + 20);
+  const matchPercentage = Math.floor(Math.random() * (100 - 21) + 20);
   const getMatchColor = (percentage) => {
     if (percentage > 90) {
       return {
@@ -38,7 +38,7 @@ const UserCard = ({ user, setUserDetails }) => {
     >
       <div className="relative w-64 h-96">
         <div
-          className={`absolute top-4 -left-5 ${matchColors.bg} rounded-lg shadow-lg px-3 py-1 z-40 flex items-center border ${matchColors.border}`}
+          className={`absolute top-4 -left-6 ${matchColors.bg} rounded-lg shadow-lg px-3 py-1 z-40 flex items-center border ${matchColors.border}`}
         >
           <div className="flex flex-col items-center">
             <span className="font-bold text-white text-xl tracking-wide">
