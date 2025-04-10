@@ -41,6 +41,8 @@ const ProfileContent = () => {
       birthdayDate: formatDate(userData.birthdayDate),
       gender: userData.personelDetails.gender,
       genderInterest: userData.personelDetails.genderInterest,
+      occupation:
+        userData.occupation.at(0).toUpperCase() + userData.occupation.slice(1),
     },
   });
 
@@ -63,7 +65,9 @@ const ProfileContent = () => {
     if (data.genderInterest !== defaultValues.genderInterest) {
       formData.append("genderInterest", data.genderInterest);
     }
-
+    if (data.occupation !== defaultValues.occupation) {
+      formData.append("occupation", data.occupation);
+    }
     ["image1", "image2", "image3"].forEach((key, index) => {
       if (images[key]) {
         formData.append("photos", images[key], `${index + 1}`);
@@ -94,6 +98,7 @@ const ProfileContent = () => {
               { label: "First Name", name: "firstName", disabled: false },
               { label: "Email", name: "email", disabled: true },
               { label: "Birthday Date", name: "birthdayDate", disabled: true },
+              { label: "Occupation", name: "occupation", disabled: false },
             ].map(({ label, name, disabled }) => (
               <div key={name} className="flex flex-col">
                 <label htmlFor={name} className="mb-2 text-sm font-medium">

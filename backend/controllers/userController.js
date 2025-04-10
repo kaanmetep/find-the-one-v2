@@ -17,10 +17,11 @@ exports.updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found!" });
     }
-    const { firstName, genderInterest, imageDeleted } = req.body;
+    const { firstName, genderInterest, imageDeleted, occupation } = req.body;
     if (firstName) user.firstName = firstName;
     if (genderInterest) user.personelDetails.genderInterest = genderInterest;
     if (imageDeleted) user.photos.pop();
+    if (occupation) user.occupation = occupation;
     if (req.files.length > 0) {
       const files = req.files;
       const imageUrls = await Promise.all(
