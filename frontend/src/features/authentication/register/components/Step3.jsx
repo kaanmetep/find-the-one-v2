@@ -7,6 +7,7 @@ import {
   Calendar,
   PersonStanding,
   HeartHandshakeIcon,
+  BriefcaseBusiness,
 } from "lucide-react";
 function Step3({ control, errors, register }) {
   const [inputType, setInputType] = useState("text");
@@ -45,6 +46,21 @@ function Step3({ control, errors, register }) {
           </div>
         )}
       />
+      <Controller
+        name="occupation"
+        control={control}
+        render={({ field }) => (
+          <div className="flex relative">
+            <BriefcaseBusiness className="absolute left-3 top-1/2 -translate-y-1/2" />
+            <InputElement
+              placeholder="What's your occupation?"
+              pl={40}
+              py={6}
+              {...field}
+            />
+          </div>
+        )}
+      />
       <div className="flex relative">
         <PersonStanding className="absolute left-3 top-1/2 -translate-y-1/2 " />
         <select
@@ -75,8 +91,9 @@ function Step3({ control, errors, register }) {
         </select>
       </div>
       <RegisterValidationError>
-        {errors.name?.message ||
+        {errors.firstName?.message ||
           errors.birthdayDate?.message ||
+          errors.occupation?.message ||
           errors.gender?.message ||
           errors.genderInterest?.message}
       </RegisterValidationError>

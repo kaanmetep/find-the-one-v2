@@ -81,9 +81,10 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
           </div>
           <div className="text-center mb-4 sm:mb-8 bg-red-50 rounded-lg p-3 sm:p-4 border-l-4 border-red-400">
             <p className="text-base sm:text-lg text-gray-800">
-              <span className="font-medium">{formattedUserName}</span> is a{" "}
+              <span className="font-medium">{formattedUserName}</span> is{" "}
+              {/^[aeiouAEIOU]/.test(userDetails.occupation) ? "an" : "a"}{" "}
               <span className="font-bold text-lg sm:text-xl text-red-600">
-                student
+                {userDetails.occupation}
               </span>
             </p>
           </div>

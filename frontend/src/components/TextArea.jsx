@@ -1,11 +1,11 @@
 function TextArea({ value, onChange }) {
   return (
     <textarea
-      className="shadow-lg border-2 border-rose-200 px-2 pt-2  rounded-md py-6 placeholder:text-sm w-72 
+      className="shadow-lg border-2 border-rose-200 px-2 pt-2  rounded-md py-6 placeholder:text-sm w-full 
   transition-all duration-300 focus:outline-none
   focus:ring
   focus:ring-rose-200
-  focus:ring-opacity-50 text-black "
+  focus:ring-opacity-50 text-black min-h-32 "
       maxLength={100}
       placeholder="Start typing..."
       value={value}

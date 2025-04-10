@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Upload } from "lucide-react";
 import ImageContainer from "@components/ImageContainer";
 import { handleImageUpload } from "@utils";
-const Step2 = ({ images, setImages }) => {
+import RegisterValidationError from "./RegisterValidationError";
+const Step2 = ({ images, setImages, imageError }) => {
   const [imageErrors, setImageErrors] = useState({});
   return (
     <>
@@ -47,6 +48,7 @@ const Step2 = ({ images, setImages }) => {
           </ImageContainer>
         ))}
       </div>
+      <RegisterValidationError>{imageError}</RegisterValidationError>
     </>
   );
 };

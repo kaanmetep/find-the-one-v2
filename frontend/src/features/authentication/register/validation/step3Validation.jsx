@@ -18,6 +18,7 @@ const step3Validation = yup.object({
   genderInterest: yup
     .string()
     .required("Please choose your interested gender."),
+  occupation: yup.string().required("Please enter your occupation."),
 });
 
 export default step3Validation;

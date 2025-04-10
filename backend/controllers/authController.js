@@ -14,6 +14,7 @@ exports.signup = async (req, res) => {
       email,
       birthdayDate,
       password,
+      occupation,
       rePassword,
       personelDetails, // JSON
       personelQuestions, // JSON
@@ -24,7 +25,6 @@ exports.signup = async (req, res) => {
     const parsedPersonelDetails = JSON.parse(personelDetails);
     const parsedPersonelQuestions = JSON.parse(personelQuestions);
     const parsedRelationshipQuestions = JSON.parse(relationshipQuestions);
-
     const files = req.files;
     if (!files || files.length < 2) {
       return res
@@ -49,6 +49,7 @@ exports.signup = async (req, res) => {
       birthdayDate,
       password,
       rePassword,
+      occupation,
       photos: imageUrls,
       personelDetails: parsedPersonelDetails,
       personelQuestions: parsedPersonelQuestions,

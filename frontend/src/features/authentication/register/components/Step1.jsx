@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import InputElement from "@components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
 import { Mail, KeyRound } from "lucide-react";
-const Step1 = ({ control, errors }) => {
+const Step1 = ({ control, errors, emailExistError }) => {
   return (
     <>
       <h2 className="text-center  italic font-bold text-black px-4">
@@ -57,7 +57,8 @@ const Step1 = ({ control, errors }) => {
       <RegisterValidationError>
         {errors.email?.message ||
           errors.password?.message ||
-          errors.rePassword?.message}
+          errors.rePassword?.message ||
+          emailExistError}
       </RegisterValidationError>
     </>
   );

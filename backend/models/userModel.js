@@ -38,6 +38,12 @@ const userSchema = new mongoose.Schema({
     },
     trim: true,
   },
+  occupation: {
+    type: String,
+    required: [true, "You must enter your occupation."],
+    lowercase: true,
+    trim: true,
+  },
   photos: { type: [String], required: true },
   personelDetails: {
     gender: {
@@ -74,6 +80,21 @@ const userSchema = new mongoose.Schema({
       required: [true, "You must answer fourth personel question"],
       trim: true,
     },
+    personelQ5: {
+      type: String,
+      required: [true, "You must answer fourth personel question"],
+      trim: true,
+    },
+    personelQ6: {
+      type: String,
+      required: [true, "You must answer fourth personel question"],
+      trim: true,
+    },
+    personelQ7: {
+      type: String,
+      required: [true, "You must answer fourth personel question"],
+      trim: true,
+    },
   },
   relationshipQuestions: {
     relationshipQ1: {
@@ -92,6 +113,21 @@ const userSchema = new mongoose.Schema({
       trim: true,
     },
     relationshipQ4: {
+      type: String,
+      required: [true, "You must answer fourth relationship question."],
+      trim: true,
+    },
+    relationshipQ5: {
+      type: String,
+      required: [true, "You must answer fourth relationship question."],
+      trim: true,
+    },
+    relationshipQ6: {
+      type: String,
+      required: [true, "You must answer fourth relationship question."],
+      trim: true,
+    },
+    relationshipQ7: {
       type: String,
       required: [true, "You must answer fourth relationship question."],
       trim: true,
