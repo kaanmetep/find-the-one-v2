@@ -220,19 +220,20 @@ const ProfileContent = () => {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center items-center gap-6">
+          <div className="flex flex-col justify-center items-center gap-4 w-full">
             {updatingUser ? (
               <Loading />
             ) : (
               <button
                 type="submit"
-                className="px-6 py-2 bg-gradient-to-r from-red-300 to-red-500 text-gray-50 font-semibold rounded-md hover:text-gray-200 hover:shadow-lg  transition-all delay-75 w-fit"
+                className="px-8 py-3 bg-gradient-to-r from-red-400 to-red-600 text-white font-medium rounded-lg hover:from-red-500 hover:to-red-700 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 ease-in-out w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
               >
                 Update Profile
               </button>
             )}
+
             <button
-              className="px-4 py-2 bg-gradient-to-r from-red-200 to-red-300 text-black font-semibold rounded-md hover:text-gray-50 hover:shadow-lg  transition-all delay-75 w-fit mx-auto text-xs"
+              className="px-6 py-2.5 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 font-medium rounded-lg hover:from-gray-200 hover:to-gray-300 shadow hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-300 ease-in-out w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50 border border-gray-200"
               type="button"
               onClick={() => setShowProfileDeletePage(true)}
             >

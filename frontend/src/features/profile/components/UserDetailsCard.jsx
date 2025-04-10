@@ -84,8 +84,8 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
               <span className="font-medium">{formattedUserName}</span> is{" "}
               {/^[aeiouAEIOU]/.test(userDetails.occupation) ? "an" : "a"}{" "}
               <span className="font-bold text-lg sm:text-xl text-red-600">
-                {userDetails.occupation.at(0).toUpperCase() +
-                  userDetails.occupation.slice(1)}
+                {userDetails?.occupation?.at(0).toUpperCase() +
+                  userDetails?.occupation?.slice(1)}
               </span>
             </p>
           </div>
