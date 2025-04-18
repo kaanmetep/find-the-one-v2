@@ -11,7 +11,7 @@ function Learn() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 2, ease: "easeOut", delay: 2 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 1 }}
         >
           <SectionHeading>Learn</SectionHeading>
           <h3 className="mt-4 font-fontHeading text-rose-400 font-extrabold">
