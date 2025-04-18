@@ -7,6 +7,7 @@ import Learn from "../components/Learn";
 import Safety from "../components/Safety";
 import Support from "../components/Support";
 import HowItWorks from "../components/HowItWorks";
+import Footer from "../components/Footer";
 function Home() {
   const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function Home() {
         <Support />
         <HowItWorks />
       </div>
+      <Footer />
     </div>
   );
 }
