@@ -44,6 +44,12 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
+  gender: {
+    type: String,
+    lowercase: true,
+    required: [true, "You must enter your gender"],
+    trim: true,
+  },
   photos: { type: [String], required: true },
   socialMedia: {
     twitter: {
@@ -63,12 +69,22 @@ const userSchema = new mongoose.Schema({
       trim: true,
     },
   },
-  personelDetails: {
-    gender: {
+  preferences: {
+    ageLimitMatters: {
+      type: Boolean,
+      required: true,
+    },
+    relationshipType: {
       type: String,
-      lowercase: true,
-      required: [true, "You must enter your gender"],
-      trim: true,
+      required: true,
+    },
+    minAge: {
+      type: Number,
+      required: true,
+    },
+    maxAge: {
+      type: Number,
+      required: true,
     },
     genderInterest: {
       type: String,
@@ -77,6 +93,7 @@ const userSchema = new mongoose.Schema({
       trim: true,
     },
   },
+
   personelQuestions: {
     personelQ1: {
       type: String,

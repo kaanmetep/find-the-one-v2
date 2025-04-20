@@ -4,6 +4,7 @@ import step5Validation from "./step5Validation";
 import step3Validation from "./step3Validation";
 import step4Validation from "./step4Validation";
 import stepSocialsValidaton from "./stepSocialsValidation";
+import stepPreferencesValidation from "./stepPreferencesValidation";
 export const validationSchemas = [
   step1Validation,
   step2Validation,
@@ -11,4 +12,5 @@ export const validationSchemas = [
   stepSocialsValidaton,
   step4Validation,
   step5Validation,
+  stepPreferencesValidation,
 ];

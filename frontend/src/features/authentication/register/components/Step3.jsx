@@ -6,7 +6,6 @@ import {
   UserIcon,
   Calendar,
   PersonStanding,
-  HeartHandshakeIcon,
   BriefcaseBusiness,
 } from "lucide-react";
 function Step3({ control, errors, register }) {
@@ -76,27 +75,12 @@ function Step3({ control, errors, register }) {
           <option value="woman">Woman</option>
         </select>
       </div>
-      <div className="flex relative">
-        <HeartHandshakeIcon className="absolute left-3 top-1/2 -translate-y-1/2 " />
 
-        <select
-          className={"input-element-select"}
-          required
-          {...register("genderInterest")}
-        >
-          <option value="" disabled selected>
-            Interested Gender
-          </option>
-          <option value="man">Man</option>
-          <option value="woman">Woman</option>
-        </select>
-      </div>
       <RegisterValidationError>
         {errors.firstName?.message ||
           errors.birthdayDate?.message ||
           errors.occupation?.message ||
-          errors.gender?.message ||
-          errors.genderInterest?.message}
+          errors.gender?.message}
       </RegisterValidationError>
     </>
   );

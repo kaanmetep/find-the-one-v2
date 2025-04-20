@@ -16,7 +16,9 @@ import Step3 from "../features/authentication/register/components/Step3";
 import Step4 from "../features/authentication/register/components/Step4";
 import Step5 from "../features/authentication/register/components/Step5";
 import StepSocials from "../features/authentication/register/components/StepSocials";
+import StepPreferences from "../features/authentication/register/components/StepPreferences";
 function Register() {
+  const totalSteps = 7;
   const [images, setImages] = useState({
     image1: null,
     image2: null,
@@ -32,6 +34,7 @@ function Register() {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
   } = useForm({ resolver: yupResolver(validationSchemas[currentStep - 1]) });
   const {
     mutate: registerUser,
@@ -51,7 +54,7 @@ function Register() {
   };
   const goForward = async () => {
     setImageError(null);
-    if (currentStep > 5) return;
+    if (currentStep > 6) return;
     if (currentStep === 1) {
       try {
         if (watch("email")) {
@@ -75,7 +78,7 @@ function Register() {
       handleSubmit(() => setCurrentStep((curr) => curr + 1))(); // handleSubmit is a function that returns another function. So we have to call it immediately.
     }
   };
-
+  console.log(watch());
   const onSubmit = async (data) => {
     const {
       firstName,
@@ -88,9 +91,14 @@ function Register() {
       twitter,
       snapchat,
       bluesky,
+      ageDoesntMatter,
+      gender,
+      minAge,
+      maxAge,
+      relationshipType,
+      genderInterest,
       ...rest
     } = data;
-
     const formData = new FormData();
 
     formData.append("firstName", firstName);
@@ -99,13 +107,8 @@ function Register() {
     formData.append("password", password);
     formData.append("rePassword", rePassword);
     formData.append("occupation", occupation);
-    formData.append(
-      "personelDetails",
-      JSON.stringify({
-        gender: rest.gender,
-        genderInterest: rest.genderInterest,
-      })
-    );
+    formData.append("gender", gender);
+
     formData.append(
       "personelQuestions",
       JSON.stringify({
@@ -130,18 +133,29 @@ function Register() {
         relationshipQ7: rest.relationshipQ7,
       })
     );
+    formData.append(
+      "socials",
+      JSON.stringify({ twitter, snapchat, bluesky, instagram })
+    );
+
+    formData.append(
+      "preferences",
+      JSON.stringify({
+        ageLimitMatters: watch("ageDoesntMatter") ? true : false,
+        relationshipType: relationshipType,
+        minAge: watch("ageDoesntMatter") ? 18 : minAge,
+        maxAge: watch("ageDoesntMatter") ? 90 : maxAge,
+        genderInterest: genderInterest,
+      })
+    );
 
     if (images.image1) formData.append("photos", images.image1);
     if (images.image2) formData.append("photos", images.image2);
     if (images.image3) formData.append("photos", images.image3);
 
-    if (twitter) formData.append("twitter", twitter);
-    if (snapchat) formData.append("snapchat", snapchat);
-    if (bluesky) formData.append("bluesky", bluesky);
-    if (instagram) formData.append("instagram", instagram);
-
     registerUser(formData);
   };
+  console.log(watch());
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-rose-50 to-pink-50">
       <div className="flex flex-col items-center gap-4 py-10 md:w-[70%] lg:w-[60%] w-[90%] mx-auto bg-white rounded-xl shadow-lg border border-rose-100 my-8">
@@ -178,13 +192,13 @@ function Register() {
               Create an account
             </h1>
             <div className="bg-rose-500 text-white font-bold text-sm rounded-full h-8 w-8 flex items-center justify-center">
-              {currentStep}/6
+              {currentStep}/{totalSteps}
             </div>
           </div>
           <div className="h-1 w-64 mt-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-rose-500 transition-all duration-500 ease-in-out"
-              style={{ width: `${(currentStep / 6) * 100}%` }}
+              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
             ></div>
           </div>
         </div>
@@ -199,6 +213,7 @@ function Register() {
               errors={errors}
               watch={watch}
               emailExistError={emailCheckedError?.response?.data?.result}
+              totalSteps={totalSteps}
             />
           )}
           {currentStep === 2 && (
@@ -220,33 +235,45 @@ function Register() {
           )}
           {currentStep === 5 && <Step4 control={control} errors={errors} />}
           {currentStep === 6 && <Step5 control={control} errors={errors} />}
-
-          {currentStep === 6 ? (
+          {currentStep === 7 && (
+            <StepPreferences
+              control={control}
+              errors={errors}
+              register={register}
+              watch={watch}
+              setValue={setValue}
+            />
+          )}
+          {currentStep === 7 ? (
             isRegistering ? (
               <div className="mt-6">
                 <LoadingSpinner />
               </div>
-            ) : registerFailed ? (
-              <p className="text-red-600 font-semibold text-center mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
-                An error occurred on register. Please try again later.
-                {registerError?.response.data.result}
-              </p>
             ) : (
-              <div className="flex gap-4 items-center mt-8 justify-between w-full sm:w-3/4 lg:w-1/2">
-                <button
-                  onClick={goBack}
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300 shadow-sm"
-                  type="button"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-700" />
-                </button>
-                <button
-                  className="bg-rose-500 px-8 py-3 rounded-lg text-white font-semibold hover:bg-rose-600 transition-all duration-300 shadow-sm flex-grow"
-                  type="submit"
-                >
-                  Complete
-                </button>
-              </div>
+              <>
+                {registerFailed && (
+                  <p className="text-red-600 font-semibold text-center mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
+                    An error occurred on register. Please try again later.
+                    {registerError?.response.data.result}
+                  </p>
+                )}
+
+                <div className="flex gap-4 items-center mt-8 justify-between w-full sm:w-3/4 lg:w-1/2">
+                  <button
+                    onClick={goBack}
+                    className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300 shadow-sm"
+                    type="button"
+                  >
+                    <ArrowLeft className="w-5 h-5 text-gray-700" />
+                  </button>
+                  <button
+                    className="bg-rose-500 px-8 py-3 rounded-lg text-white font-semibold hover:bg-rose-600 transition-all duration-300 shadow-sm flex-grow"
+                    type="submit"
+                  >
+                    Complete
+                  </button>
+                </div>
+              </>
             )
           ) : (
             <div className="flex gap-4 items-center mt-2 justify-between w-full sm:w-3/4 lg:w-1/2">
@@ -279,7 +306,7 @@ function Register() {
           )}
         </form>
         <div className="flex justify-center gap-2 mt-6 w-full">
-          {[1, 2, 3, 4, 5, 6].map((step) => (
+          {[1, 2, 3, 4, 5, 6, 7].map((step) => (
             <div
               key={step}
               className={`text-xs font-medium ${
@@ -292,6 +319,7 @@ function Register() {
               {step === 4 && "Socials"}
               {step === 5 && "Personal"}
               {step === 6 && "Relationship"}
+              {step === 7 && "Preferences"}
             </div>
           ))}
         </div>

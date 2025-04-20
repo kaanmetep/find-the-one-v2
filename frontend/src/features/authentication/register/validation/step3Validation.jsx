@@ -15,9 +15,7 @@ const step3Validation = yup.object({
       }
     ),
   gender: yup.string().required("Please choose your gender."),
-  genderInterest: yup
-    .string()
-    .required("Please choose your interested gender."),
+
   occupation: yup.string().required("Please enter your occupation."),
 });
 

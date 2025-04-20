@@ -2,11 +2,11 @@ import { Controller } from "react-hook-form";
 import InputElement from "@components/InputElement";
 import RegisterValidationError from "../components/RegisterValidationError";
 import { Mail, KeyRound } from "lucide-react";
-const Step1 = ({ control, errors, emailExistError }) => {
+const Step1 = ({ control, errors, emailExistError, totalSteps }) => {
   return (
     <>
       <h2 className="text-center  italic font-bold text-black px-4">
-        Registration consists of 5 steps. You must fill out all steps
+        Registration consists of {totalSteps} steps. You must fill out all steps
         completely.
       </h2>
       <p className="text-gray-500 text-sm mb-4 text-center">
