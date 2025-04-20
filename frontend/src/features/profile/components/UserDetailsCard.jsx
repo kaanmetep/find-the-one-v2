@@ -2,12 +2,15 @@ import { useEffect } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { Heart, X, Coffee, Film, Sun, Users } from "lucide-react";
 import UserDetailsCardContactSection from "./UserDetailsCardContactSection.jsx";
+import { getMatchColor } from "../../../lib/utils.js";
 const UserDetailsCard = ({ userDetails, setUserDetails }) => {
+  const { userInfo, matchPercentage } = userDetails;
   useOutsideClick(setUserDetails, null);
   const formattedUserName =
-    userDetails.firstName.at(0).toUpperCase() + userDetails.firstName.slice(1);
+    userInfo.firstName.at(0).toUpperCase() + userInfo.firstName.slice(1);
   const userAge =
-    new Date().getFullYear() - new Date(userDetails.birthdayDate).getFullYear();
+    new Date().getFullYear() - new Date(userInfo.birthdayDate).getFullYear();
+  const matchColors = getMatchColor(matchPercentage);
 
   // Disable background scroll on mount
   useEffect(() => {
@@ -35,9 +38,9 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
             Get to know {formattedUserName}
           </h2>
           <p className="text-center text-white/90">
-            You have a{" "}
+            You have{" "}
             <span className="font-bold text-white text-xl lg:text-2xl">
-              90%
+              {matchPercentage}%
             </span>{" "}
             match rate!
           </p>
@@ -46,7 +49,7 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
         {/* Content section */}
         <div className="p-4 sm:p-6 md:p-10 overflow-y-auto max-h-[70vh] sm:max-h-[80vh]">
           <div className="grid grid-cols-2  md:grid-cols-3  gap-2 sm:gap-3 mb-6 sm:mb-8">
-            {userDetails.photos.map((photo) => (
+            {userInfo.photos.map((photo) => (
               <div
                 key={photo}
                 className="aspect-square overflow-hidden rounded-md shadow-md hover:shadow-lg border-2 border-transparent hover:border-red-400 transition-all duration-300"
@@ -72,10 +75,10 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
           <div className="text-center mb-4 sm:mb-8 bg-red-50 rounded-lg p-3 sm:p-4 border-l-4 border-red-400">
             <p className="text-base sm:text-lg text-gray-800">
               <span className="font-medium">{formattedUserName}</span> is{" "}
-              {/^[aeiouAEIOU]/.test(userDetails.occupation) ? "an" : "a"}{" "}
+              {/^[aeiouAEIOU]/.test(userInfo.occupation) ? "an" : "a"}{" "}
               <span className="font-bold text-lg sm:text-xl text-red-600">
-                {userDetails?.occupation?.at(0).toUpperCase() +
-                  userDetails?.occupation?.slice(1)}
+                {userInfo?.occupation?.at(0).toUpperCase() +
+                  userInfo?.occupation?.slice(1)}
               </span>
             </p>
           </div>
@@ -154,27 +157,31 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
           </div>
 
           {/* Footer with match percentage */}
-          <div className="mt-6 sm:mt-8 text-center bg-gray-50 p-4 sm:p-6 rounded-lg">
+          <div
+            className={`mt-6 sm:mt-8 text-center bg-gray-50 p-4 sm:p-6 rounded-lg border ${matchColors.border}`}
+          >
             <div className="mb-3">
               <div className="text-center mb-2 font-bold text-base sm:text-lg text-gray-800">
-                Match Rate: 90%
+                Match Rate: {matchPercentage}%
               </div>
               <div className="bg-gray-200 rounded-full h-3 sm:h-4 w-full">
                 <div
-                  className="bg-gradient-to-r from-red-600 to-red-400 h-3 sm:h-4 rounded-full"
-                  style={{ width: "90%" }}
+                  className={`bg-gradient-to-r ${matchColors.bg} h-3 sm:h-4 rounded-full`}
+                  style={{ width: `${matchPercentage}%` }}
                 ></div>
               </div>
             </div>
             <p className="text-xs sm:text-sm text-gray-600 mt-2">
               Based on your preferences and interests, you have a{" "}
-              <span className="font-bold text-red-600">90%</span> match with{" "}
-              {formattedUserName}
+              <span className={`font-bold text-red-600`}>
+                {matchPercentage}%
+              </span>{" "}
+              match with {formattedUserName}
             </p>
           </div>
           {/* Contact Section */}
           <UserDetailsCardContactSection
-            userDetails={userDetails}
+            userInfo={userInfo}
             formattedUserName={formattedUserName}
           />
         </div>

@@ -6,12 +6,12 @@ import {
   FaBluesky,
 } from "react-icons/fa6";
 
-const UserDetailsCardContactSection = ({ formattedUserName, userDetails }) => {
+const UserDetailsCardContactSection = ({ formattedUserName, userInfo }) => {
   const socialPlatforms = [
     {
       name: "Instagram",
       icon: <FaInstagram size={20} />,
-      username: userDetails?.socialMedia?.instagram,
+      username: userInfo?.socialMedia?.instagram,
       baseUrl: "https://instagram.com/",
       gradient:
         "from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600",
@@ -19,7 +19,7 @@ const UserDetailsCardContactSection = ({ formattedUserName, userDetails }) => {
     {
       name: "Snapchat",
       icon: <FaSnapchat size={20} />,
-      username: userDetails?.socialMedia?.snapchat,
+      username: userInfo?.socialMedia?.snapchat,
       baseUrl: "https://snapchat.com/add/",
       gradient:
         "from-yellow-600 to-yellow-300 hover:from-yellow-500 hover:to-yellow-400",
@@ -27,8 +27,7 @@ const UserDetailsCardContactSection = ({ formattedUserName, userDetails }) => {
     {
       name: "Twitter",
       icon: <FaXTwitter size={20} />,
-      username:
-        userDetails?.socialMedia?.twitter || userDetails?.socialMedia?.x,
+      username: userInfo?.socialMedia?.twitter || userInfo?.socialMedia?.x,
       baseUrl: "https://twitter.com/",
       gradient:
         "from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500",
@@ -36,7 +35,7 @@ const UserDetailsCardContactSection = ({ formattedUserName, userDetails }) => {
     {
       name: "Bluesky",
       icon: <FaBluesky size={20} />,
-      username: userDetails?.socialMedia?.bluesky,
+      username: userInfo?.socialMedia?.bluesky,
       baseUrl: "https://bsky.app/profile/",
       gradient: "from-sky-400 to-cyan-300 hover:from-sky-500 hover:to-cyan-400",
     },

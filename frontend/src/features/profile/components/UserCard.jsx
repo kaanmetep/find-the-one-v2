@@ -1,32 +1,6 @@
+import { getMatchColor } from "../../../lib/utils";
 const UserCard = ({ user, setUserDetails }) => {
   const matchPercentage = Math.floor(Math.random() * (100 - 21) + 20);
-  const getMatchColor = (percentage) => {
-    if (percentage > 90) {
-      return {
-        bg: "bg-gradient-to-r from-red-600 to-red-700",
-        text: "text-red-100",
-        border: "border-red-300",
-      };
-    } else if (percentage >= 70 && percentage <= 90) {
-      return {
-        bg: "bg-gradient-to-r from-red-400 to-red-500",
-        text: "text-red-100",
-        border: "border-red-300",
-      };
-    } else if (percentage >= 50 && percentage < 70) {
-      return {
-        bg: "bg-gradient-to-r from-yellow-500 to-yellow-700",
-        text: "text-yellow-100",
-        border: "border-yellow-300",
-      };
-    } else {
-      return {
-        bg: "bg-gradient-to-r from-gray-300 to-gray-400",
-        text: "text-gray-100",
-        border: "border-gray-300",
-      };
-    }
-  };
 
   const matchColors = getMatchColor(matchPercentage);
 
@@ -34,7 +8,7 @@ const UserCard = ({ user, setUserDetails }) => {
     <li
       key={user.email}
       className="relative hover:scale-105 transition-all duration-300 cursor-pointer group flex flex-col items-center"
-      onClick={() => setUserDetails(user)}
+      onClick={() => setUserDetails({ userInfo: user, matchPercentage })}
     >
       <div className="relative w-64 h-96">
         <div
