@@ -2,11 +2,18 @@ import { useAuth } from "@hooks/useAuth";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
 import { Trash2, Upload, SquarePen } from "lucide-react";
+import {
+  FaSnapchat,
+  FaInstagram,
+  FaXTwitter,
+  FaBluesky,
+} from "react-icons/fa6";
 import { useUpdateUser } from "../services/profileService";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
 import { formatDate, handleImageUpload } from "@utils";
 import DeleteProfile from "./DeleteProfile";
+
 const ProfileContent = () => {
   const imageDeleted = useRef(false);
   const [showProfileDeletePage, setShowProfileDeletePage] = useState(false);
@@ -43,6 +50,10 @@ const ProfileContent = () => {
       genderInterest: userData.preferences.genderInterest,
       occupation:
         userData.occupation.at(0).toUpperCase() + userData.occupation.slice(1),
+      instagram: userData.socialMedia?.instagram || "",
+      twitter: userData.socialMedia?.twitter || "",
+      snapchat: userData.socialMedia?.snapchat || "",
+      bluesky: userData.socialMedia?.bluesky || "",
     },
   });
 
@@ -57,6 +68,7 @@ const ProfileContent = () => {
       toast.success("Profile updated successfully!");
     }
   }, [userUpdated]);
+
   const onSubmit = (data) => {
     const formData = new FormData();
     if (data.firstName !== defaultValues.firstName) {
@@ -68,6 +80,21 @@ const ProfileContent = () => {
     if (data.occupation !== defaultValues.occupation) {
       formData.append("occupation", data.occupation);
     }
+
+    // Check for social media changes
+    if (data.instagram !== defaultValues.instagram) {
+      formData.append("instagram", data.instagram);
+    }
+    if (data.twitter !== defaultValues.twitter) {
+      formData.append("twitter", data.twitter);
+    }
+    if (data.snapchat !== defaultValues.snapchat) {
+      formData.append("snapchat", data.snapchat);
+    }
+    if (data.bluesky !== defaultValues.bluesky) {
+      formData.append("bluesky", data.bluesky);
+    }
+
     ["image1", "image2", "image3"].forEach((key, index) => {
       if (images[key]) {
         formData.append("photos", images[key], `${index + 1}`);
@@ -88,65 +115,206 @@ const ProfileContent = () => {
       {showProfileDeletePage && (
         <DeleteProfile setShowProfileDeletePage={setShowProfileDeletePage} />
       )}
-      <div className="max-w-xl mx-auto p-6 bg-white shadow-lg shadow-red-100 rounded-lg  mt-4">
+      <div className=" mx-auto p-6 bg-white shadow-lg shadow-red-100 rounded-lg mt-4">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col space-y-14"
         >
           <div className="grid gap-4">
-            {[
-              { label: "First Name", name: "firstName", disabled: false },
-              { label: "Email", name: "email", disabled: true },
-              { label: "Birthday Date", name: "birthdayDate", disabled: true },
-              { label: "Occupation", name: "occupation", disabled: false },
-            ].map(({ label, name, disabled }) => (
-              <div key={name} className="flex flex-col">
-                <label htmlFor={name} className="mb-2 text-sm font-medium">
-                  {label}
+            {/* Basic Information - Horizontal layout */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label htmlFor="firstName" className="mb-2 text-sm font-medium">
+                  First Name
                 </label>
                 <Controller
-                  name={name}
+                  name="firstName"
                   control={control}
                   render={({ field }) => (
                     <input
                       {...field}
-                      disabled={disabled}
-                      className={`w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring ${
-                        disabled ? "bg-gray-100 cursor-not-allowed" : ""
-                      } transition-all delay-[50ms]`}
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
                     />
                   )}
                 />
               </div>
-            ))}
-
-            <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium">Gender</label>
-              <select
-                {...register("gender")}
-                disabled
-                className="w-full px-3 py-2 border rounded-md bg-gray-100 cursor-not-allowed border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring"
-              >
-                <option value="man">Man</option>
-                <option value="woman">Woman</option>
-              </select>
+              <div className="flex flex-col">
+                <label htmlFor="email" className="mb-2 text-sm font-medium">
+                  Email
+                </label>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      disabled
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring bg-gray-100 cursor-not-allowed transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
             </div>
 
-            <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium">
-                Gender Interest
-              </label>
-              <select
-                {...register("genderInterest")}
-                required
-                className="w-full px-3 py-2 border rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
-              >
-                <option value="man">Man</option>
-                <option value="woman">Woman</option>
-              </select>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="birthdayDate"
+                  className="mb-2 text-sm font-medium"
+                >
+                  Birthday Date
+                </label>
+                <Controller
+                  name="birthdayDate"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      disabled
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring bg-gray-100 cursor-not-allowed transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="occupation"
+                  className="mb-2 text-sm font-medium"
+                >
+                  Occupation
+                </label>
+                <Controller
+                  name="occupation"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label className="mb-2 text-sm font-medium">Gender</label>
+                <select
+                  {...register("gender")}
+                  disabled
+                  className="w-full px-3 py-2 border rounded-md bg-gray-100 cursor-not-allowed border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring"
+                >
+                  <option value="man">Man</option>
+                  <option value="woman">Woman</option>
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mb-2 text-sm font-medium">
+                  Gender Interest
+                </label>
+                <select
+                  {...register("genderInterest")}
+                  required
+                  className="w-full px-3 py-2 border rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                >
+                  <option value="man">Man</option>
+                  <option value="woman">Woman</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Social Media Section */}
+            <h3 className="text-lg font-medium text-gray-700 mt-2">
+              Social Media Profiles
+            </h3>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="instagram"
+                  className="mb-2 text-sm font-medium flex items-center"
+                >
+                  <FaInstagram className="mr-2 text-pink-500" /> Instagram
+                </label>
+                <Controller
+                  name="instagram"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      placeholder="@username"
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="twitter"
+                  className="mb-2 text-sm font-medium flex items-center"
+                >
+                  <FaXTwitter className="mr-2 text-black" /> Twitter
+                </label>
+                <Controller
+                  name="twitter"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      placeholder="@username"
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="snapchat"
+                  className="mb-2 text-sm font-medium flex items-center"
+                >
+                  <FaSnapchat className="mr-2 text-yellow-400" /> Snapchat
+                </label>
+                <Controller
+                  name="snapchat"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      placeholder="username"
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="bluesky"
+                  className="mb-2 text-sm font-medium flex items-center"
+                >
+                  <FaBluesky className="mr-2 text-blue-500" /> Bluesky
+                </label>
+                <Controller
+                  name="bluesky"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      placeholder="username"
+                      className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                    />
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Photo Upload Section */}
+            <h3 className="text-lg font-medium text-gray-700 mt-2 mx-auto">
+              Profile Photos
+            </h3>
+            <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto ">
               {["image1", "image2", "image3"].map((key, index) => (
                 <div key={key} className="relative">
                   <input
