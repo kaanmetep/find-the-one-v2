@@ -1,7 +1,7 @@
 import { useAuth } from "@hooks/useAuth";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
-import { Trash2, Upload, SquarePen } from "lucide-react";
+import { Trash2, Upload, SquarePen, HeartHandshake, Users } from "lucide-react";
 import {
   FaSnapchat,
   FaInstagram,
@@ -24,6 +24,9 @@ const ProfileContent = () => {
     image3: null,
   });
   const [imageErrors, setImageErrors] = useState({});
+  const [ageDoesntMatter, setAgeDoesntMatter] = useState(
+    userData.preferences?.ageDoesntMatter || false
+  );
 
   const removeImage = (key) => {
     console.log(images);
@@ -38,6 +41,8 @@ const ProfileContent = () => {
     control,
     handleSubmit,
     register,
+    watch,
+    setValue,
     formState: { defaultValues },
   } = useForm({
     defaultValues: {
@@ -48,6 +53,11 @@ const ProfileContent = () => {
       birthdayDate: formatDate(userData.birthdayDate),
       gender: userData.gender,
       genderInterest: userData.preferences.genderInterest,
+      minAge: userData.preferences?.minAge || 18,
+      maxAge: userData.preferences?.maxAge || 90,
+      ageDoesntMatter: userData.preferences?.ageDoesntMatter || false,
+      relationshipType:
+        userData.preferences?.relationshipType || "doesntMatter",
       occupation:
         userData.occupation.at(0).toUpperCase() + userData.occupation.slice(1),
       instagram: userData.socialMedia?.instagram || "",
@@ -56,6 +66,31 @@ const ProfileContent = () => {
       bluesky: userData.socialMedia?.bluesky || "",
     },
   });
+
+  // Watch age values
+  const minAge = watch("minAge") || 18;
+  const maxAge = watch("maxAge") || 90;
+
+  // Update ageDoesntMatter state when form value changes
+  useEffect(() => {
+    setAgeDoesntMatter(watch("ageDoesntMatter"));
+  }, [watch("ageDoesntMatter")]);
+
+  // Reset age inputs when "age doesn't matter" is checked
+  useEffect(() => {
+    if (ageDoesntMatter) {
+      setValue("minAge", "");
+      setValue("maxAge", "");
+    } else if (!watch("minAge") && !watch("maxAge")) {
+      setValue("minAge", 18);
+      setValue("maxAge", 90);
+    }
+  }, [ageDoesntMatter, setValue, watch]);
+
+  // Handle slider change
+  const handleSliderChange = (e) => {
+    setValue(e.target.name, parseInt(e.target.value, 10));
+  };
 
   const {
     mutate: updateUser,
@@ -79,6 +114,20 @@ const ProfileContent = () => {
     }
     if (data.occupation !== defaultValues.occupation) {
       formData.append("occupation", data.occupation);
+    }
+
+    // Add new preferences
+    if (data.minAge !== defaultValues.minAge) {
+      formData.append("minAge", data.minAge);
+    }
+    if (data.maxAge !== defaultValues.maxAge) {
+      formData.append("maxAge", data.maxAge);
+    }
+    if (data.ageDoesntMatter !== defaultValues.ageDoesntMatter) {
+      formData.append("ageDoesntMatter", data.ageDoesntMatter);
+    }
+    if (data.relationshipType !== defaultValues.relationshipType) {
+      formData.append("relationshipType", data.relationshipType);
     }
 
     // Check for social media changes
@@ -208,19 +257,111 @@ const ProfileContent = () => {
                   <option value="woman">Woman</option>
                 </select>
               </div>
+            </div>
+
+            {/* Preferences Section */}
+            <h3 className="text-lg font-medium text-gray-700 mt-2">
+              Matching Preferences
+            </h3>
+
+            <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col">
-                <label className="mb-2 text-sm font-medium">
+                <label className="mb-2 text-sm font-medium flex items-center">
+                  <HeartHandshake className="mr-2 text-red-500" size={18} />
                   Gender Interest
                 </label>
                 <select
                   {...register("genderInterest")}
                   required
-                  className="w-full px-3 py-2 border rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                  className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
                 >
                   <option value="man">Man</option>
                   <option value="woman">Woman</option>
+                  <option value="both">Both</option>
                 </select>
               </div>
+              <div className="flex flex-col">
+                <label className="mb-2 text-sm font-medium flex items-center">
+                  <Users className="mr-2 text-red-500" size={18} />
+                  Looking For
+                </label>
+                <select
+                  {...register("relationshipType")}
+                  required
+                  className="w-full px-3 py-2 border-2 rounded-md border-red-50 focus:ring-red-100 focus:outline-none focus:ring-offset-1 focus:ring transition-all delay-[50ms]"
+                >
+                  <option value="casual">Casual Dating</option>
+                  <option value="serious">Serious Relationship</option>
+                  <option value="friendship">Friendship</option>
+                  <option value="doesntMatter">Doesn't Matter</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Age Range with Slider */}
+            <div className="mb-2">
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-sm font-medium text-gray-700 flex items-center">
+                  Age Range
+                </label>
+                <div className="text-sm text-red-500 font-medium">
+                  {!ageDoesntMatter && `${minAge} - ${maxAge} years`}
+                </div>
+              </div>
+
+              {/* Min Age Slider */}
+              <div className={`mb-4 ${ageDoesntMatter ? "opacity-50" : ""}`}>
+                <label className="block text-xs text-gray-500 mb-1">
+                  Minimum Age
+                </label>
+                <input
+                  type="range"
+                  min="18"
+                  max="90"
+                  step="1"
+                  name="minAge"
+                  value={minAge}
+                  disabled={ageDoesntMatter}
+                  onChange={handleSliderChange}
+                  className="w-full h-2 bg-red-200 rounded-lg appearance-none cursor-pointer accent-red-500"
+                  {...register("minAge")}
+                />
+              </div>
+
+              {/* Max Age Slider */}
+              <div className={`mb-4 ${ageDoesntMatter ? "opacity-50" : ""}`}>
+                <label className="block text-xs text-gray-500 mb-1">
+                  Maximum Age
+                </label>
+                <input
+                  type="range"
+                  min="18"
+                  max="90"
+                  step="1"
+                  name="maxAge"
+                  value={maxAge}
+                  disabled={ageDoesntMatter}
+                  onChange={handleSliderChange}
+                  className="w-full h-2 bg-red-200 rounded-lg appearance-none cursor-pointer accent-red-500"
+                  {...register("maxAge")}
+                />
+              </div>
+            </div>
+
+            {/* Age Doesn't Matter Checkbox */}
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="ageDoesntMatter"
+                className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 focus:ring-offset-0"
+                {...register("ageDoesntMatter")}
+              />
+              <label
+                htmlFor="ageDoesntMatter"
+                className="ml-2 text-gray-700 text-sm"
+              >
+                Age doesn't matter to me
+              </label>
             </div>
 
             {/* Social Media Section */}

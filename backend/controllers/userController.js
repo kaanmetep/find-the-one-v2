@@ -21,6 +21,10 @@ exports.updateUser = async (req, res) => {
     const {
       firstName,
       genderInterest,
+      minAge,
+      maxAge,
+      ageDoesntMatter,
+      relationshipType,
       imageDeleted,
       occupation,
       instagram,
@@ -29,16 +33,24 @@ exports.updateUser = async (req, res) => {
       bluesky,
     } = req.body;
 
-    // Update basic profile information
     if (firstName) user.firstName = firstName;
-    if (genderInterest) user.preferences.genderInterest = genderInterest;
-    if (imageDeleted) user.photos.pop();
     if (occupation) user.occupation = occupation;
+    if (imageDeleted) user.photos.pop();
 
-    // Initialize socialMedia object if it doesn't exist
-    if (!user.socialMedia) {
-      user.socialMedia = {};
+    if (genderInterest) user.preferences.genderInterest = genderInterest;
+
+    if (ageDoesntMatter) {
+      user.preferences.ageDoesntMatter = true;
+      user.preferences.minAge = 18;
+      user.preferences.maxAge = 90;
     }
+
+    if (!user.preferences.ageDoesntMatter) {
+      if (minAge) user.preferences.minAge = minAge;
+      if (maxAge) user.preferences.maxAge = maxAge;
+    }
+
+    if (relationshipType) user.preferences.relationshipType = relationshipType;
 
     // Update social media handles if provided
     if (instagram) user.socialMedia.instagram = instagram;
