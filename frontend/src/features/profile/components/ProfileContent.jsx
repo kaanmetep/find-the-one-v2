@@ -39,8 +39,8 @@ const ProfileContent = () => {
         userData.firstName.slice(1),
       email: userData.email,
       birthdayDate: formatDate(userData.birthdayDate),
-      gender: userData.personelDetails.gender,
-      genderInterest: userData.personelDetails.genderInterest,
+      gender: userData.gender,
+      genderInterest: userData.preferences.genderInterest,
       occupation:
         userData.occupation.at(0).toUpperCase() + userData.occupation.slice(1),
     },
