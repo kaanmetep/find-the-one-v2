@@ -32,6 +32,7 @@ function StepSocials({ control, errors, register }) {
               pl={40}
               py={6}
               {...field}
+              maxLength="20"
             />
           </div>
         )}
@@ -48,6 +49,7 @@ function StepSocials({ control, errors, register }) {
               pl={40}
               py={6}
               {...field}
+              maxLength="20"
             />
           </div>
         )}
@@ -64,6 +66,7 @@ function StepSocials({ control, errors, register }) {
               pl={40}
               py={6}
               {...field}
+              maxLength="20"
             />
           </div>
         )}
@@ -80,6 +83,7 @@ function StepSocials({ control, errors, register }) {
               pl={40}
               py={6}
               {...field}
+              maxLength="20"
             />
           </div>
         )}

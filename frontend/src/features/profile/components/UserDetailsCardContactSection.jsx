@@ -22,7 +22,7 @@ const UserDetailsCardContactSection = ({ formattedUserName, userDetails }) => {
       username: userDetails?.socialMedia?.snapchat,
       baseUrl: "https://snapchat.com/add/",
       gradient:
-        "from-yellow-400 to-yellow-300 hover:from-yellow-500 hover:to-yellow-400",
+        "from-yellow-600 to-yellow-300 hover:from-yellow-500 hover:to-yellow-400",
     },
     {
       name: "Twitter",
@@ -74,7 +74,7 @@ const UserDetailsCardContactSection = ({ formattedUserName, userDetails }) => {
               <div className="flex flex-col">
                 <span className="font-bold">{platform.name}</span>
                 {platform.username && (
-                  <span className="text-sm opacity-90">
+                  <span className="text-sm opacity-90 font-extrabold ">
                     @{platform.username}
                   </span>
                 )}

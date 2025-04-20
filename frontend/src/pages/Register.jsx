@@ -136,7 +136,7 @@ function Register() {
     if (images.image3) formData.append("photos", images.image3);
 
     if (twitter) formData.append("twitter", twitter);
-    if (snapchat) formData.append("twitter", snapchat);
+    if (snapchat) formData.append("snapchat", snapchat);
     if (bluesky) formData.append("bluesky", bluesky);
     if (instagram) formData.append("instagram", instagram);
 
