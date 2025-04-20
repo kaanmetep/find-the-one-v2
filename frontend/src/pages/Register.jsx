@@ -15,6 +15,7 @@ import Step2 from "../features/authentication/register/components/Step2";
 import Step3 from "../features/authentication/register/components/Step3";
 import Step4 from "../features/authentication/register/components/Step4";
 import Step5 from "../features/authentication/register/components/Step5";
+import StepSocials from "../features/authentication/register/components/StepSocials";
 function Register() {
   const [images, setImages] = useState({
     image1: null,
@@ -50,7 +51,7 @@ function Register() {
   };
   const goForward = async () => {
     setImageError(null);
-    if (currentStep > 4) return;
+    if (currentStep > 5) return;
     if (currentStep === 1) {
       try {
         if (watch("email")) {
@@ -83,6 +84,10 @@ function Register() {
       password,
       rePassword,
       occupation,
+      instagram,
+      twitter,
+      snapchat,
+      bluesky,
       ...rest
     } = data;
 
@@ -130,6 +135,11 @@ function Register() {
     if (images.image2) formData.append("photos", images.image2);
     if (images.image3) formData.append("photos", images.image3);
 
+    if (twitter) formData.append("twitter", twitter);
+    if (snapchat) formData.append("twitter", snapchat);
+    if (bluesky) formData.append("bluesky", bluesky);
+    if (instagram) formData.append("instagram", instagram);
+
     registerUser(formData);
   };
   return (
@@ -168,13 +178,13 @@ function Register() {
               Create an account
             </h1>
             <div className="bg-rose-500 text-white font-bold text-sm rounded-full h-8 w-8 flex items-center justify-center">
-              {currentStep}/5
+              {currentStep}/6
             </div>
           </div>
           <div className="h-1 w-64 mt-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-rose-500 transition-all duration-500 ease-in-out"
-              style={{ width: `${(currentStep / 5) * 100}%` }}
+              style={{ width: `${(currentStep / 6) * 100}%` }}
             ></div>
           </div>
         </div>
@@ -201,10 +211,17 @@ function Register() {
           {currentStep === 3 && (
             <Step3 control={control} errors={errors} register={register} />
           )}
-          {currentStep === 4 && <Step4 control={control} errors={errors} />}
-          {currentStep === 5 && <Step5 control={control} errors={errors} />}
+          {currentStep === 4 && (
+            <StepSocials
+              control={control}
+              errors={errors}
+              register={register}
+            />
+          )}
+          {currentStep === 5 && <Step4 control={control} errors={errors} />}
+          {currentStep === 6 && <Step5 control={control} errors={errors} />}
 
-          {currentStep === 5 ? (
+          {currentStep === 6 ? (
             isRegistering ? (
               <div className="mt-6">
                 <LoadingSpinner />
@@ -262,7 +279,7 @@ function Register() {
           )}
         </form>
         <div className="flex justify-center gap-2 mt-6 w-full">
-          {[1, 2, 3, 4, 5].map((step) => (
+          {[1, 2, 3, 4, 5, 6].map((step) => (
             <div
               key={step}
               className={`text-xs font-medium ${
@@ -272,8 +289,9 @@ function Register() {
               {step === 1 && "Basics"}
               {step === 2 && "Photos"}
               {step === 3 && "Details"}
-              {step === 4 && "Personal"}
-              {step === 5 && "Relationship"}
+              {step === 4 && "Socials"}
+              {step === 5 && "Personal"}
+              {step === 6 && "Relationship"}
             </div>
           ))}
         </div>

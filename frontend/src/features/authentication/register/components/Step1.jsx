@@ -9,7 +9,7 @@ const Step1 = ({ control, errors, emailExistError }) => {
         Registration consists of 5 steps. You must fill out all steps
         completely.
       </h2>
-      <p className="text-gray-500 text-sm mb-4">
+      <p className="text-gray-500 text-sm mb-4 text-center">
         Do not refresh the page before you complete all the steps.
       </p>
       <Controller

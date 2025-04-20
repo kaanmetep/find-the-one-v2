@@ -10,7 +10,7 @@ const Step2 = ({ images, setImages, imageError }) => {
       <h2 className="text-center italic font-bold text-black">
         Show people how amazing you look. Add at least 2 photos of yourself!
       </h2>
-      <p className="text-gray-500 text-sm mb-4">
+      <p className="text-gray-500 text-sm mb-4 text-center">
         Do not refresh the page before you complete all the steps.
       </p>
 

@@ -1,17 +1,7 @@
 import { useEffect } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import {
-  Heart,
-  X,
-  Coffee,
-  Film,
-  Sun,
-  Users,
-  Instagram,
-  Twitter,
-  MessageCircle,
-} from "lucide-react";
-
+import { Heart, X, Coffee, Film, Sun, Users } from "lucide-react";
+import UserDetailsCardContactSection from "./UserDetailsCardContactSection.jsx";
 const UserDetailsCard = ({ userDetails, setUserDetails }) => {
   useOutsideClick(setUserDetails, null);
   const formattedUserName =
@@ -183,57 +173,10 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
             </p>
           </div>
           {/* Contact Section */}
-          <div className="mt-6 sm:mt-8 rounded-lg border border-gray-200 p-4 sm:p-6 shadow-md">
-            <h3 className="flex items-center gap-2 text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-red-600 border-b-2 border-red-200 pb-2">
-              <MessageCircle size={20} className="text-red-500" />
-              Connect with {formattedUserName}
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <a
-                href={`#`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 p-3 sm:p-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg text-white font-medium transition-all duration-300 hover:shadow-lg"
-              >
-                <Instagram size={20} />
-                <span>Instagram</span>
-              </a>
-
-              <a
-                href="#"
-                className="flex items-center justify-center gap-2 p-3 sm:p-4 bg-gradient-to-r from-yellow-400 to-yellow-300 hover:from-yellow-500 hover:to-yellow-400 rounded-lg text-white font-medium transition-all duration-300 hover:shadow-lg"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-ghost"
-                >
-                  <path d="M9 10h.01"></path>
-                  <path d="M15 10h.01"></path>
-                  <path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"></path>
-                </svg>
-                <span>Snapchat</span>
-              </a>
-
-              <a
-                href={`#`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500 rounded-lg text-white font-medium transition-all duration-300 hover:shadow-lg"
-              >
-                <Twitter size={20} />
-                <span>Twitter</span>
-              </a>
-            </div>
-          </div>
+          <UserDetailsCardContactSection
+            userDetails={userDetails}
+            formattedUserName={formattedUserName}
+          />
         </div>
       </div>
     </div>

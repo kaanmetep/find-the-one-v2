@@ -16,6 +16,10 @@ exports.signup = async (req, res) => {
       password,
       occupation,
       rePassword,
+      twitter,
+      snapchat,
+      bluesky,
+      instagram,
       personelDetails, // JSON
       personelQuestions, // JSON
       relationshipQuestions, // JSON
@@ -25,6 +29,14 @@ exports.signup = async (req, res) => {
     const parsedPersonelDetails = JSON.parse(personelDetails);
     const parsedPersonelQuestions = JSON.parse(personelQuestions);
     const parsedRelationshipQuestions = JSON.parse(relationshipQuestions);
+
+    // Create a social media object with only the fields that exist
+    const socialMedia = {};
+    if (twitter) socialMedia.twitter = twitter;
+    if (snapchat) socialMedia.snapchat = snapchat;
+    if (bluesky) socialMedia.bluesky = bluesky;
+    if (instagram) socialMedia.instagram = instagram;
+
     const files = req.files;
     if (!files || files.length < 2) {
       return res
@@ -51,6 +63,7 @@ exports.signup = async (req, res) => {
       rePassword,
       occupation,
       photos: imageUrls,
+      socialMedia,
       personelDetails: parsedPersonelDetails,
       personelQuestions: parsedPersonelQuestions,
       relationshipQuestions: parsedRelationshipQuestions,

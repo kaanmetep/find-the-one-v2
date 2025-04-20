@@ -45,6 +45,24 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   photos: { type: [String], required: true },
+  socialMedia: {
+    twitter: {
+      type: String,
+      trim: true,
+    },
+    instagram: {
+      type: String,
+      trim: true,
+    },
+    bluesky: {
+      type: String,
+      trim: true,
+    },
+    snapchat: {
+      type: String,
+      trim: true,
+    },
+  },
   personelDetails: {
     gender: {
       type: String,

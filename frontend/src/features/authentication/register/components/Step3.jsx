@@ -16,7 +16,7 @@ function Step3({ control, errors, register }) {
       <h2 className="text-center italic font-bold text-black">
         Let's get the important details first.
       </h2>
-      <p className="text-gray-500 text-sm mb-4">
+      <p className="text-gray-500 text-sm mb-4 text-center">
         Do not refresh the page before you complete all the steps.
       </p>
       <Controller
@@ -61,6 +61,7 @@ function Step3({ control, errors, register }) {
           </div>
         )}
       />
+
       <div className="flex relative">
         <PersonStanding className="absolute left-3 top-1/2 -translate-y-1/2 " />
         <select
