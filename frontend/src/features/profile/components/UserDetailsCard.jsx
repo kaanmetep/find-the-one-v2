@@ -77,12 +77,22 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
               <span className="font-medium">{formattedUserName}</span> is{" "}
               {/^[aeiouAEIOU]/.test(userInfo.occupation) ? "an" : "a"}{" "}
               <span className="font-bold text-lg sm:text-xl text-red-600">
-                {userInfo?.occupation?.at(0).toUpperCase() +
-                  userInfo?.occupation?.slice(1)}
+                {userInfo?.occupation}
               </span>
             </p>
           </div>
-
+          <div className="text-center mb-4 sm:mb-8 bg-red-50 rounded-lg p-3 sm:p-4 border-l-4 border-red-400">
+            <p className="text-base sm:text-lg text-gray-800">
+              <span className="font-medium">{formattedUserName}</span> is
+              looking for a{" "}
+              <span className="font-bold text-lg sm:text-xl text-red-600">
+                {userInfo?.preferences?.relationshipType === "doesntMatter"
+                  ? "any kind of"
+                  : userInfo?.preferences?.relationshipType}{" "}
+                relationship
+              </span>
+            </p>
+          </div>
           {/* Match information */}
           <div className="space-y-6 sm:space-y-8 mb-6">
             {/* Positive matches */}
