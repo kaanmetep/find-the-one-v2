@@ -19,7 +19,7 @@ exports.updateUser = async (req, res) => {
     }
     const { firstName, genderInterest, imageDeleted, occupation } = req.body;
     if (firstName) user.firstName = firstName;
-    if (genderInterest) user.personelDetails.genderInterest = genderInterest;
+    if (genderInterest) user.preferences.genderInterest = genderInterest;
     if (imageDeleted) user.photos.pop();
     if (occupation) user.occupation = occupation;
     if (req.files.length > 0) {
