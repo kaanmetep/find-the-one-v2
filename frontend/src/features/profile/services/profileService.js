@@ -15,13 +15,15 @@ const getUser = async (userId) => {
     throw error;
   }
 };
-const getUsers = async () => {
+const getUsers = async (filterParams = {}) => {
   try {
-    const response = await axios.get(`${endpoints.getUsers}`);
+    const response = await axios.get(`${endpoints.getUsers}`, {
+      params: filterParams,
+    });
     return response.data;
   } catch (err) {
     console.log(err.message);
-    throw error;
+    throw err;
   }
 };
 const updateUser = async (userId, updatedData) => {
@@ -61,12 +63,13 @@ export const useGetUser = () => {
     staleTime: Infinity,
   });
 };
-export const useGetUsers = () => {
+export const useGetUsers = (filterParams = {}) => {
   return useQuery({
-    queryKey: ["users"],
-    queryFn: () => getUsers(),
+    queryKey: ["users", filterParams],
+    queryFn: () => getUsers(filterParams),
   });
 };
+
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
   const { userId } = useAuth();

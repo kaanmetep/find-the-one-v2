@@ -34,7 +34,11 @@ function Dashboard() {
         <Navigation />
       </div>
       <div className="px-4 py-4">
-        {location.pathname === "/dashboard" ? <HomePageContent /> : <Outlet />}
+        {location.pathname === "/dashboard" ? (
+          <HomePageContent userData={userData} />
+        ) : (
+          <Outlet />
+        )}
       </div>
     </>
   );

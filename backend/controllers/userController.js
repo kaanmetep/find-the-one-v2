@@ -103,11 +103,48 @@ exports.deleteUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    if (users) {
+    const { genderInterest, minAge, maxAge, relationshipType } = req.query;
+
+    // Temel sorgu oluştur
+    let query = {};
+
+    // GenderInterest filtresi
+    if (genderInterest) {
+      query.gender = genderInterest;
+    }
+
+    // RelationshipType filtresi
+    if (relationshipType) {
+      query["preferences.relationshipType"] = relationshipType;
+    }
+
+    // Yaş filtresi için tarih hesaplamaları
+    if (minAge || maxAge) {
+      query.birthdayDate = {};
+
+      if (maxAge) {
+        // maxAge için minimum doğum tarihi hesapla
+        const minBirthDate = new Date();
+        minBirthDate.setFullYear(minBirthDate.getFullYear() - maxAge);
+        query.birthdayDate.$gte = minBirthDate;
+      }
+
+      if (minAge) {
+        // minAge için maximum doğum tarihi hesapla
+        const maxBirthDate = new Date();
+        maxBirthDate.setFullYear(maxBirthDate.getFullYear() - minAge);
+        query.birthdayDate.$lte = maxBirthDate;
+      }
+    }
+
+    const users = await User.find(query);
+
+    if (users && users.length > 0) {
       return res.status(200).json({ result: users });
     }
-    return res.status(401).json({ result: "Users couldnt fetched!" });
+    return res
+      .status(200)
+      .json({ result: [], message: "No users match the criteria." });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
