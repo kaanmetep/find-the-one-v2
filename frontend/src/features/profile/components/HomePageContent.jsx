@@ -6,22 +6,32 @@ import UserDetailsCard from "./UserDetailsCard";
 import { Search } from "lucide-react";
 
 const HomePageContent = ({ userData }) => {
-  console.log(userData);
-  const filterParams = {
-    genderInterest: userData?.preferences?.genderInterest,
-    minAge: userData?.preferences?.minAge,
-    maxAge: userData?.preferences?.maxAge,
-    relationshipType: userData?.preferences?.relationshipType,
-  };
-  const { data, isPending: gettingUsers } = useGetUsers(filterParams);
   const [users, setUsers] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
+
+  // Only create filterParams if userData and preferences exist
+  const filterParams = userData?.preferences
+    ? {
+        genderInterest: userData.preferences.genderInterest,
+        minAge: userData.preferences.minAge,
+        maxAge: userData.preferences.maxAge,
+        relationshipType: userData.preferences.relationshipType,
+      }
+    : null;
+
+  // Skip query if filterParams is not yet available
+  const { data, isPending: gettingUsers } = useGetUsers(
+    filterParams || { skip: true } // Pass dummy param to prevent unfiltered query
+  );
 
   useEffect(() => {
     if (data) {
       setUsers(data.result);
     }
   }, [data]);
+
+  // True if we're loading OR filters aren't ready yet
+  const isLoading = gettingUsers || !filterParams;
 
   return (
     <div className="container mx-auto px-4 py-4 ">
@@ -33,7 +43,7 @@ const HomePageContent = ({ userData }) => {
       )}
 
       <div className="flex flex-col items-center ">
-        <h2 className="text-4xl font-extrabold text-black mb-3 relative  w-fit text-center">
+        <h2 className="text-4xl font-extrabold text-black mb-3 relative w-fit text-center">
           <span
             className="absolute h-2 md:h-3 w-1/2 hidden md:block lg:w-full bg-red-300 bottom-1 left-0 -z-10 rounded-md"
             aria-hidden="true"
@@ -47,7 +57,12 @@ const HomePageContent = ({ userData }) => {
           <span className="text-black font-semibold">one click away!</span>
         </p>
       </div>
-      {users ? (
+
+      {isLoading ? (
+        <div className="fixed inset-0 flex items-center justify-center -z-10">
+          <Loading />
+        </div>
+      ) : users ? (
         users.length > 0 ? (
           <UserCards users={users} setUserDetails={setUserDetails} />
         ) : (
@@ -69,8 +84,13 @@ const HomePageContent = ({ userData }) => {
           </div>
         )
       ) : (
-        <div className="fixed inset-0 flex items-center justify-center -z-10">
-          <Loading />
+        <div className="fixed inset-0 flex flex-col items-center justify-center -z-10">
+          <h3 className="text-xl font-medium text-gray-200 mb-2">
+            Error Loading Users
+          </h3>
+          <p className="text-gray-400 mb-6">
+            We couldn't fetch user data. Please try refreshing the page.
+          </p>
         </div>
       )}
     </div>

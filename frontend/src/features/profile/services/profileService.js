@@ -64,9 +64,12 @@ export const useGetUser = () => {
   });
 };
 export const useGetUsers = (filterParams = {}) => {
+  const hasFilters = Object.keys(filterParams).length > 0 && !filterParams.skip;
+
   return useQuery({
     queryKey: ["users", filterParams],
     queryFn: () => getUsers(filterParams),
+    enabled: hasFilters, // Only run query when filters are available
   });
 };
 
