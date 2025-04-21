@@ -117,7 +117,9 @@ exports.getAllUsers = async (req, res) => {
 
     // RelationshipType filtresi
     if (relationshipType) {
-      query["preferences.relationshipType"] = relationshipType;
+      if (relationshipType !== "doesntMatter") {
+        query["preferences.relationshipType"] = relationshipType;
+      }
     }
 
     // Yaş filtresi için tarih hesaplamaları
