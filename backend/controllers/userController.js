@@ -110,8 +110,9 @@ exports.getAllUsers = async (req, res) => {
 
     // GenderInterest filtresi
     if (genderInterest) {
-      if (genderInterest === "both") return;
-      query.gender = genderInterest;
+      if (genderInterest !== "both") {
+        query.gender = genderInterest;
+      }
     }
 
     // RelationshipType filtresi
