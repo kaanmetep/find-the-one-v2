@@ -24,9 +24,6 @@ const ProfileContent = () => {
     image3: null,
   });
   const [imageErrors, setImageErrors] = useState({});
-  const [ageDoesntMatter, setAgeDoesntMatter] = useState(
-    userData.preferences?.ageDoesntMatter || false
-  );
 
   const removeImage = (key) => {
     console.log(images);
@@ -55,7 +52,6 @@ const ProfileContent = () => {
       genderInterest: userData.preferences.genderInterest,
       minAge: userData.preferences?.minAge || 18,
       maxAge: userData.preferences?.maxAge || 90,
-      ageDoesntMatter: userData.preferences?.ageDoesntMatter || false,
       relationshipType:
         userData.preferences?.relationshipType || "doesntMatter",
       occupation:
@@ -70,22 +66,6 @@ const ProfileContent = () => {
   // Watch age values
   const minAge = watch("minAge") || 18;
   const maxAge = watch("maxAge") || 90;
-
-  // Update ageDoesntMatter state when form value changes
-  useEffect(() => {
-    setAgeDoesntMatter(watch("ageDoesntMatter"));
-  }, [watch("ageDoesntMatter")]);
-
-  // Reset age inputs when "age doesn't matter" is checked
-  useEffect(() => {
-    if (ageDoesntMatter) {
-      setValue("minAge", "");
-      setValue("maxAge", "");
-    } else if (!watch("minAge") && !watch("maxAge")) {
-      setValue("minAge", 18);
-      setValue("maxAge", 90);
-    }
-  }, [ageDoesntMatter, setValue, watch]);
 
   // Handle slider change
   const handleSliderChange = (e) => {
@@ -122,9 +102,6 @@ const ProfileContent = () => {
     }
     if (data.maxAge !== defaultValues.maxAge) {
       formData.append("maxAge", data.maxAge);
-    }
-    if (data.ageDoesntMatter !== defaultValues.ageDoesntMatter) {
-      formData.append("ageDoesntMatter", data.ageDoesntMatter);
     }
     if (data.relationshipType !== defaultValues.relationshipType) {
       formData.append("relationshipType", data.relationshipType);
@@ -305,12 +282,12 @@ const ProfileContent = () => {
                   Age Range
                 </label>
                 <div className="text-sm text-red-500 font-medium">
-                  {!ageDoesntMatter && `${minAge} - ${maxAge} years`}
+                  {`${minAge} - ${maxAge} years`}
                 </div>
               </div>
 
               {/* Min Age Slider */}
-              <div className={`mb-4 ${ageDoesntMatter ? "opacity-50" : ""}`}>
+              <div className="mb-4">
                 <label className="block text-xs text-gray-500 mb-1">
                   Minimum Age
                 </label>
@@ -321,7 +298,6 @@ const ProfileContent = () => {
                   step="1"
                   name="minAge"
                   value={minAge}
-                  disabled={ageDoesntMatter}
                   onChange={handleSliderChange}
                   className="w-full h-2 bg-red-200 rounded-lg appearance-none cursor-pointer accent-red-500"
                   {...register("minAge")}
@@ -329,7 +305,7 @@ const ProfileContent = () => {
               </div>
 
               {/* Max Age Slider */}
-              <div className={`mb-4 ${ageDoesntMatter ? "opacity-50" : ""}`}>
+              <div className="mb-4">
                 <label className="block text-xs text-gray-500 mb-1">
                   Maximum Age
                 </label>
@@ -340,28 +316,11 @@ const ProfileContent = () => {
                   step="1"
                   name="maxAge"
                   value={maxAge}
-                  disabled={ageDoesntMatter}
                   onChange={handleSliderChange}
                   className="w-full h-2 bg-red-200 rounded-lg appearance-none cursor-pointer accent-red-500"
                   {...register("maxAge")}
                 />
               </div>
-            </div>
-
-            {/* Age Doesn't Matter Checkbox */}
-            <div className="flex items-center mb-4">
-              <input
-                type="checkbox"
-                id="ageDoesntMatter"
-                className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 focus:ring-offset-0"
-                {...register("ageDoesntMatter")}
-              />
-              <label
-                htmlFor="ageDoesntMatter"
-                className="ml-2 text-gray-700 text-sm"
-              >
-                Age doesn't matter to me
-              </label>
             </div>
 
             {/* Social Media Section */}
