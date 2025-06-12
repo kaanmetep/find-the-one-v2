@@ -155,7 +155,6 @@ function Register() {
 
     registerUser(formData);
   };
-  console.log(watch());
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-rose-50 to-pink-50">
       <div className="flex flex-col items-center gap-4 py-10 md:w-[70%] lg:w-[60%] w-[90%] mx-auto bg-white rounded-xl shadow-lg border border-rose-100 my-8">
