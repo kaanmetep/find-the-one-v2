@@ -1,11 +1,16 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-dotenv.config({ path: "../config.env" });
-const authController = require("../controllers/authController");
-const userController = require("../controllers/userController");
-const { upload } = require("../middlewares/upload");
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, "../config.env") });
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+
+import * as authController from "../controllers/authController.js";
+import * as userController from "../controllers/userController.js";
+import { upload } from "../middlewares/upload.js";
 
 const app = express();
 

@@ -1,13 +1,14 @@
-const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
-const { uploadToCloudinary } = require("../cloudinary");
+import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import { uploadToCloudinary } from "../cloudinary.js";
+
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     const {
       firstName,
@@ -24,13 +25,24 @@ exports.signup = async (req, res) => {
     } = req.body;
 
     // Parse JSON first
-    const parsedSocials = JSON.parse(socials);
-    const parsedPreferences = JSON.parse(preferences);
-    const parsedPersonelQuestions = JSON.parse(personelQuestions);
-    const parsedRelationshipQuestions = JSON.parse(relationshipQuestions);
+    let parsedSocials,
+      parsedPreferences,
+      parsedPersonelQuestions,
+      parsedRelationshipQuestions;
+    try {
+      parsedSocials = JSON.parse(socials);
+      parsedPreferences = JSON.parse(preferences);
+      parsedPersonelQuestions = JSON.parse(personelQuestions);
+      parsedRelationshipQuestions = JSON.parse(relationshipQuestions);
+    } catch (parseErr) {
+      console.error("[SIGNUP] JSON parse error:", parseErr);
+      return res
+        .status(400)
+        .json({ status: "fail", message: "Invalid JSON in request body." });
+    }
 
-    const files = req.files;
-    if (!files || files.length < 2) {
+    if (!req.files || req.files.length < 2) {
+      console.warn("[SIGNUP] Not enough photos uploaded.");
       return res
         .status(400)
         .json({ error: "You need to upload at least 2 photos!" });
@@ -38,40 +50,58 @@ exports.signup = async (req, res) => {
 
     const existedUser = await User.findOne({ email });
     if (existedUser) {
+      console.warn("[SIGNUP] Email already in use:", email);
       return res
         .status(409)
         .json({ status: "fail", result: "This e-mail is already in use!" });
     }
 
-    const imageUrls = await Promise.all(
-      files.map((file) => uploadToCloudinary(file.buffer))
-    );
+    let imageUrls;
+    try {
+      imageUrls = await Promise.all(
+        req.files.map((file) => uploadToCloudinary(file.buffer))
+      );
+    } catch (cloudErr) {
+      console.error("[SIGNUP] Cloudinary upload error:", cloudErr);
+      return res
+        .status(500)
+        .json({ status: "fail", message: "Photo upload failed." });
+    }
 
-    const newUser = await User.create({
-      firstName,
-      email,
-      birthdayDate,
-      password,
-      rePassword,
-      occupation,
-      photos: imageUrls,
-      socialMedia: parsedSocials,
-      gender,
-      preferences: parsedPreferences,
-      personelQuestions: parsedPersonelQuestions,
-      relationshipQuestions: parsedRelationshipQuestions,
-    });
+    let newUser;
+    try {
+      newUser = await User.create({
+        firstName,
+        email,
+        birthdayDate,
+        password,
+        rePassword,
+        occupation,
+        photos: imageUrls,
+        socialMedia: parsedSocials,
+        gender,
+        preferences: parsedPreferences,
+        personelQuestions: parsedPersonelQuestions,
+        relationshipQuestions: parsedRelationshipQuestions,
+      });
+    } catch (userErr) {
+      console.error("[SIGNUP] User creation error:", userErr);
+      return res
+        .status(500)
+        .json({ status: "fail", message: "User creation failed." });
+    }
 
     const token = signToken(newUser._id);
     res.status(201).json({ token });
   } catch (err) {
+    console.error("[SIGNUP] Uncaught error:", err, err?.stack);
     res.status(400).json({
       status: "fail",
       message: err.message,
     });
   }
 };
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const { loginEmail, loginPassword } = req.body;
   if (!loginEmail || !loginPassword) {
     return res
@@ -86,7 +116,7 @@ exports.login = async (req, res) => {
   res.status(200).json({ token });
 };
 
-exports.checkExistingEmail = async (req, res) => {
+export const checkExistingEmail = async (req, res) => {
   const { email } = req.body;
 
   try {

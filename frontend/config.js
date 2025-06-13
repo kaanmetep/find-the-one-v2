@@ -63,12 +63,12 @@ export const questionsPersonal = [
   },
   {
     id: 5,
-    question: "What’s your way of dealing with stress?",
+    question: "How do you usually make important decisions in life?",
     options: [
-      "I meditate or do mindfulness exercises",
-      "I exercise or do physical activities",
-      "I talk it out with close friends or family",
-      "I prefer to be alone and reflect quietly",
+      "I rely on logic and careful analysis",
+      "I follow my intuition and gut feeling",
+      "I seek advice from people I trust",
+      "I take time alone to reflect before deciding",
     ],
   },
   {
@@ -127,7 +127,7 @@ export const questionsRelationship = [
       "It’s essential - I love making my partner laugh",
       "It’s important, but not the main thing",
       "I enjoy humor but also value serious moments",
-      "’m more serious and prefer meaningful conversations",
+      "I’m more serious and prefer meaningful conversations",
     ],
   },
   {

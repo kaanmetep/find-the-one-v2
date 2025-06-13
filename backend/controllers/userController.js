@@ -1,6 +1,7 @@
-const User = require("../models/userModel");
-const { uploadToCloudinary } = require("../cloudinary");
-exports.getUser = async (req, res) => {
+import User from "../models/userModel.js";
+import { uploadToCloudinary } from "../cloudinary.js";
+
+export const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -11,7 +12,7 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -84,7 +85,7 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const { password } = req.body;
     const user = await User.findById(req.params.id);
@@ -101,7 +102,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const { genderInterest, minAge, maxAge, relationshipType } = req.query;
 

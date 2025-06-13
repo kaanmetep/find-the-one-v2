@@ -1,5 +1,13 @@
-const cloudinary = require("cloudinary").v2;
-const streamifier = require("streamifier");
+import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, "config.env") });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,7 +20,18 @@ const uploadToCloudinary = (buffer) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder: "profile_photos" },
       (error, result) => {
-        if (error) return reject(error);
+        if (error) {
+          console.error("[CLOUDINARY] upload_stream error:", error);
+          return reject(error);
+        }
+        if (!result || !result.secure_url) {
+          console.error(
+            "[CLOUDINARY] upload_stream: result.secure_url is missing!",
+            result
+          );
+          return reject(new Error("Cloudinary did not return a secure_url"));
+        }
+
         resolve(result.secure_url);
       }
     );
@@ -20,4 +39,4 @@ const uploadToCloudinary = (buffer) => {
   });
 };
 
-module.exports = { uploadToCloudinary };
+export { uploadToCloudinary };
