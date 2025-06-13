@@ -63,13 +63,25 @@ export const useGetUser = () => {
     staleTime: Infinity,
   });
 };
-export const useGetUsers = (filterParams = {}) => {
+export const useGetUsers = (
+  filterParams = {},
+  currentUserId,
+  personelQuestions,
+  relationshipQuestions
+) => {
   const hasFilters = Object.keys(filterParams).length > 0 && !filterParams.skip;
 
+  const params = {
+    ...filterParams,
+    excludeId: currentUserId,
+    personelQuestions: JSON.stringify(personelQuestions),
+    relationshipQuestions: JSON.stringify(relationshipQuestions),
+  };
+
   return useQuery({
-    queryKey: ["users", filterParams],
-    queryFn: () => getUsers(filterParams),
-    enabled: hasFilters, // Only run query when filters are available
+    queryKey: ["users", params],
+    queryFn: () => getUsers(params),
+    enabled: hasFilters,
   });
 };
 

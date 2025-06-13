@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { Heart, X, Coffee, Film, Sun, Users } from "lucide-react";
+import { X } from "lucide-react";
 import UserDetailsCardContactSection from "./UserDetailsCardContactSection.jsx";
 import { getMatchColor } from "../../../lib/utils.js";
 const UserDetailsCard = ({ userDetails, setUserDetails }) => {
@@ -92,78 +92,6 @@ const UserDetailsCard = ({ userDetails, setUserDetails }) => {
                 relationship
               </span>
             </p>
-          </div>
-          {/* Match information */}
-          <div className="space-y-6 sm:space-y-8 mb-6">
-            {/* Positive matches */}
-            <div className="rounded-lg border border-gray-200 p-4 sm:p-6 shadow-md">
-              <h3 className="flex items-center gap-2 text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-red-600 border-b-2 border-red-200 pb-2">
-                <Heart size={20} className="text-red-500" />
-                Why you might be a good match
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
-                  <Coffee size={16} className="text-red-500" />
-                  <p className="text-gray-800 font-medium text-sm sm:text-base">
-                    You both enjoy coffee
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
-                  <Users size={16} className="text-red-500" />
-                  <p className="text-gray-800 font-medium text-sm sm:text-base">
-                    You both like going out
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
-                  <Film size={16} className="text-red-500" />
-                  <p className="text-gray-800 font-medium text-sm sm:text-base">
-                    You both enjoy watching movies
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
-                  <Sun size={16} className="text-red-500" />
-                  <p className="text-gray-800 font-medium text-sm sm:text-base">
-                    You both like watching the sunset
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Areas of difference */}
-            <div className="rounded-lg border border-gray-200 p-4 sm:p-6 shadow-md">
-              <h3 className="flex items-center gap-2 text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-700 border-b-2 border-gray-200 pb-2">
-                <X size={20} className="text-gray-500" />
-                Areas where you differ
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
-                  <Coffee size={16} className="text-gray-500" />
-                  <p className="text-gray-700 font-medium text-sm sm:text-base">
-                    Coffee preferences
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
-                  <Users size={16} className="text-gray-500" />
-                  <p className="text-gray-700 font-medium text-sm sm:text-base">
-                    Social activity levels
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
-                  <Film size={16} className="text-gray-500" />
-                  <p className="text-gray-700 font-medium text-sm sm:text-base">
-                    Movie genre preferences
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
-                  <Sun size={16} className="text-gray-500" />
-                  <p className="text-gray-700 font-medium text-sm sm:text-base">
-                    Morning or evening person
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Footer with match percentage */}

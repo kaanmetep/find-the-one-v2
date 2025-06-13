@@ -21,7 +21,10 @@ const HomePageContent = ({ userData }) => {
 
   // Skip query if filterParams is not yet available
   const { data, isPending: gettingUsers } = useGetUsers(
-    filterParams || { skip: true } // Pass dummy param to prevent unfiltered query
+    filterParams || { skip: true },
+    userData?._id,
+    userData?.personelQuestions,
+    userData?.relationshipQuestions
   );
 
   useEffect(() => {
@@ -29,7 +32,7 @@ const HomePageContent = ({ userData }) => {
       setUsers(data.result);
     }
   }, [data]);
-
+  console.log("userssss", users);
   // True if we're loading OR filters aren't ready yet
   const isLoading = gettingUsers || !filterParams;
 

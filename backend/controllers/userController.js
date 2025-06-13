@@ -1,5 +1,8 @@
 import User from "../models/userModel.js";
 import { uploadToCloudinary } from "../cloudinary.js";
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export const getUser = async (req, res) => {
   try {
@@ -102,54 +105,99 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+function mergeUserAnswers(user) {
+  const personal = Array.isArray(user.personelQuestions)
+    ? user.personelQuestions.join(" ")
+    : Object.values(user.personelQuestions || {}).join(" ");
+  const relationship = Array.isArray(user.relationshipQuestions)
+    ? user.relationshipQuestions.join(" ")
+    : Object.values(user.relationshipQuestions || {}).join(" ");
+  return `Personal: ${personal}\nRelationship: ${relationship}`;
+}
+function cosineSimilarity(vecA, vecB) {
+  const dot = vecA.reduce((sum, a, i) => sum + a * vecB[i], 0);
+  const magA = Math.sqrt(vecA.reduce((sum, a) => sum + a * a, 0));
+  const magB = Math.sqrt(vecB.reduce((sum, b) => sum + b * b, 0));
+  return dot / (magA * magB);
+}
+
 export const getAllUsers = async (req, res) => {
   try {
-    const { genderInterest, minAge, maxAge, relationshipType } = req.query;
+    const {
+      genderInterest,
+      minAge,
+      maxAge,
+      relationshipType,
+      excludeId,
+      personelQuestions,
+      relationshipQuestions,
+    } = req.query;
 
-    // Temel sorgu oluştur
     let query = {};
-
-    // GenderInterest filtresi
     if (genderInterest) {
       if (genderInterest !== "both") {
         query.gender = genderInterest;
       }
     }
-
-    // RelationshipType filtresi
     if (relationshipType) {
       if (relationshipType !== "doesntMatter") {
         query["preferences.relationshipType"] = relationshipType;
       }
     }
-
-    // Yaş filtresi için tarih hesaplamaları
     if (minAge || maxAge) {
       query.birthdayDate = {};
-
       if (maxAge) {
-        // maxAge için minimum doğum tarihi hesapla
         const minBirthDate = new Date();
         minBirthDate.setFullYear(minBirthDate.getFullYear() - maxAge);
         query.birthdayDate.$gte = minBirthDate;
       }
-
       if (minAge) {
-        // minAge için maximum doğum tarihi hesapla
         const maxBirthDate = new Date();
         maxBirthDate.setFullYear(maxBirthDate.getFullYear() - minAge);
         query.birthdayDate.$lte = maxBirthDate;
       }
     }
+    if (excludeId) {
+      query._id = { $ne: excludeId };
+    }
 
     const users = await User.find(query);
 
-    if (users && users.length > 0) {
-      return res.status(200).json({ result: users });
+    let userAEmbedding = null;
+    if (personelQuestions && relationshipQuestions) {
+      const userA = {
+        personelQuestions: JSON.parse(personelQuestions),
+        relationshipQuestions: JSON.parse(relationshipQuestions),
+      };
+      const userAText = mergeUserAnswers(userA);
+      const userAEmbeddingResponse = await openai.embeddings.create({
+        model: "text-embedding-3-small",
+        input: userAText,
+      });
+      userAEmbedding = userAEmbeddingResponse.data[0].embedding;
     }
-    return res
-      .status(200)
-      .json({ result: [], message: "No users match the criteria." });
+
+    const resultWithMatch = [];
+    for (const userB of users) {
+      let matchPercentage = null;
+      if (userAEmbedding) {
+        const userBText = mergeUserAnswers(userB);
+        const userBEmbeddingResponse = await openai.embeddings.create({
+          model: "text-embedding-3-small",
+          input: userBText,
+        });
+        const userBEmbedding = userBEmbeddingResponse.data[0].embedding;
+        const similarity = cosineSimilarity(userAEmbedding, userBEmbedding);
+        matchPercentage = Math.max(0, Math.round((similarity - 0.6) * 250));
+        if (matchPercentage > 100) matchPercentage = 100;
+      }
+      resultWithMatch.push({
+        ...userB.toObject(),
+        matchPercentage,
+      });
+    }
+
+    return res.status(200).json({ result: resultWithMatch });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

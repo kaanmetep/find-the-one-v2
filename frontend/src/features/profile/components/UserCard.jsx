@@ -1,6 +1,6 @@
 import { getMatchColor } from "../../../lib/utils";
 const UserCard = ({ user, setUserDetails }) => {
-  const matchPercentage = Math.floor(Math.random() * (100 - 21) + 20);
+  const matchPercentage = user.matchPercentage;
 
   const matchColors = getMatchColor(matchPercentage);
 
