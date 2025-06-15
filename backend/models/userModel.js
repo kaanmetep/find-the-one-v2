@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "You must have a first name."],
     lowercase: true,
     trim: true,
+    maxlength: [30, "First name must be less than 30 characters long."],
   },
   email: {
     type: String,
@@ -21,6 +22,20 @@ const userSchema = new mongoose.Schema({
     type: Date,
     required: [true, "You must have a birth date."],
     trim: true,
+    validate: {
+      validator: function (value) {
+        if (!value) return false;
+        const today = new Date();
+        const birthDate = new Date(value);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age >= 18;
+      },
+      message: "You must be at least 18 years old.",
+    },
   },
   password: {
     type: String,
