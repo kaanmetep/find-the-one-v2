@@ -39,27 +39,7 @@ app.get("/", (req, res) => {
   res.end("hello from the server");
 });
 
-app.post(
-  "/signup",
-  upload,
-  (req, res, next) => {
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://findtheoneai.vercel.app"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET,POST,PUT,DELETE,OPTIONS,PATCH"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    next();
-  },
-  authController.signup
-);
+app.post("/signup", upload, authController.signup);
 
 app.post("/login", authController.login);
 
