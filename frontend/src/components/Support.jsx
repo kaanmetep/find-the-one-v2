@@ -8,6 +8,8 @@ import Button from "./Button";
 import SectionContainer from "./SectionContainer";
 import { User, Mail, MessageSquare } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
+import { endpoints } from "../../config";
+import { useState } from "react";
 
 function Support() {
   const {
@@ -16,9 +18,28 @@ function Support() {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    toast.success("Message has sent!");
-    reset();
+  const [isLoading, setIsLoading] = useState(false);
+  const onSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(endpoints.support, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+      toast.success("Message has sent!");
+      reset();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <SectionContainer>
@@ -84,7 +105,9 @@ function Support() {
                 )}
               />
             </div>
-            <Button type="submit">Send Message</Button>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Sending..." : "Send Message"}
+            </Button>
             <p className="text-center text-red-600 font-bold italic">
               {errors?.supportName?.message ||
                 errors?.supportEposta?.message ||

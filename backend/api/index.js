@@ -11,6 +11,7 @@ import cors from "cors";
 import * as authController from "../controllers/authController.js";
 import * as userController from "../controllers/userController.js";
 import { upload } from "../middlewares/upload.js";
+import * as emailController from "../controllers/emailController.js";
 
 const app = express();
 
@@ -51,6 +52,8 @@ app.patch("/users/:id", upload, userController.updateUser);
 app.post("/checkEmail", authController.checkExistingEmail);
 
 app.delete("/users/:id", userController.deleteUser);
+
+app.post("/support", emailController.sendSupportMail);
 
 const port = 3000;
 app.listen(port, () => {

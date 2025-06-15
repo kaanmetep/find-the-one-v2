@@ -9,12 +9,12 @@ function TestimonialCards() {
       viewport={{ once: true }}
       transition={{ duration: 1.7, ease: "easeOut" }}
     >
-      <div className="flex flex-col md:flex-row gap-12 md:gap-8 mt-12 tracking-wide">
+      <div className="flex flex-col lg:flex-row gap-12 md:gap-8 mt-12 tracking-wide">
         {/* Elizabeth's Card */}
         <div className="flex flex-col gap-12 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden border border-gray-100">
           <div className="p-6 flex-1">
             <Quote className="size-8 mb-4 text-rose-300" />
-            <p className="text-center mt-4 text-slate-700 leading-relaxed">
+            <p className="text-center mt-4 text-slate-700 leading-relaxed text-base">
               I was hesitant about trying online dating, but this platform made
               it so simple and safe. The safety guidelines were especially
               helpful as I navigated meeting new people. After a month, I
@@ -39,7 +39,7 @@ function TestimonialCards() {
         <div className="flex flex-col gap-12 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden border-2 border-rose-200">
           <div className="p-6 flex-1">
             <Quote className="size-8 mb-4 text-rose-400" />
-            <p className="text-center mt-4 text-slate-700 leading-relaxed">
+            <p className="text-center mt-4 text-slate-700 leading-relaxed text-base">
               After my divorce, I thought I'd never find connection again. This
               platform not only helped me meet interesting people, but also
               regain my confidence. The interface was intuitive, and the
@@ -65,7 +65,7 @@ function TestimonialCards() {
         <div className="flex flex-col gap-12 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden border border-gray-100">
           <div className="p-6 flex-1">
             <Quote className="size-8 mb-4 text-rose-300" />
-            <p className="text-center mt-4 text-slate-700 leading-relaxed">
+            <p className="text-center mt-4 text-slate-700 leading-relaxed text-base">
               As someone with a busy career, I rarely had time to meet new
               people. This platform fit perfectly into my lifestyle, letting me
               connect with others at my own pace. The verification system gave

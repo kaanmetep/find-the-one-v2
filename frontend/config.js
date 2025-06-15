@@ -8,6 +8,7 @@ export const endpoints = {
   login: `${API_URL}/login`,
   getUsers: `${API_URL}/users`,
   checkEmail: `${API_URL}/checkEmail`,
+  support: `${API_URL}/support`,
 };
 
 export const questionsPersonal = [
