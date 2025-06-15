@@ -6,15 +6,15 @@ export const formatDate = (dateString) => {
     year: "numeric",
   });
 };
-export const validateImage = (file, name) => {
+export const validateImage = (file) => {
   return new Promise((resolve, reject) => {
     if (!file) return resolve(null);
 
     if (!file.type.startsWith("image/")) {
       return reject(new Error("Invalid file type. Please upload an image."));
     }
-    if (file.size > 5 * 1024 * 1024) {
-      return reject(new Error("File size must be less than 5MB."));
+    if (file.size > 2 * 1024 * 1024) {
+      return reject(new Error("Each photo must be less than 2MB."));
     }
 
     const img = new Image();
@@ -49,7 +49,7 @@ export const handleImageUpload = async (
   if (!file) return;
 
   try {
-    const error = await validateImage(file, name);
+    const error = await validateImage(file);
 
     if (!error) {
       setImages((prev) => ({

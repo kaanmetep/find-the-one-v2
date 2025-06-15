@@ -48,6 +48,14 @@ export const signup = async (req, res) => {
         .json({ error: "You need to upload at least 2 photos!" });
     }
 
+    const MAX_PHOTO_SIZE = 2 * 1024 * 1024;
+    if (req.files && req.files.some((file) => file.size > MAX_PHOTO_SIZE)) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Each photo must be less than 2MB.",
+      });
+    }
+
     const existedUser = await User.findOne({ email });
     if (existedUser) {
       console.warn("[SIGNUP] Email already in use:", email);
