@@ -57,10 +57,10 @@ export const updateUser = async (req, res) => {
     if (relationshipType) user.preferences.relationshipType = relationshipType;
 
     // Update social media handles if provided
-    if (instagram) user.socialMedia.instagram = instagram;
-    if (twitter) user.socialMedia.twitter = twitter;
-    if (snapchat) user.socialMedia.snapchat = snapchat;
-    if (bluesky) user.socialMedia.bluesky = bluesky;
+    if ("instagram" in req.body) user.socialMedia.instagram = instagram;
+    if ("twitter" in req.body) user.socialMedia.twitter = twitter;
+    if ("snapchat" in req.body) user.socialMedia.snapchat = snapchat;
+    if ("bluesky" in req.body) user.socialMedia.bluesky = bluesky;
 
     // Handle photo uploads
     if (req.files && req.files.length > 0) {
