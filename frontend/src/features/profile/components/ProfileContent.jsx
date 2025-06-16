@@ -25,13 +25,14 @@ const ProfileContent = () => {
   });
   const [imageErrors, setImageErrors] = useState({});
 
-  const removeImage = (key) => {
-    console.log(images);
+  const removeImage = (key, index) => {
     setImages((prev) => ({
       ...prev,
       [key]: null,
     }));
-    imageDeleted.current = true;
+    if (userData.photos[index]) {
+      imageDeleted.current = true;
+    }
   };
 
   const {
@@ -463,7 +464,7 @@ const ProfileContent = () => {
                             type="button"
                             onClick={(e) => {
                               e.preventDefault();
-                              removeImage(key);
+                              removeImage(key, index);
                             }}
                             className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
                           >
